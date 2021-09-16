@@ -1,11 +1,12 @@
 # Description
 
-This project will be used for tracking and logging different metrics for a german voluntary fire fighter station. This solution replaces an Excel spreadsheet. The requirements are:
+This project will be used for tracking and logging different metrics for voluntary workers. This solution aims to provide an easy solution to tracking hours and expenses. The requirements are:
 
 - log work hours by category.
 - log expenses, deposits and payouts.
 - add / remove members.
 - get PDF reports for different metrics.
+- authentication.
 
 # Technology
 
