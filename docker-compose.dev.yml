@@ -1,7 +1,6 @@
-version: '3'
+version: '3.8'
 services:
-  angular:
-    # image: flsoller/angular-app
+  web:
     build: ./frontend/
     ports:
       - '4200:4200'
@@ -14,7 +13,6 @@ services:
       - api
 
   api:
-    # image: flsoller/api-server
     restart: unless-stopped
     build: ./api/
     ports:
@@ -26,21 +24,26 @@ services:
     networks:
       - appnetwork
     depends_on:
-      - mongo
+      - postgres
 
-  mongo:
-    image: mongo:4.4-focal
+  postgres:
+    image: postgres:13.4
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: app-db
     ports:
-      - '27017:27017'
+      - '5432:5432'
     networks:
       - appnetwork
     volumes:
-      - mongo-db:/data/db
+      - postgres-db:/data/db
 
 networks:
   appnetwork:
     driver: bridge
 
 volumes:
-  mongo-db:
+  postgres-db:
     driver: local
