@@ -1,13 +1,20 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { SequelizeModule } from '@nestjs/sequelize';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
-import { CONNECTION_STRING } from '../config/db';
-
 @Module({
-  imports: [MongooseModule.forRoot(CONNECTION_STRING)],
+  imports: [
+    SequelizeModule.forRoot({
+      dialect: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: 'postgres',
+      database: 'app-db',
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
