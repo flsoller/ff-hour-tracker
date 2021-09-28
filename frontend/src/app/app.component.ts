@@ -15,10 +15,5 @@ export class AppComponent implements OnInit {
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit() {
-    this.http.get<any>(this.apiURL).subscribe((res) => {
-      this.apiRes = res.message;
-      console.log(this.apiRes);
-    });
-  }
+  ngOnInit() {}
 }
