@@ -1,16 +1,16 @@
 # Description
 
-This project will be used for tracking and logging different metrics for voluntary workers. This solution aims to provide an easy solution to tracking hours and expenses. The requirements are:
+This project will be used for tracking and logging different metrics for voluntary workers or members. This app aims to provide an easy solution for tracking hours and expenses. The requirements are:
 
 - log work hours by category.
 - log expenses, deposits and payouts.
 - add / remove members.
-- get PDF reports for different metrics.
+- get reports for different metrics.
 - authentication.
 
 # Technology
 
-The frontend features Angular. The backend uses Node with NestJS and MongoDB.
+The frontend features Angular. The backend uses Node with Express and Postgres.
 
 # Installation
 
