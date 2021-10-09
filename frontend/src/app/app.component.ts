@@ -1,6 +1,4 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +6,9 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'frontend';
-  apiRes = '';
+  title = 'Hour Tracker';
 
-  apiURL = environment.apiURL;
-
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
   ngOnInit() {}
 }
