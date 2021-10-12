@@ -4,7 +4,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 // DB config import
-import { connectDb } from './config/db';
+import { connectDb } from './config/helpers';
 
 // Load env configuration
 dotenv.config();
