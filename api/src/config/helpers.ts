@@ -1,8 +1,8 @@
-import db from './db';
+import sequelize from './db';
 
 export const connectDb = async (): Promise<void> => {
   try {
-    await db.authenticate();
+    await sequelize.authenticate();
     console.log('Connection has been established successfully.');
   } catch (error) {
     console.error('Unable to connect to the database:', error);
