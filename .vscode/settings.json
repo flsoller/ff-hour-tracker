@@ -2,5 +2,6 @@
     "eslint.workingDirectories": [
         "./api",
         "./frontend"
-    ]
+    ],
+    "typescript.tsdk": "node_modules/typescript/lib"
 }
