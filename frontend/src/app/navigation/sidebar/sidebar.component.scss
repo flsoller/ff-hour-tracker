@@ -1,0 +1,9 @@
+@import "theme";
+
+.sidebar {
+  width: 6rem;
+  background-color: $dark;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
