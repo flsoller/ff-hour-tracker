@@ -1,0 +1,30 @@
+@import "theme";
+
+.button {
+  &--neo-button {
+    padding: 1rem 1em;
+    background: $dark;
+    border: none;
+    border-radius: 2rem;
+    color: #f6f6f6;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.2rem;
+    text-align: center;
+    outline: none;
+    cursor: pointer;
+    box-shadow: -6px -6px 14px #3c3f44, -6px -6px 10px #3c3f44,
+      5px 4px 4px #202225, 5px 4px 8px #202225;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      box-shadow: -2px -2px 6px #3c3f44, -2px -2px 4px #3c3f44,
+        2px 2px 2px #202225, 2px 2px 4px #202225;
+    }
+
+    &:active {
+      box-shadow: inset -2px -2px 6px #3c3f44, inset -2px -2px 4px #3c3f44,
+        inset 2px 2px 2px #202225, inset 2px 2px 4px #202225;
+    }
+  }
+}

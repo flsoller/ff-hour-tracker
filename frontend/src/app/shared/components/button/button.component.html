@@ -1,1 +1,8 @@
-<p>button works!</p>
+<button
+  type="button"
+  class="button"
+  [ngClass]="{ 'button--neo-button': neoButton }"
+>
+  {{ label | uppercase }}
+  <ng-content></ng-content>
+</button>
