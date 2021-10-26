@@ -1,9 +1,14 @@
 @import "theme";
 
 .sidebar {
-  width: 6rem;
+  width: 7rem;
   background-color: $dark;
   height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
+
+  &__element {
+    padding-top: 2rem;
+  }
 }
