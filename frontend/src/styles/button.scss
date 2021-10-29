@@ -1,33 +1,36 @@
 @import "colors";
 
 .button {
-  &--neo-button {
-    padding: 0.7rem 0.7em;
-    background: $dark-2;
-    border: none;
-    border-radius: 2rem;
-    color: #f6f6f6;
-    font-size: 2rem;
-    font-weight: 700;
-    text-align: center;
-    outline: none;
-    cursor: pointer;
-    box-shadow: -3px -3px 8px $dark-2-dark-accent,
-      -3px -3px 6px $dark-2-dark-accent, 3px 3px 5px $dark-2-light-accent,
-      2px 2px 4px $dark-2-light-accent;
-    transition: 0.2s ease-in-out;
+  border: none;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    &:hover {
-      box-shadow: -1px -1px 3px $dark-2-dark-accent,
-        -2px -2px 4px $dark-2-dark-accent, 2px 2px 2px $dark-2-light-accent,
-        2px 2px 4px $dark-2-light-accent;
+  &--icon-button-lg {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    background: linear-gradient(150deg, #2f353a 14.75%, #1c1f22 84.81%);
+
+    &::after {
+      position: absolute;
+      content: "";
+      width: 4.5rem;
+      height: 4.5rem;
+      background: radial-gradient(
+        transparent 63%,
+        #2c3036 14.05%,
+        #31343c 85.29%
+      );
+      box-shadow: 7px 7px 21px #1f2427, -13px -12px 23px #485057;
+      border-radius: inherit;
+      filter: blur(1px);
     }
 
     &:active {
-      box-shadow: inset -2px -2px 6px $dark-2-dark-accent,
-        inset -2px -2px 4px $dark-2-dark-accent,
-        inset 2px 2px 2px $dark-2-light-accent,
-        inset 2px 2px 4px $dark-2-light-accent;
+      background: linear-gradient(320deg, #2f353a 14.75%, #1c1f22 84.81%);
     }
   }
 }

@@ -15,7 +15,7 @@ export class ButtonDirective implements OnInit {
   setModifiers(): string {
     switch (this.buttonType) {
       case 'neo':
-        return 'button button--neo-button';
+        return 'button button--icon-button-lg';
 
       default:
         return 'button';
