@@ -3,5 +3,7 @@
 @import "_css-reset";
 
 body {
+  height: 100vh;
+  width: 100vw;
   background-color: $dark-2;
 }
