@@ -3,12 +3,20 @@
 .sidebar {
   width: 7rem;
   background: $dark-3;
-  height: 100vh;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   &__element {
-    padding-top: 2rem;
+    padding-top: 2.5rem;
+
+    &__icon {
+      color: $white-blue;
+    }
+
+    &:last-child {
+      padding-bottom: 2.5rem;
+    }
   }
 }
