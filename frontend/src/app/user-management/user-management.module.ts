@@ -2,10 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { UserManagementRoutingModule } from './user-management-routing.module';
+import { OverviewComponent } from './overview/overview.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    OverviewComponent
+  ],
   imports: [
     CommonModule,
     UserManagementRoutingModule

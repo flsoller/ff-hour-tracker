@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   faUsers,
   faBox,
@@ -18,7 +19,7 @@ export class SidebarComponent implements OnInit {
   faUserClock = faUserClock;
   faFileInvoice = faFileInvoice;
 
-  constructor() {}
+  constructor(public router: Router) {}
 
   ngOnInit(): void {}
 }
