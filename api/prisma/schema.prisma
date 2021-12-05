@@ -31,6 +31,27 @@ model Member {
 
   organization Organization @relation(fields: [orgId], references: [id])
   orgId        String
+  timelogs     TimeLog[]
 
   @@map("members")
+}
+
+model ActivityType {
+  activityName String @id
+  activityDesc String @db.VarChar(500)
+
+  timelog   TimeLog @relation(fields: [activityName], references: [id])
+  timelogId String
+
+  @@map("activity_types")
+}
+
+model TimeLog {
+  id           String         @id @default(uuid())
+  date         DateTime
+  hours        Int
+  activityType ActivityType[]
+  member       Member         @relation(fields: [id], references: [id])
+
+  @@map("timelogs")
 }
