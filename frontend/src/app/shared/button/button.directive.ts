@@ -17,6 +17,9 @@ export class ButtonDirective implements OnInit {
       case 'neo':
         return 'button button--icon-button-lg';
 
+      case 'dropdown':
+        return 'button button--dropdown-button';
+
       default:
         return 'button';
     }
