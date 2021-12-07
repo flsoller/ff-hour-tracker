@@ -1,0 +1,18 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: docker build web
+        run: docker build ./frontend/ --tag web-frontend:$(date +%s)
+      - name: docker build api
+        run: docker build ./api/ --tag api:$(date +%s)
