@@ -1,0 +1,33 @@
+<div class="dropdown" appClickOutside (outsideElClick)="closeDropdown()">
+  <!-- Dropdown label -->
+  <label class="dropdown__label">{{ label | uppercase }}</label>
+
+  <!-- Button element -->
+  <button
+    app-button
+    buttonType="dropdown"
+    class="dropdown__button"
+    (click)="toggleDropdown()"
+    [disabled]="!listItems.length"
+    [ngClass]="{ 'dropdown__button--disabled': !listItems.length }">
+    <span class="dropdown__selected">{{ selectedItem }}</span>
+    <span>
+      <fa-icon
+        [icon]="faCaretSquareDown"
+        class="dropdown__icon"
+        [ngClass]="{ 'dropdown__icon--disabled': !listItems.length }"></fa-icon>
+    </span>
+  </button>
+
+  <!-- Dropdown -->
+  <ul
+    class="dropdown__menu"
+    [ngClass]="{ 'dropdown__menu--dropdown-visible': dropdownOpen }">
+    <li
+      *ngFor="let item of listItems"
+      class="dropdown__menu__item"
+      (click)="onSelectionChanged(item)">
+      {{ item }}
+    </li>
+  </ul>
+</div>
