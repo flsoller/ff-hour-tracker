@@ -2,16 +2,16 @@ FROM node:16-alpine
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
-
-RUN npm install
+COPY package.json ./
+COPY yarn.lock ./
+RUN yarn install
 
 COPY prisma ./
 
-RUN npx prisma generate
+RUN yarn prisma generate
 
 COPY . .
 
 EXPOSE 5000
 
-CMD [ "npm", "run", "dev" ]
+CMD [ "yarn", "run", "dev" ]

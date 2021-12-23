@@ -9,7 +9,7 @@
     "start": "node dist/server.js",
     "dev": "nodemon src/server.ts",
     "build": "rimraf dist && tsc",
-    "db:docker:firstinit": "cd .. && docker-compose -f docker-compose.dev.yml exec api npx prisma db push --force-reset",
+    "db:docker:firstinit": "cd .. && docker-compose -f docker-compose.dev.yml exec api yarn prisma db push --force-reset",
     "db:console": "cd .. && docker-compose -f docker-compose.dev.yml exec postgres psql -U postgres -d app_db_dev"
   },
   "repository": {
