@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonDirective } from './button/button.directive';
 import { DropdownComponent } from './dropdown/dropdown.component';
@@ -7,6 +7,7 @@ import { ClickOutsideDirective } from './directives/click-outside/click-outside.
 
 @NgModule({
   declarations: [ButtonDirective, DropdownComponent, ClickOutsideDirective],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [CommonModule, FontAwesomeModule],
   exports: [ButtonDirective, DropdownComponent, ClickOutsideDirective],
 })
