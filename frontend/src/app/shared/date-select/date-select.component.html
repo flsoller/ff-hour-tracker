@@ -1,0 +1,14 @@
+<div class="date-select">
+  <div class="date-select__item">
+    <app-dropdown
+      [listItems]="months"
+      [label]="'month'"
+      (selectionChanged)="onMonthChanged()"></app-dropdown>
+  </div>
+  <div class="date-select__item">
+    <app-dropdown
+      [listItems]="getYears()"
+      [label]="'year'"
+      (selectionChanged)="onYearChanged()"></app-dropdown>
+  </div>
+</div>
