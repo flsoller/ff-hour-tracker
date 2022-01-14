@@ -2,7 +2,16 @@
 
 .new-log {
   display: flex;
+  flex-direction: column;
   width: 100%;
   align-items: center;
   justify-content: center;
+
+  &__name-select {
+    width: 400px;
+  }
+
+  &__date-select {
+    display: flex;
+  }
 }
