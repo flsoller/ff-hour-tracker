@@ -4,4 +4,13 @@ module.exports = {
     port: 4200,
     public: '0.0.0.0:4200',
   },
+  css: {
+    loaderOptions: {
+      scss: {
+        prependData: `
+         @import "@/styles/colors.scss";
+        `,
+      },
+    },
+  },
 };

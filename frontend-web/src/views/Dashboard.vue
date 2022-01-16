@@ -1,16 +1,12 @@
 <template>
-  <h1>Hello World</h1>
+  <h1>Dashboard</h1>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: '',
-  props: {
-    msg: String,
-  },
+  name: 'Dashboard',
+  components: {},
 });
 </script>
-
-<style scoped lang="scss"></style>
