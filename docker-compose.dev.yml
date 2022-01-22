@@ -1,13 +1,13 @@
 version: '3.8'
 services:
   web:
-    build: ./frontend-web/
+    build: ./frontend/
     environment:
       - NODE_ENV=development
     ports:
-      - '4200:4200'
+      - '3000:3000'
     volumes:
-      - './frontend-web:/app'
+      - './frontend:/app'
       - /app/node_modules
     networks:
       - appnetwork
