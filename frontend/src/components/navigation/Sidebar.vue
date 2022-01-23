@@ -1,24 +1,46 @@
 <template>
   <div class="sidebar">
-    <Button class="sidebar__element button button--icon-button-lg"></Button>
+    <div class="sidebar__element">
+      <router-link to="/" class="button button--icon-button-lg"></router-link>
+    </div>
+    <div class="sidebar__element">
+      <router-link
+        to="/config"
+        class="button button--icon-button-lg"
+      ></router-link>
+    </div>
+    <div class="sidebar__element">
+      <router-link
+        to="/timelog"
+        class="button button--icon-button-lg"
+      ></router-link>
+    </div>
+    <div class="sidebar__element">
+      <router-link
+        to="/members"
+        class="button button--icon-button-lg"
+      ></router-link>
+    </div>
+    <div class="sidebar__element">
+      <router-link
+        to="/reports"
+        class="button button--icon-button-lg"
+      ></router-link>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Button from '@/components/Button.vue';
 
-export default defineComponent({
-  components: {
-    Button,
-  },
-});
+export default defineComponent({});
 </script>
 
 <style lang="scss" scoped>
 @import '@/styles/theme.scss';
 .sidebar {
   width: 7rem;
+  min-width: 5.5rem;
   background: $dark-3;
   min-height: 100%;
   display: flex;
