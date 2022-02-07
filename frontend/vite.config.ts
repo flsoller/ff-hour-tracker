@@ -15,4 +15,12 @@ export default defineConfig({
     port: 3000,
     host: '0.0.0.0',
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // Only import variables/mixins here
+        additionalData: ` @import "src/styles/base/imports.scss"; `,
+      },
+    },
+  },
 });

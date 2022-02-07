@@ -36,8 +36,7 @@ import { defineComponent } from 'vue';
 export default defineComponent({});
 </script>
 
-<style lang="scss" scoped>
-@import '@/styles/theme.scss';
+<style lang="scss">
 .sidebar {
   width: 7rem;
   min-width: 5.5rem;

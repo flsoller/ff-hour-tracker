@@ -19,7 +19,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '@/styles/_css-reset.scss';
+@import '@/styles/base/normalize.scss';
 @import '@/styles/theme.scss';
 
 .app-container {

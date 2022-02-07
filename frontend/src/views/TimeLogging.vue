@@ -1,12 +1,9 @@
 <template>
-  <h1>Time-Logging</h1>
+  <Dropdown :listItems="list" />
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
+import Dropdown from '@/components/AppDropdown.vue';
 
-export default defineComponent({
-  name: 'Time-Logging',
-  components: {},
-});
+const list = ['Name One', 'Name Two', 'Name Three'];
 </script>
