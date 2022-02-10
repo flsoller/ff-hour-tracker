@@ -1,5 +1,5 @@
 <template>
-  <Dropdown :listItems="list" />
+  <Dropdown :listItems="list" label="Member" />
 </template>
 
 <script lang="ts" setup>

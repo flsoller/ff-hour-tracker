@@ -3,22 +3,18 @@
     <!-- Dropdown label -->
     <label class="dropdown__label">{{ label }}</label>
 
-    <!-- Button element -->
+    <!-- Select element -->
     <button
-      class="button button--dropdown-button dropdown__button"
-      :class="{ 'dropdown__button--disabled': !props.listItems.length }"
+      class="dropdown__select"
+      :class="{ 'dropdown__select--disabled': !props.listItems.length }"
       @click="toggleDropdown"
     >
       <span class="dropdown__selected">{{ selectedItem }}</span>
-      <span
-        >X
-        <!-- Caret Icon -->
-        <!-- <fa-icon
-          [icon]="faCaretSquareDown"
-          class="dropdown__icon"
-          [ngClass]="{ 'dropdown__icon--disabled': !listItems.length }"
-        ></fa-icon> -->
-      </span>
+      <font-awesome-icon
+        :icon="faCaretSquareDown"
+        :class="{ 'dropdown__icon--disabled': !props.listItems.length }"
+        size="lg"
+      />
     </button>
 
     <!-- Dropdown -->
@@ -39,6 +35,8 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faCaretSquareDown } from '@fortawesome/free-solid-svg-icons';
 
 interface Props {
   listItems: string[];
@@ -50,17 +48,12 @@ const props = withDefaults(defineProps<Props>(), {
   label: 'unspecified',
 });
 
-let selectedItem = ref('');
-let dropdownOpen = ref(false);
+const selectedItem = ref('');
+const dropdownOpen = ref(false);
 
 // Open/Close dropdown
 function toggleDropdown(): void {
   dropdownOpen.value = !dropdownOpen.value;
-}
-
-// Click handler used in combination with appClickOutside directive
-function closeDropdown(): void {
-  dropdownOpen.value = false;
 }
 
 /**
@@ -94,17 +87,36 @@ function onSelectionChanged(item: string): void {
     }
   }
 
+  &__select {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 1.3rem;
+    border-radius: 8px;
+    color: $white-blue;
+    background-color: $dark;
+    border: 2px solid $dark-3;
+    justify-content: space-between;
+    padding: 1.5rem 1rem;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &--disabled {
+      &:hover {
+        cursor: not-allowed;
+      }
+    }
+  }
+
   &__selected {
     @include text-select;
     padding-right: 1rem;
   }
 
-  &__icon {
-    font-size: 1.4rem;
-
-    &--disabled {
-      color: $gray;
-    }
+  &__icon--disabled {
+    color: $gray;
   }
 
   &__menu {
