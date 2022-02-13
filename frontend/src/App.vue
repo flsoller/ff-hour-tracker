@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Sidebar from '@/components/navigation/Sidebar.vue';
+import Sidebar from '@/components/AppSidebar.vue';
 
 export default defineComponent({
   components: {
