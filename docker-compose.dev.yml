@@ -2,8 +2,10 @@ version: '3.8'
 services:
   web:
     build: ./frontend/
+    environment:
+      - NODE_ENV=development
     ports:
-      - '4200:4200'
+      - '3000:3000'
     volumes:
       - './frontend:/app'
       - /app/node_modules
@@ -31,7 +33,7 @@ services:
 
   postgres:
     image: postgres:13.4
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres

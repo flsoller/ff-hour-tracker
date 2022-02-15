@@ -1,16 +1,9 @@
-@import "colors";
-@import "button";
-@import "typography";
-@import "_css-reset";
-
 @font-face {
-  font-family: "Open-Sans";
-  src: local("Open-Sans"), url(./fonts/OpenSans.ttf) format("truetype");
+  font-family: 'Open-Sans';
+  src: local('Open-Sans'), '@styles/fonts/OpenSans.ttf', format('truetype');
 }
 
 body {
-  font-family: "Open-Sans", Arial, Helvetica, sans-serif;
-  height: 100vh;
-  width: 100vw;
+  font-family: 'Open-Sans', Arial, Helvetica, sans-serif;
   background-color: $dark-2;
 }
