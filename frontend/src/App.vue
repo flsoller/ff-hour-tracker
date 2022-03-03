@@ -7,20 +7,13 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import Sidebar from '@/components/AppSidebar.vue';
-
-export default defineComponent({
-  components: {
-    Sidebar,
-  },
-});
 </script>
 
 <style lang="scss">
-@import '@/styles/base/normalize.scss';
-@import '@/styles/theme.scss';
+@import "@/styles/base/normalize.scss";
+@import "@/styles/theme.scss";
 
 .app-container {
   display: flex;

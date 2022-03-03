@@ -8,6 +8,7 @@
       class="dropdown__select"
       :class="{ 'dropdown__select--disabled': !props.listItems.length }"
       @click="toggleDropdown"
+      type="button"
     >
       <span class="dropdown__selected">{{ selectedItem }}</span>
       <font-awesome-icon
@@ -18,17 +19,12 @@
     </button>
 
     <!-- Dropdown -->
-    <ul
-      class="dropdown__menu"
-      :class="{ 'dropdown__menu--menu-visible': dropdownOpen }"
-    >
+    <ul class="dropdown__menu" :class="{ 'dropdown__menu--menu-visible': dropdownOpen }">
       <li
         v-for="item in listItems"
         class="dropdown__menu__item"
         @click="onSelectionChanged(item)"
-      >
-        {{ item }}
-      </li>
+      >{{ item }}</li>
     </ul>
   </div>
 </template>
@@ -41,6 +37,7 @@ import { faCaretSquareDown } from '@fortawesome/free-solid-svg-icons';
 interface Props {
   listItems: string[];
   label: string;
+  isDisabled?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
