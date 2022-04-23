@@ -17,17 +17,18 @@ model Organization {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  members Member[]
+  members    Member[]
+  activities ActivityType[]
 
   @@map("organizations")
 }
 
 model Member {
-  id        String  @id @default(uuid())
-  firstName String
-  lastName  String
-  email     String  @unique
-  isAdmin   Boolean @default(false)
+  id           String  @id @default(uuid())
+  firstName    String
+  lastName     String
+  emailAddress String  @unique
+  isAdmin      Boolean @default(false)
 
   organization Organization @relation(fields: [orgId], references: [id])
   orgId        String
@@ -39,6 +40,9 @@ model Member {
 model ActivityType {
   activityName String @id
   activityDesc String @db.VarChar(500)
+
+  organization Organization @relation(fields: [orgId], references: [id])
+  orgId        String
 
   timelog   TimeLog @relation(fields: [activityName], references: [id])
   timelogId String
