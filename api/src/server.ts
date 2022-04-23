@@ -3,6 +3,9 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
+// Router imports
+import organizations from './controllers/Organizations';
+
 // Load env configuration
 dotenv.config();
 
@@ -16,6 +19,10 @@ if (process.env.NODE_ENV === 'development') {
 
 // JSON body-parser middleware
 app.use(express.json());
+
+// Mount routers
+const API_V0 = '/api/v0';
+app.use(`${API_V0}/organizations`, organizations);
 
 // Define server port
 const PORT = process.env.PORT || 5000;
