@@ -1,9 +1,11 @@
 {
-  "extends": "@tsconfig/node14/tsconfig.json",
-    "compilerOptions": {
+  "extends": "@tsconfig/node16/tsconfig.json",
+  "compilerOptions": {
     "lib": ["ESNext"],
     "outDir": "dist",
-    "removeComments": true
+    "removeComments": true,
+    "strict": true,
+    "esModuleInterop": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "test", "dist", "**/*.spec.ts"]
