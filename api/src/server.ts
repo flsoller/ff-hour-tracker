@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 
 // Router imports
 import organizations from './controllers/Organizations';
+import members from './controllers/Members';
 
 // Load env configuration
 dotenv.config();
@@ -23,6 +24,7 @@ app.use(express.json());
 // Mount routers
 const API_V0 = '/api/v0';
 app.use(`${API_V0}/organizations`, organizations);
+app.use(`${API_V0}/members`, members);
 
 // Define server port
 const PORT = process.env.PORT || 5000;
