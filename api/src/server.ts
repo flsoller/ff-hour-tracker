@@ -3,7 +3,10 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
-// Router imports
+// Middleware imports
+import errorHandler from './middleware/errorHandler';
+
+// Controller imports
 import organizations from './controllers/Organizations';
 import members from './controllers/Members';
 
@@ -21,10 +24,13 @@ if (process.env.NODE_ENV === 'development') {
 // JSON body-parser middleware
 app.use(express.json());
 
-// Mount routers
+// Mount routes
 const API_V0 = '/api/v0';
 app.use(`${API_V0}/organizations`, organizations);
 app.use(`${API_V0}/members`, members);
+
+// Error handling middleware
+app.use(errorHandler);
 
 // Define server port
 const PORT = process.env.PORT || 5000;
