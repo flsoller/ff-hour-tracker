@@ -1,36 +1,33 @@
 import { Request, Response, Router } from 'express';
-import { prisma } from '../../utils/prisma';
 import { Member, Organization } from '@prisma/client';
 import asyncHandler from '../../utils/asyncHandler';
+import { ErrorResponse } from '../../utils/error';
+import { getOrganizationById } from '../../services/organizations';
+import { addMember } from '../../services/members';
 
 const createMember = asyncHandler(async (req: Request, res: Response) => {
   const { firstName, lastName, emailAddress, organizationId } = req.body;
 
-  const organization: Organization | null =
-    await prisma.organization.findUnique({
-      where: {
-        id: organizationId,
-      },
-    });
+  const organization: Organization | null = await getOrganizationById(
+    organizationId,
+  );
 
   if (!organization) {
-    throw new Error('OrganizationDoesNotExist');
+    throw new ErrorResponse('OrganizationDoesNotExist', 400);
   }
 
-  const member: Member = await prisma.member.create({
-    data: {
-      firstName,
-      lastName,
-      emailAddress,
-      orgId: organization.id,
-    },
-  });
+  const member: Member | null = await addMember(
+    firstName,
+    lastName,
+    emailAddress,
+    organization.id,
+  );
 
   if (!member) {
-    throw new Error('ErrorCreatingMember');
+    throw new ErrorResponse('ErrorCreatingMember', 500);
   }
 
-  res.status(201);
+  res.status(201).json(member);
 });
 
 // Route definitions
