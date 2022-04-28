@@ -1,15 +1,18 @@
 import { Request, Response, Router } from 'express';
-import { prisma } from '../../utils/prisma';
 import asyncHandler from '../../utils/asyncHandler';
+import { addOrganization } from '../../services/organizations';
 
-const getAll = asyncHandler(async (req: Request, res: Response) => {
-  const orgs = await prisma.organization.findMany();
-  res.json('Hello from orgs');
+// Create a new organization
+const createOrganization = asyncHandler(async (req: Request, res: Response) => {
+  const { name, description } = req.body;
+  const organization = await addOrganization(name, description);
+
+  res.status(201).json(organization);
 });
 
 // Route definitions
 const router = Router();
 
-router.route('/').get(getAll);
+router.route('/').post(createOrganization);
 
 export default router;
