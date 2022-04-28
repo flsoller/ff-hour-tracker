@@ -1,3 +1,4 @@
+import { PrismaClientValidationError } from '@prisma/client/runtime';
 import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import { ErrorResponse } from '../utils/error';
 
@@ -15,6 +16,12 @@ const errorHandler: ErrorRequestHandler = async (
     additionalInfo: {},
     statusCode: 500,
   };
+
+  // Prisma validation error check
+  if (err instanceof PrismaClientValidationError) {
+    error.statusCode = 400;
+    error.message = 'MissingInformation';
+  }
 
   res.status(error.statusCode).json({
     error: error.message,
