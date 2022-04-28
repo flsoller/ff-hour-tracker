@@ -23,10 +23,6 @@ const createMember = asyncHandler(async (req: Request, res: Response) => {
     organization.id,
   );
 
-  if (!member) {
-    throw new ErrorResponse('ErrorCreatingMember', 500);
-  }
-
   res.status(201).json(member);
 });
 
