@@ -9,6 +9,7 @@ import errorHandler from './middleware/errorHandler';
 // Controller imports
 import organizations from './controllers/Organizations';
 import members from './controllers/Members';
+import activities from './controllers/Activities';
 
 // Load env configuration
 dotenv.config();
@@ -28,6 +29,7 @@ app.use(express.json());
 const API_V0 = '/api/v0';
 app.use(`${API_V0}/organizations`, organizations);
 app.use(`${API_V0}/members`, members);
+app.use(`${API_V0}/activities`, activities);
 
 // Error handling middleware
 app.use(errorHandler);
