@@ -19,6 +19,7 @@ model Organization {
 
   members    Member[]
   activities ActivityType[]
+  timeLogs   TimeLog[]
 
   @@map("organizations")
 }
@@ -58,7 +59,11 @@ model TimeLog {
   activityType   ActivityType @relation(fields: [activityTypeId], references: [id])
   activityTypeId String
 
-  member Member @relation(fields: [id], references: [id])
+  organization Organization @relation(fields: [orgId], references: [id])
+  orgId        String
+
+  member   Member @relation(fields: [memberId], references: [id])
+  memberId String
 
   @@map("timelogs")
 }
