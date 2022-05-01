@@ -10,6 +10,7 @@ import errorHandler from './middleware/errorHandler';
 import organizations from './controllers/Organizations';
 import members from './controllers/Members';
 import activities from './controllers/Activities';
+import timelog from './controllers/TimeLogs';
 
 // Load env configuration
 dotenv.config();
@@ -30,6 +31,7 @@ const API_V0 = '/api/v0';
 app.use(`${API_V0}/organizations`, organizations);
 app.use(`${API_V0}/members`, members);
 app.use(`${API_V0}/activities`, activities);
+app.use(`${API_V0}/timelog`, timelog);
 
 // Error handling middleware
 app.use(errorHandler);
