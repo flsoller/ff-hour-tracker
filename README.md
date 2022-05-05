@@ -1,5 +1,7 @@
 # Description
 
+[![Docker Image CI](https://github.com/flsoller/ff-hour-tracker/actions/workflows/docker-image.yml/badge.svg)](https://github.com/flsoller/ff-hour-tracker/actions/workflows/docker-image.yml)
+
 This project will be used for tracking and logging different metrics for voluntary workers or members. This app aims to provide an easy solution for tracking hours and expenses. The requirements are:
 
 - log work hours by category.
@@ -10,7 +12,7 @@ This project will be used for tracking and logging different metrics for volunta
 
 # Technology
 
-The frontend features Angular. The backend uses Node with Express and Postgres.
+The frontend features Vue. The backend uses Node with Express, Prisma and Postgres.
 
 # Installation / Setup
 
@@ -41,13 +43,13 @@ docker-compose -f docker-compose.dev.yml up -d
 
 ## Initialize database
 
-When the previous step was successfully, we need to set up the postgres schema by following these steps:
+When the previous step was successful, we need to set up the postgres schema by following these steps:
 
 ```
 cd api/ && npm run db:docker:firstinit
 ```
 
-DISCLAIMER: During first init, the schema will be force pushed and the database force reset. Because of the early stages of the project, migrations will not be used at this time. See [Prisma docs](https://www.prisma.io/docs/concepts/components/prisma-migrate/db-push#choosing-db-push-or-prisma-migrate) for further details.
+During first init, the schema will be force pushed and the database force reset. Because of the early stages of the project, migrations will not be used at this time. See [Prisma docs](https://www.prisma.io/docs/concepts/components/prisma-migrate/db-push#choosing-db-push-or-prisma-migrate) for further details.
 
 <br>
 
@@ -55,7 +57,7 @@ DISCLAIMER: During first init, the schema will be force pushed and the database 
 
 When all of the above steps were successful:
 
-- Frontend is available at http://localhost:4200/
+- Frontend is available at http://localhost:3000/
 - API is available at http://localhost:5000/
 
 <br>
@@ -76,6 +78,18 @@ make start-dev
 docker-compose -f docker-compose.dev.yml stop
 ---
 docker-compose -f docker-compose.dev.yml start
+```
+
+<br>
+
+## Tests
+
+### API
+
+To run api integration tests, make sure the containers are up and running and run the command from the api folder:
+
+```
+yarn test-ci:integration
 ```
 
 <br>
