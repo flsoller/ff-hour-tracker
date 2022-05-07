@@ -11,7 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install modules
-        run: cd ./api && yarn install
+      - name: Build docker
+        run: |
+          echo ---building and starting up docker---
+          docker-compose -f docker-compose.dev.yml up -d
+          echo ---containers are running---
       - name: Run tests
-        run: cd ./api && yarn test-ci:integration
+        run: |
+          echo ---running tests---
+          docker-compose -f docker-compose.dev.yml exec -T api yarn test

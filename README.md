@@ -1,6 +1,6 @@
 # Description
 
-[![Docker Image CI](https://github.com/flsoller/ff-hour-tracker/actions/workflows/docker-image.yml/badge.svg)](https://github.com/flsoller/ff-hour-tracker/actions/workflows/docker-image.yml)
+[![Docker Image CI](https://github.com/flsoller/ff-hour-tracker/actions/workflows/docker-image.yml/badge.svg)](https://github.com/flsoller/ff-hour-tracker/actions/workflows/docker-image.yml) [![Tests](https://github.com/flsoller/ff-hour-tracker/actions/workflows/tests.yml/badge.svg)](https://github.com/flsoller/ff-hour-tracker/actions/workflows/tests.yml)
 
 This project will be used for tracking and logging different metrics for voluntary workers or members. This app aims to provide an easy solution for tracking hours and expenses. The requirements are:
 
