@@ -28,13 +28,14 @@ model Member {
   id           String  @id @default(uuid())
   firstName    String
   lastName     String
-  emailAddress String  @unique
+  emailAddress String
   isAdmin      Boolean @default(false)
 
   organization Organization @relation(fields: [orgId], references: [id])
   orgId        String
   timelogs     TimeLog[]
 
+  @@unique([emailAddress, orgId], map: "Member_emailAddress_orgId_unique_constraint")
   @@map("members")
 }
 
