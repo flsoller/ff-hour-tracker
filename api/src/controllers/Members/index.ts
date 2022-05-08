@@ -3,7 +3,7 @@ import { Member, Organization } from '@prisma/client';
 import asyncHandler from '../../utils/asyncHandler';
 import { ErrorResponse } from '../../utils/error';
 import { getOrganizationById } from '../../services/organizations';
-import { addMember } from '../../services/members';
+import { addMember, isMemberEmailUnique } from '../../services/members';
 
 const createMember = asyncHandler(async (req: Request, res: Response) => {
   const { firstName, lastName, emailAddress, organizationId } = req.body;
@@ -16,6 +16,12 @@ const createMember = asyncHandler(async (req: Request, res: Response) => {
     throw new ErrorResponse('OrganizationDoesNotExist', 400);
   }
 
+  const emailUnique = await isMemberEmailUnique(emailAddress, organization.id);
+
+  if (!emailUnique) {
+    throw new ErrorResponse('UnableToCreateMember', 400);
+  }
+
   const member: Member | null = await addMember(
     firstName,
     lastName,
@@ -23,7 +29,13 @@ const createMember = asyncHandler(async (req: Request, res: Response) => {
     organization.id,
   );
 
-  res.status(201).json(member);
+  res.status(201).json({
+    id: member.id,
+    firstName: member.firstName,
+    lastName: member.lastName,
+    emailAddress: member.emailAddress,
+    organization: organization.name,
+  });
 });
 
 // Route definitions

@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createMember should create one member 1`] = `
+Object {
+  "emailAddress": "arthur@coolguy.com",
+  "firstName": "Arthur",
+  "id": Any<String>,
+  "lastName": "Morgan",
+  "organization": "organization",
+}
+`;

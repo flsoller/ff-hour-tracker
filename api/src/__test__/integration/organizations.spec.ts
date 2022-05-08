@@ -9,6 +9,9 @@ describe('createOrganization', () => {
     });
 
     expect(res.status).toBe(201);
+    expect(res.body).toMatchSnapshot({
+      id: expect.any(String),
+    });
   });
 
   it('should fail when required fields are missing', async () => {

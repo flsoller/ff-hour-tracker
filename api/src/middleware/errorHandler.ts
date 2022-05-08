@@ -3,7 +3,7 @@ import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import { ErrorResponse } from '../utils/error';
 
 const errorHandler: ErrorRequestHandler = async (
-  err: Error,
+  err: ErrorResponse,
   req: Request,
   res: Response,
   // Express requires 4th param to be handled as an error handler but is unused here
@@ -14,7 +14,7 @@ const errorHandler: ErrorRequestHandler = async (
     ...err,
     message: err.message || 'ServerError',
     additionalInfo: {},
-    statusCode: 500,
+    statusCode: err.statusCode || 500,
   };
 
   // Prisma validation error check
