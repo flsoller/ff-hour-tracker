@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createOrganization should create an organization 1`] = `
+Object {
+  "id": Any<String>,
+  "name": "TestOrganiztion",
+}
+`;

@@ -16,4 +16,18 @@ async function addMember(
   });
 }
 
-export { addMember };
+async function isMemberEmailUnique(
+  emailAddress: string,
+  orgId: string,
+): Promise<boolean> {
+  const member = await prisma.member.findFirst({
+    where: {
+      emailAddress,
+      orgId,
+    },
+  });
+
+  return !member;
+}
+
+export { addMember, isMemberEmailUnique };

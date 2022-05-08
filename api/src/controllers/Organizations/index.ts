@@ -7,7 +7,10 @@ const createOrganization = asyncHandler(async (req: Request, res: Response) => {
   const { name, description } = req.body;
   const organization = await addOrganization(name, description);
 
-  res.status(201).json(organization);
+  res.status(201).json({
+    id: organization.id,
+    name: organization.name,
+  });
 });
 
 // Route definitions
