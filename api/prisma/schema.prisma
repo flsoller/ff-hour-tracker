@@ -41,7 +41,7 @@ model Member {
 
 model ActivityType {
   id           String @id @default(uuid())
-  activityName String @unique @db.VarChar(50)
+  activityName String @db.VarChar(50)
   activityDesc String @db.VarChar(500)
 
   organization Organization @relation(fields: [orgId], references: [id])
@@ -49,6 +49,7 @@ model ActivityType {
 
   timelogs TimeLog[]
 
+  @@unique([activityName, orgId], map: "ActivityType_activityName_orgId_unique_constraint")
   @@map("activity_types")
 }
 

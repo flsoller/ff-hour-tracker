@@ -1,4 +1,7 @@
-import { PrismaClientValidationError } from '@prisma/client/runtime';
+import {
+  PrismaClientKnownRequestError,
+  PrismaClientValidationError,
+} from '@prisma/client/runtime';
 import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import { ErrorResponse } from '../utils/error';
 
@@ -21,6 +24,12 @@ const errorHandler: ErrorRequestHandler = async (
   if (err instanceof PrismaClientValidationError) {
     error.statusCode = 400;
     error.message = 'MissingInformation';
+  }
+
+  // Prisma unique constraint error check
+  if (err instanceof PrismaClientKnownRequestError && err.code === 'P2002') {
+    error.statusCode = 400;
+    error.message = 'UnableToCreateResource';
   }
 
   res.status(error.statusCode).json({
