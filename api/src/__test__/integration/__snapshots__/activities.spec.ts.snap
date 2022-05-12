@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`activities controller createActivity should create an activity for an organization 1`] = `
+Object {
+  "activityDesc": "This is a nice activity",
+  "activityName": "Test Activity",
+  "id": Any<String>,
+}
+`;

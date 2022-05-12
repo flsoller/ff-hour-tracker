@@ -25,16 +25,18 @@ const createActivity = asyncHandler(async (req: Request, res: Response) => {
     organization.id,
   );
 
-  res.status(201).json(activityType);
+  res.status(201).json({
+    id: activityType.id,
+    activityName: activityType.activityName,
+    activityDesc: activityType.activityDesc,
+  });
 });
 
 /**
  * Get all activities for an organization
  */
 const getAllActivities = asyncHandler(async (req: Request, res: Response) => {
-  const { organizationId } = req.body;
-
-  const activities: ActivityType[] = await getAll(organizationId);
+  const activities: ActivityType[] = await getAll(req.params.id);
 
   res.status(200).json(activities);
 });
@@ -42,6 +44,7 @@ const getAllActivities = asyncHandler(async (req: Request, res: Response) => {
 // Route definitions
 const router = Router();
 
-router.route('/').get(getAllActivities).post(createActivity);
+router.route('/').post(createActivity);
+router.route('/:id').get(getAllActivities);
 
 export default router;
