@@ -1,3 +1,4 @@
+import { Member } from '@prisma/client';
 import { prisma } from '../utils/prisma';
 
 async function addMember(
@@ -30,4 +31,16 @@ async function isMemberEmailUnique(
   return !member;
 }
 
-export { addMember, isMemberEmailUnique };
+async function getMemberById(
+  memberId: string,
+  orgId: string,
+): Promise<Member | null> {
+  return prisma.member.findFirst({
+    where: {
+      id: memberId,
+      orgId,
+    },
+  });
+}
+
+export { addMember, isMemberEmailUnique, getMemberById };

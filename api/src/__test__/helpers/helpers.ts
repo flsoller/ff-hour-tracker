@@ -18,4 +18,20 @@ async function createOrganizations() {
   return [organization, otherOrganization];
 }
 
-export { createOrganizations };
+async function createMemberForOrganization(
+  orgId: string,
+  emailAddress = 'test@mail.com',
+  firstName = 'Test',
+  lastName = 'User',
+) {
+  return prisma.member.create({
+    data: {
+      firstName,
+      lastName,
+      emailAddress,
+      orgId,
+    },
+  });
+}
+
+export { createOrganizations, createMemberForOrganization };

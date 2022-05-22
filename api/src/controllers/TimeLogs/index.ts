@@ -1,5 +1,4 @@
 import { Request, Response, Router } from 'express';
-import { TimeLog } from '@prisma/client';
 import asyncHandler from '../../utils/asyncHandler';
 import { addTimelog } from '../../services/timelogs';
 
@@ -10,7 +9,7 @@ const createTimeLogForDate = asyncHandler(
   async (req: Request, res: Response) => {
     const { date, hours, activityTypeId, memberId, organizationId } = req.body;
 
-    const timeLog: TimeLog = await addTimelog(
+    const timeLog = await addTimelog(
       new Date(Date.parse(date)),
       parseInt(hours),
       activityTypeId,
