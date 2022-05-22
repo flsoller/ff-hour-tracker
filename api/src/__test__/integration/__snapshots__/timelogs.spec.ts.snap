@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`activities controller createTimeLogForDate should create a timelog entry for a member 1`] = `
+Object {
+  "activity": "Test Activity",
+  "date": "2022-06-22T00:00:00.000Z",
+  "hours": 2,
+  "memberName": "Brian O'Connor",
+}
+`;

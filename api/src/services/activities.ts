@@ -32,4 +32,13 @@ async function getAll(organizationId: string) {
   });
 }
 
-export { addActivity, getAll };
+async function getActivityById(activityId: string, orgId: string) {
+  return prisma.activityType.findFirst({
+    where: {
+      orgId,
+      id: activityId,
+    },
+  });
+}
+
+export { addActivity, getAll, getActivityById };

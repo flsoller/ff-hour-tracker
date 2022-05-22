@@ -1,4 +1,7 @@
+import { ErrorResponse } from '../utils/error';
 import { prisma } from '../utils/prisma';
+import { getActivityById } from './activities';
+import { getMemberById } from './members';
 
 /**
  * Creates a new activity for an organization
@@ -15,15 +18,34 @@ async function addTimelog(
   memberId: string,
   organizationId: string,
 ) {
-  return prisma.timeLog.create({
+  const member = await getMemberById(memberId, organizationId);
+
+  if (!member) {
+    throw new ErrorResponse('MemberNotFound', 400);
+  }
+
+  const activity = await getActivityById(activityTypeId, organizationId);
+
+  if (!activity) {
+    throw new ErrorResponse('ActivityNotFound', 400);
+  }
+
+  const timelog = await prisma.timeLog.create({
     data: {
       date,
       hours,
-      activityTypeId,
+      activityTypeId: activity.id,
       memberId,
       orgId: organizationId,
     },
   });
+
+  return {
+    memberName: `${member.firstName} ${member.lastName}`,
+    hours: timelog.hours,
+    activity: activity.activityName,
+    date: timelog.date,
+  };
 }
 
 export { addTimelog };
