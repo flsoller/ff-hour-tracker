@@ -1,0 +1,21 @@
+{
+  "name": "ff-hour-tracker",
+  "version": "0.0.1",
+  "description": "Hour and expense tracking app",
+  "repository": "git@github.com:flsoller/ff-hour-tracker.git",
+  "author": "Florian Soller <flsoller@gmail.com>",
+  "license": "UNLICENSED",
+  "workspaces": [
+    "frontend",
+    "api",
+    "./core/*"
+  ],
+  "private": true,
+  "scripts": {
+    "api:prisma-generate": "yarn workspace hour-tracker-api prisma-generate",
+    "api:run-dev": "yarn workspace hour-tracker-api dev",
+    "api:test-ci:integration": "docker-compose -f docker-compose.dev.yml exec api yarn workspace hour-tracker-api test",
+    "api:db:docker:reset": "docker-compose -f docker-compose.dev.yml exec api yarn workspace hour-tracker-api db:reset",
+    "frontend:run-dev": "yarn workspace hour-tracker-frontend dev"
+  }
+}

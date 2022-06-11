@@ -13,6 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: docker build web
-        run: docker build ./frontend/ --tag web-frontend:$(date +%s)
+        run: docker build -f ./frontend/Dockerfile --tag web-frontend:$(date +%s) --build-arg BUILD_CONTEXT=frontend .
       - name: docker build api
-        run: docker build ./api/ --tag api:$(date +%s)
+        run: docker build -f ./api/Dockerfile --tag api:$(date +%s) --build-arg BUILD_CONTEXT=api .
