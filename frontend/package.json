@@ -1,5 +1,5 @@
 {
-  "name": "my-vue-app",
+  "name": "hour-tracker-frontend",
   "version": "0.0.0",
   "private": true,
   "description": "Web frontend for hour tracker app",
@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@types/node": "^17.0.10",
+    "@hour-tracker/core-types": "1.0.0",
     "@vitejs/plugin-vue": "^2.0.0",
     "sass": "^1.49.0",
     "typescript": "^4.4.4",

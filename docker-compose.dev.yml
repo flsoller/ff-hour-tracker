@@ -2,14 +2,21 @@ version: '3.8'
 services:
   # web frontend container
   web:
-    build: ./frontend/
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+      args:
+        - BUILD_CONTEXT=frontend
     environment:
       - NODE_ENV=development
+      - PORT=3000
     ports:
       - '3000:3000'
     volumes:
-      - './frontend:/app'
+      - './frontend:/app/frontend'
+      - './core:/app/core'
       - /app/node_modules
+      - /app/frontend/node_modules
     networks:
       - appnetwork
     depends_on:
@@ -18,15 +25,21 @@ services:
   # api server container
   api:
     restart: unless-stopped
-    build: ./api/
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile
+      args:
+        - BUILD_CONTEXT=api
     environment:
       - NODE_ENV=development
       - PORT=5000
     ports:
       - '5000:5000'
     volumes:
-      - './api:/app'
+      - './api:/app/api'
+      - './core:/app/core'
       - /app/node_modules
+      - /app/api/node_modules
     networks:
       - appnetwork
     depends_on:

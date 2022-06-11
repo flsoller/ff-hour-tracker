@@ -1,4 +1,4 @@
 {
-  "eslint.workingDirectories": ["./api", "./frontend-web", "./frontend"],
+  "eslint.workingDirectories": ["./api", "./frontend"],
   "typescript.tsdk": "node_modules/typescript/lib"
 }

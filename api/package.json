@@ -1,5 +1,5 @@
 {
-  "name": "api",
+  "name": "hour-tracker-api",
   "version": "0.0.1",
   "private": true,
   "description": "API for hour tracker app",
@@ -9,10 +9,9 @@
     "start": "node dist/server.js",
     "dev": "dotenv -e .env.dev nodemon src/server.ts",
     "build": "rimraf dist && tsc",
-    "db:docker:firstinit": "cd .. && docker-compose -f docker-compose.dev.yml exec api yarn prisma db push --force-reset",
     "db:console": "cd .. && docker-compose -f docker-compose.dev.yml exec postgres psql -U postgres -d app_db_dev",
-    "test-ci:integration": "cd .. && docker-compose -f docker-compose.dev.yml exec api yarn test",
-    "prisma-generate": "npx prisma generate"
+    "prisma-generate": "npx prisma generate",
+    "db:reset": "dotenv -e .env.dev prisma db push --force-reset"
   },
   "repository": {
     "type": "git",
@@ -34,6 +33,7 @@
     "pg-hstore": "^2.3.4"
   },
   "devDependencies": {
+    "@hour-tracker/core-types": "1.0.0",
     "@tsconfig/node16": "^1.0.2",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
