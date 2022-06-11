@@ -19,4 +19,4 @@ jobs:
       - name: Run tests
         run: |
           echo ---running tests---
-          api:test-ci:integration
+          docker-compose -f docker-compose.dev.yml exec -T api yarn workspace hour-tracker-api test
