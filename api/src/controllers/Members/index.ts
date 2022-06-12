@@ -4,39 +4,53 @@ import asyncHandler from '../../utils/asyncHandler';
 import { ErrorResponse } from '../../utils/error';
 import { getOrganizationById } from '../../services/organizations';
 import { addMember, isMemberEmailUnique } from '../../services/members';
+import {
+  ICreateMemberReq,
+  IMemberCreatedRes,
+} from '@hour-tracker/core-types/api/members';
 
-const createMember = asyncHandler(async (req: Request, res: Response) => {
-  const { firstName, lastName, emailAddress, organizationId } = req.body;
+const createMember = asyncHandler(
+  async (req: Request, res: Response<IMemberCreatedRes>) => {
+    const {
+      firstName,
+      lastName,
+      emailAddress,
+      organizationId,
+    }: ICreateMemberReq = req.body;
 
-  const organization: Organization | null = await getOrganizationById(
-    organizationId,
-  );
+    const organization: Organization | null = await getOrganizationById(
+      organizationId,
+    );
 
-  if (!organization) {
-    throw new ErrorResponse('OrganizationDoesNotExist', 400);
-  }
+    if (!organization) {
+      throw new ErrorResponse('OrganizationDoesNotExist', 400);
+    }
 
-  const emailUnique = await isMemberEmailUnique(emailAddress, organization.id);
+    const emailUnique = await isMemberEmailUnique(
+      emailAddress,
+      organization.id,
+    );
 
-  if (!emailUnique) {
-    throw new ErrorResponse('UnableToCreateMember', 400);
-  }
+    if (!emailUnique) {
+      throw new ErrorResponse('UnableToCreateMember', 400);
+    }
 
-  const member: Member | null = await addMember(
-    firstName,
-    lastName,
-    emailAddress,
-    organization.id,
-  );
+    const member: Member | null = await addMember(
+      firstName,
+      lastName,
+      emailAddress,
+      organization.id,
+    );
 
-  res.status(201).json({
-    id: member.id,
-    firstName: member.firstName,
-    lastName: member.lastName,
-    emailAddress: member.emailAddress,
-    organization: organization.name,
-  });
-});
+    res.status(201).json({
+      id: member.id,
+      firstName: member.firstName,
+      lastName: member.lastName,
+      emailAddress: member.emailAddress,
+      organization: organization.name,
+    });
+  },
+);
 
 // Route definitions
 const router = Router();
