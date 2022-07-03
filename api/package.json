@@ -5,7 +5,7 @@
   "description": "API for hour tracker app",
   "main": "server.js",
   "scripts": {
-    "test": "dotenv -e .env.test jest -i",
+    "test": "dotenv -e .env.test jest -i --",
     "start": "node dist/server.js",
     "dev": "dotenv -e .env.dev nodemon src/server.ts",
     "build": "rimraf dist && tsc",
