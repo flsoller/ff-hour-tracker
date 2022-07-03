@@ -20,16 +20,16 @@ model Organization {
   members    Member[]
   activities ActivityType[]
   timeLogs   TimeLog[]
+  users      User[]
 
   @@map("organizations")
 }
 
 model Member {
-  id           String  @id @default(uuid())
+  id           String @id @default(uuid())
   firstName    String
   lastName     String
   emailAddress String
-  isAdmin      Boolean @default(false)
 
   organization Organization @relation(fields: [orgId], references: [id])
   orgId        String
@@ -68,4 +68,17 @@ model TimeLog {
   memberId String
 
   @@map("timelogs")
+}
+
+model User {
+  id           String  @id @default(uuid())
+  emailAddress String
+  name         String?
+  password     String
+
+  organization Organization @relation(fields: [orgId], references: [id])
+  orgId        String
+
+  @@unique([emailAddress, orgId], map: "User_emailAddress_orgId_unique_constraint")
+  @@map("users")
 }
