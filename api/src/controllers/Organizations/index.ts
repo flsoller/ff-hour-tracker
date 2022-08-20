@@ -5,6 +5,7 @@ import {
   ICreateOrganizationReq,
   IOrganizationCreatedRes,
 } from '@hour-tracker/core-types/api/organization';
+import protect from '../../middleware/authHandler';
 
 // Create a new organization
 const createOrganization = asyncHandler(
@@ -22,6 +23,6 @@ const createOrganization = asyncHandler(
 // Route definitions
 const router = Router();
 
-router.route('/').post(createOrganization);
+router.route('/').post(protect, createOrganization);
 
 export default router;

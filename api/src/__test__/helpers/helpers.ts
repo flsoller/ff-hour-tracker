@@ -1,4 +1,7 @@
 import { prisma } from '../../utils/prisma';
+import { registerUser } from '../../services/auth';
+import { IRegisterUser } from '@hour-tracker/core-types/api/auth';
+import supertest from 'supertest';
 
 async function createOrganizations() {
   const organization = await prisma.organization.create({
@@ -34,4 +37,33 @@ async function createMemberForOrganization(
   });
 }
 
-export { createOrganizations, createMemberForOrganization };
+async function createUserForOrganization(orgId: string) {
+  const params: IRegisterUser = {
+    emailAddress: 'testuser@db.com',
+    password: '12345',
+    name: 'Mr. Test',
+    orgId,
+  };
+
+  return registerUser(params);
+}
+
+async function loginTestUser(
+  app: Express.Application,
+  emailAddress: string,
+): Promise<string> {
+  return supertest(app)
+    .post('/api/v0/auth/signin')
+    .send({
+      emailAddress,
+      password: '12345',
+    })
+    .then((res) => res.body.accessToken);
+}
+
+export {
+  createOrganizations,
+  createMemberForOrganization,
+  createUserForOrganization,
+  loginTestUser,
+};
