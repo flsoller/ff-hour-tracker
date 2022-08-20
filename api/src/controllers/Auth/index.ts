@@ -1,0 +1,40 @@
+import { Request, Response, Router } from 'express';
+import asyncHandler from '../../utils/asyncHandler';
+import { getRefreshToken, registerUser, userSignIn } from '../../services/auth';
+import { IUserCreated } from '@hour-tracker/core-types/api/auth';
+
+/**
+ * Registration endpoint
+ */
+const register = asyncHandler(
+  async (req: Request, res: Response<IUserCreated>) => {
+    const { emailAddress } = await registerUser(req.body);
+    res.status(201).json({ emailAddress });
+  },
+);
+
+/**
+ * User sign in
+ */
+const signIn = asyncHandler(async (req: Request, res: Response) => {
+  const { accessToken, refreshToken } = await userSignIn(req.body);
+  res.cookie('rtc', refreshToken, { httpOnly: true });
+  res.status(200).json({ accessToken });
+});
+
+/**
+ * Route for getting a new refresh token
+ */
+const refreshToken = asyncHandler(async (req: Request, res: Response) => {
+  const { accessToken } = await getRefreshToken(req.cookies.rtc);
+  res.status(200).json({ accessToken });
+});
+
+// Route definitions
+const router = Router();
+
+router.route('/register').post(register);
+router.route('/signin').post(signIn);
+router.route('/refresh-token').get(refreshToken);
+
+export default router;
