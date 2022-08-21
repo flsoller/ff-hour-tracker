@@ -4,6 +4,8 @@ import { prisma } from '../../utils/prisma';
 import {
   createOrganizations,
   createMemberForOrganization,
+  createUserForOrganization,
+  loginTestUser,
 } from '../helpers/helpers';
 import { Organization } from '@prisma/client';
 
@@ -11,9 +13,12 @@ describe('activities controller', () => {
   const ROUTE = '/api/v0/timelog';
   let organization: Organization;
   let otherOrganization: Organization;
+  let token: string;
 
   beforeEach(async () => {
     [organization, otherOrganization] = await createOrganizations();
+    const testUser = await createUserForOrganization(organization.id);
+    token = await loginTestUser(app, testUser.emailAddress);
   });
 
   describe('createTimeLogForDate', () => {
@@ -35,12 +40,12 @@ describe('activities controller', () => {
 
       const res = await supertest(app)
         .post(ROUTE)
+        .auth(token, { type: 'bearer' })
         .send({
           date: new Date(2022, 5, 22),
           hours: 2,
           activityTypeId: activity.id,
           memberId: member.id,
-          organizationId: organization.id,
         });
 
       expect(res.status).toBe(201);
@@ -60,12 +65,12 @@ describe('activities controller', () => {
 
       const res = await supertest(app)
         .post(ROUTE)
+        .auth(token, { type: 'bearer' })
         .send({
           date: new Date(2022, 5, 22),
           hours: 2,
           activityTypeId: activity.id,
           memberId: member.id,
-          organizationId: organization.id,
         });
 
       expect(res.status).toBe(400);
@@ -88,12 +93,12 @@ describe('activities controller', () => {
 
       const res = await supertest(app)
         .post(ROUTE)
+        .auth(token, { type: 'bearer' })
         .send({
           date: new Date(2022, 5, 22),
           hours: 2,
           activityTypeId: activity.id,
           memberId: member.id,
-          organizationId: organization.id,
         });
 
       expect(res.status).toBe(400);

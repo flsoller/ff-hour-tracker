@@ -2,6 +2,7 @@ import { prisma } from '../../utils/prisma';
 import { registerUser } from '../../services/auth';
 import { IRegisterUser } from '@hour-tracker/core-types/api/auth';
 import supertest from 'supertest';
+import { Role } from '@prisma/client';
 
 async function createOrganizations() {
   const organization = await prisma.organization.create({
@@ -37,12 +38,14 @@ async function createMemberForOrganization(
   });
 }
 
-async function createUserForOrganization(orgId: string) {
+async function createUserForOrganization(orgId: string, options = {}) {
   const params: IRegisterUser = {
     emailAddress: 'testuser@db.com',
     password: '12345',
     name: 'Mr. Test',
     orgId,
+    role: Role.USER,
+    ...options,
   };
 
   return registerUser(params);

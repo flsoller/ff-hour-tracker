@@ -3,6 +3,7 @@ export interface IRegisterUser {
   name?: string;
   password: string;
   orgId: string;
+  role?: any;
 }
 
 export interface IUserCreated {
@@ -13,6 +14,7 @@ export interface IExpressReqUser {
   id: string;
   orgId: string;
   emailAddress: string;
+  role: string;
 }
 
 export interface ISignIn {

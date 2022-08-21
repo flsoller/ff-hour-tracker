@@ -1,3 +1,4 @@
+import { IExpressReqUser } from '@hour-tracker/core-types/api/auth';
 import { ErrorResponse } from '../utils/error';
 import { prisma } from '../utils/prisma';
 import { getActivityById } from './activities';
@@ -16,15 +17,15 @@ async function addTimelog(
   hours: number,
   activityTypeId: string,
   memberId: string,
-  organizationId: string,
+  user: IExpressReqUser,
 ) {
-  const member = await getMemberById(memberId, organizationId);
+  const member = await getMemberById(memberId, user.orgId);
 
   if (!member) {
     throw new ErrorResponse('MemberNotFound', 400);
   }
 
-  const activity = await getActivityById(activityTypeId, organizationId);
+  const activity = await getActivityById(activityTypeId, member.orgId);
 
   if (!activity) {
     throw new ErrorResponse('ActivityNotFound', 400);
@@ -36,7 +37,7 @@ async function addTimelog(
       hours,
       activityTypeId: activity.id,
       memberId,
-      orgId: organizationId,
+      orgId: member.orgId,
     },
   });
 

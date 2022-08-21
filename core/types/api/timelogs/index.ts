@@ -3,7 +3,6 @@ export interface ICreateTimelogReq {
   hours: number;
   activityTypeId: string;
   memberId: string;
-  organizationId: string;
 }
 
 export interface ITimelogCreatedRes {

@@ -1,35 +1,25 @@
 import { Request, Response, Router } from 'express';
-import { ActivityType, Organization } from '@prisma/client';
+import { ActivityType } from '@prisma/client';
 import asyncHandler from '../../utils/asyncHandler';
-import { ErrorResponse } from '../../utils/error';
-import { getOrganizationById } from '../../services/organizations';
 import { addActivity, getAll } from '../../services/activities';
 import {
   ICreateActivityReq,
   IActivityCreatedRes,
   IActivityType,
 } from '@hour-tracker/core-types/api/activities';
+import { protect } from '../../middleware/authHandler';
 
 /**
  * Create a new activity
  */
 const createActivity = asyncHandler(
   async (req: Request, res: Response<IActivityCreatedRes>) => {
-    const { activityName, activityDesc, organizationId }: ICreateActivityReq =
-      req.body;
+    const { activityName, activityDesc }: ICreateActivityReq = req.body;
 
-    const organization: Organization | null = await getOrganizationById(
-      organizationId,
-    );
-
-    if (!organization) {
-      throw new ErrorResponse('OrganizationDoesNotExist', 400);
-    }
-
-    const activityType: ActivityType = await addActivity(
+    const activityType = await addActivity(
       activityName,
       activityDesc,
-      organization.id,
+      req.user,
     );
 
     res.status(201).json({
@@ -45,7 +35,7 @@ const createActivity = asyncHandler(
  */
 const getAllActivities = asyncHandler(
   async (req: Request, res: Response<IActivityType[]>) => {
-    const activities: ActivityType[] = await getAll(req.params.id);
+    const activities: ActivityType[] = await getAll(req.user);
 
     res.status(200).json(activities);
   },
@@ -54,7 +44,7 @@ const getAllActivities = asyncHandler(
 // Route definitions
 const router = Router();
 
-router.route('/').post(createActivity);
-router.route('/:id').get(getAllActivities);
+router.route('/').post(protect, createActivity);
+router.route('/').get(protect, getAllActivities);
 
 export default router;

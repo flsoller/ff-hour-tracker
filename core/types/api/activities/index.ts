@@ -1,7 +1,6 @@
 export interface ICreateActivityReq {
   activityName: string;
   activityDesc: string;
-  organizationId: string;
 }
 
 export interface IActivityCreatedRes {
