@@ -16,6 +16,7 @@ async function registerUser({
   password,
   name,
   orgId,
+  role,
 }: IRegisterUser): Promise<User> {
   const hashedPassword = await hash(password, 12);
 
@@ -25,6 +26,7 @@ async function registerUser({
       name,
       orgId,
       password: hashedPassword,
+      role,
     },
   });
 }

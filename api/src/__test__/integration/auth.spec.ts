@@ -7,7 +7,7 @@ import {
   loginTestUser,
 } from '../helpers/helpers';
 import { compareSync } from 'bcryptjs';
-import { User } from '@prisma/client';
+import { Role, User } from '@prisma/client';
 import { sign, verify } from 'jsonwebtoken';
 
 describe('authController', () => {
@@ -15,22 +15,32 @@ describe('authController', () => {
   let orgId: string;
   let token: string;
   let testUser: User;
+  let adminUser: User;
+  let adminUserToken: string;
 
   beforeEach(async () => {
     const [organization] = await createOrganizations();
     testUser = await createUserForOrganization(organization.id);
+    adminUser = await createUserForOrganization(organization.id, {
+      emailAddress: 'admin@user.com',
+      role: Role.ADMIN,
+    });
     token = await loginTestUser(app, testUser.emailAddress);
+    adminUserToken = await loginTestUser(app, adminUser.emailAddress);
     orgId = organization.id;
   });
 
   describe('register', () => {
     it('should register a new user and hash the password', async () => {
-      const res = await supertest(app).post(`${ROUTE}/register`).send({
-        emailAddress: 'some@user.com',
-        password: 'pwd',
-        name: 'User Name',
-        orgId,
-      });
+      const res = await supertest(app)
+        .post(`${ROUTE}/register`)
+        .auth(adminUserToken, { type: 'bearer' })
+        .send({
+          emailAddress: 'some@user.com',
+          password: 'pwd',
+          name: 'User Name',
+          orgId,
+        });
 
       expect(res.status).toBe(201);
       expect(res.body).toStrictEqual({
@@ -55,16 +65,37 @@ describe('authController', () => {
         },
       });
 
-      const res = await supertest(app).post(`${ROUTE}/register`).send({
-        emailAddress: existingUser.emailAddress,
-        password: 'pwd',
-        name: 'User Name',
-        orgId,
-      });
+      const res = await supertest(app)
+        .post(`${ROUTE}/register`)
+        .auth(adminUserToken, { type: 'bearer' })
+        .send({
+          emailAddress: existingUser.emailAddress,
+          password: 'pwd',
+          name: 'User Name',
+          orgId,
+        });
 
       expect(res.status).toBe(400);
       expect(res.body).toStrictEqual({
         error: 'UnableToCreateResource',
+        additionalInfo: {},
+      });
+    });
+
+    it('should only allow admin users to create a new user', async () => {
+      const res = await supertest(app)
+        .post(`${ROUTE}/register`)
+        .auth(token, { type: 'bearer' })
+        .send({
+          emailAddress: 'some@user.com',
+          password: 'pwd',
+          name: 'User Name',
+          orgId,
+        });
+
+      expect(res.status).toBe(403);
+      expect(res.body).toStrictEqual({
+        error: 'NotAuthorized',
         additionalInfo: {},
       });
     });

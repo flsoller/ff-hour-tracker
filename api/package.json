@@ -33,7 +33,8 @@
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.3",
-    "pg-hstore": "^2.3.4"
+    "pg-hstore": "^2.3.4",
+    "@hour-tracker/core-constants": "1.0.0"
   },
   "devDependencies": {
     "@hour-tracker/core-types": "1.0.0",

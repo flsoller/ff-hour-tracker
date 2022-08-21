@@ -1,0 +1,7 @@
+{
+  "name": "@hour-tracker/core-constants",
+  "version": "1.0.0",
+  "description": "Constants for ff-hour-tracker app",
+  "author": "Florian Soller <flsoller@gmail.com>",
+  "license": "UNLICENSED"
+}

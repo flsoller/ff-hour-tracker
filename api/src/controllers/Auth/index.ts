@@ -2,6 +2,8 @@ import { Request, Response, Router } from 'express';
 import asyncHandler from '../../utils/asyncHandler';
 import { getRefreshToken, registerUser, userSignIn } from '../../services/auth';
 import { IUserCreated } from '@hour-tracker/core-types/api/auth';
+import { authorize, protect } from '../../middleware/authHandler';
+import { ROLES } from '@hour-tracker/core-constants/roles';
 
 /**
  * Registration endpoint
@@ -33,7 +35,7 @@ const refreshToken = asyncHandler(async (req: Request, res: Response) => {
 // Route definitions
 const router = Router();
 
-router.route('/register').post(register);
+router.route('/register').post(protect, authorize(ROLES.ADMIN), register);
 router.route('/signin').post(signIn);
 router.route('/refresh-token').get(refreshToken);
 

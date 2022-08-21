@@ -6,6 +6,5 @@ Object {
   "firstName": "Arthur",
   "id": Any<String>,
   "lastName": "Morgan",
-  "organization": "organization",
 }
 `;

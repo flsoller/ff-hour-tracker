@@ -5,26 +5,22 @@ import {
   ICreateTimelogReq,
   ITimelogCreatedRes,
 } from '@hour-tracker/core-types/api/timelogs';
+import { protect } from '../../middleware/authHandler';
 
 /**
  * Create a new time log for a specific date
  */
 const createTimeLogForDate = asyncHandler(
   async (req: Request, res: Response<ITimelogCreatedRes>) => {
-    const {
-      date,
-      hours,
-      activityTypeId,
-      memberId,
-      organizationId,
-    }: ICreateTimelogReq = req.body;
+    const { date, hours, activityTypeId, memberId }: ICreateTimelogReq =
+      req.body;
 
     const timeLog = await addTimelog(
       new Date(date),
       hours,
       activityTypeId,
       memberId,
-      organizationId,
+      req.user,
     );
 
     res.status(201).json(timeLog);
@@ -34,6 +30,6 @@ const createTimeLogForDate = asyncHandler(
 // Route definitions
 const router = Router();
 
-router.route('/').post(createTimeLogForDate);
+router.route('/').post(protect, createTimeLogForDate);
 
 export default router;

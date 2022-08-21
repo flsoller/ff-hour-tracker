@@ -23,4 +23,13 @@ const protect = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default protect;
+const authorize = (...roles: string[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (!roles.includes(req.user.role)) {
+      return next(new ErrorResponse('NotAuthorized', 403));
+    }
+    next();
+  };
+};
+
+export { protect, authorize };

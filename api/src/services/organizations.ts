@@ -1,3 +1,4 @@
+import { ErrorResponse } from '../utils/error';
 import { prisma } from '../utils/prisma';
 
 /**
@@ -5,11 +6,17 @@ import { prisma } from '../utils/prisma';
  * @param organizationId - Id of the organization
  */
 async function getOrganizationById(organizationId: string) {
-  return prisma.organization.findUnique({
+  const org = await prisma.organization.findUnique({
     where: {
       id: organizationId,
     },
   });
+
+  if (!org) {
+    throw new ErrorResponse('OrganizationDoesNotExist', 400);
+  }
+
+  return org;
 }
 
 /**

@@ -11,6 +11,7 @@ async function getUser(userId: string): Promise<IExpressReqUser> {
       id: true,
       orgId: true,
       emailAddress: true,
+      role: true,
     },
   });
 

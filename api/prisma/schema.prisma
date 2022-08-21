@@ -75,10 +75,16 @@ model User {
   emailAddress String
   name         String?
   password     String
+  role         Role    @default(USER)
 
   organization Organization @relation(fields: [orgId], references: [id])
   orgId        String
 
   @@unique([emailAddress, orgId], map: "User_emailAddress_orgId_unique_constraint")
   @@map("users")
+}
+
+enum Role {
+  ADMIN
+  USER
 }
