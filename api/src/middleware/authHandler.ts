@@ -15,7 +15,10 @@ const protect = async (req: Request, res: Response, next: NextFunction) => {
   }
 
   try {
-    const { userId }: any = verify(token, 'ACCESS_VAR_HERE');
+    const { userId }: any = verify(
+      token,
+      process.env.ACCESS_TOKEN_KEY as string,
+    );
     req.user = await getUser(userId);
     next();
   } catch (error) {

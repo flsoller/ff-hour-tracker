@@ -27,6 +27,10 @@ export interface ISignInSuccess {
   refreshToken: string;
 }
 
+export interface IReqRefreshToken {
+  grant_type: string;
+}
+
 export interface IRefreshTokenSuccess {
   accessToken: string;
 }
