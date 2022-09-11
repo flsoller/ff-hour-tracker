@@ -1,7 +1,6 @@
 import { prisma } from '../../utils/prisma';
-import { registerUser } from '../../services/auth';
+import { registerUser, createAccessToken } from '../../services/auth';
 import { IRegisterUser } from '@hour-tracker/core-types/api/auth';
-import supertest from 'supertest';
 import { Role } from '@prisma/client';
 
 async function createOrganizations() {
@@ -51,17 +50,8 @@ async function createUserForOrganization(orgId: string, options = {}) {
   return registerUser(params);
 }
 
-async function loginTestUser(
-  app: Express.Application,
-  emailAddress: string,
-): Promise<string> {
-  return supertest(app)
-    .post('/api/v0/auth/signin')
-    .send({
-      emailAddress,
-      password: '12345',
-    })
-    .then((res) => res.body.accessToken);
+function loginTestUser(userId: string): string {
+  return createAccessToken(userId);
 }
 
 export {

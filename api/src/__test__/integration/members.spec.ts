@@ -17,7 +17,7 @@ describe('createMember', () => {
   beforeEach(async () => {
     [organization, otherOrganization] = await createOrganizations();
     const testUser = await createUserForOrganization(organization.id);
-    token = await loginTestUser(app, testUser.emailAddress);
+    token = loginTestUser(testUser.id);
   });
 
   it('should create one member', async () => {

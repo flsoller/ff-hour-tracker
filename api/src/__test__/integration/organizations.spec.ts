@@ -21,8 +21,8 @@ describe('createOrganization', () => {
       emailAddress: 'admin@user.com',
       role: Role.ADMIN,
     });
-    token = await loginTestUser(app, testUser.emailAddress);
-    adminUserToken = await loginTestUser(app, adminUser.emailAddress);
+    token = loginTestUser(testUser.id);
+    adminUserToken = loginTestUser(adminUser.id);
   });
 
   it('should create an organization', async () => {

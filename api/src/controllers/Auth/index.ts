@@ -1,7 +1,10 @@
 import { Request, Response, Router } from 'express';
 import asyncHandler from '../../utils/asyncHandler';
 import { getRefreshToken, registerUser, userSignIn } from '../../services/auth';
-import { IUserCreated } from '@hour-tracker/core-types/api/auth';
+import {
+  IReqRefreshToken,
+  IUserCreated,
+} from '@hour-tracker/core-types/api/auth';
 import { authorize, protect } from '../../middleware/authHandler';
 import { ROLES } from '@hour-tracker/core-constants/roles';
 
@@ -28,7 +31,8 @@ const signIn = asyncHandler(async (req: Request, res: Response) => {
  * Route for getting a new refresh token
  */
 const refreshToken = asyncHandler(async (req: Request, res: Response) => {
-  const { accessToken } = await getRefreshToken(req.cookies.rtc);
+  const { grant_type }: IReqRefreshToken = req.body;
+  const { accessToken } = await getRefreshToken(req.cookies.rtc, grant_type);
   res.status(200).json({ accessToken });
 });
 
@@ -37,6 +41,6 @@ const router = Router();
 
 router.route('/register').post(protect, authorize(ROLES.ADMIN), register);
 router.route('/signin').post(signIn);
-router.route('/refresh-token').get(refreshToken);
+router.route('/refresh-token').post(refreshToken);
 
 export default router;

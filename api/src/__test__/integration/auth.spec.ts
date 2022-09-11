@@ -9,6 +9,7 @@ import {
 import { compareSync } from 'bcryptjs';
 import { Role, User } from '@prisma/client';
 import { sign, verify } from 'jsonwebtoken';
+import { API_GRANT_TYPES } from '@hour-tracker/core-constants/shared';
 
 describe('authController', () => {
   const ROUTE = '/api/v0/auth';
@@ -25,8 +26,8 @@ describe('authController', () => {
       emailAddress: 'admin@user.com',
       role: Role.ADMIN,
     });
-    token = await loginTestUser(app, testUser.emailAddress);
-    adminUserToken = await loginTestUser(app, adminUser.emailAddress);
+    token = loginTestUser(testUser.id);
+    adminUserToken = loginTestUser(adminUser.id);
     orgId = organization.id;
   });
 
@@ -109,14 +110,18 @@ describe('authController', () => {
       });
 
       expect(res.status).toBe(200);
-      expect(verify(res.body.accessToken, 'ACCESS_VAR_HERE')).toBeTruthy();
+      expect(
+        verify(res.body.accessToken, process.env.ACCESS_TOKEN_KEY as string),
+      ).toBeTruthy();
 
       const cookieValues: string[] = res.headers['set-cookie'][0]
         .split('=')
         .map((item: string) => item.split(';')[0]);
 
       expect(cookieValues[0]).toBe('rtc');
-      expect(verify(cookieValues[1], 'REFRESH_VAR_HERE')).toBeTruthy();
+      expect(
+        verify(cookieValues[1], process.env.REFRESH_TOKEN_KEY as string),
+      ).toBeTruthy();
     });
 
     it('should throw an error if user does not exist', async () => {
@@ -150,15 +155,36 @@ describe('authController', () => {
     it('should return valid access token if valid refresh token cookie is provided', async () => {
       const validRefreshToken = sign(
         { userId: testUser.id },
-        'REFRESH_VAR_HERE',
+        process.env.REFRESH_TOKEN_KEY as string,
       );
 
       const res = await supertest(app)
-        .get(`${ROUTE}/refresh-token`)
-        .set('Cookie', `rtc=${validRefreshToken}`);
+        .post(`${ROUTE}/refresh-token`)
+        .set('Cookie', `rtc=${validRefreshToken}`)
+        .send({ grant_type: API_GRANT_TYPES.REFRESH_TOKEN });
 
       expect(res.status).toBe(200);
-      expect(verify(res.body.accessToken, 'ACCESS_VAR_HERE')).toBeTruthy();
+      expect(
+        verify(res.body.accessToken, process.env.ACCESS_TOKEN_KEY as string),
+      ).toBeTruthy();
+    });
+
+    it('should fail when grant_type is invalid', async () => {
+      const validRefreshToken = sign(
+        { userId: testUser.id },
+        process.env.REFRESH_TOKEN_KEY as string,
+      );
+
+      const res = await supertest(app)
+        .post(`${ROUTE}/refresh-token`)
+        .set('Cookie', `rtc=${validRefreshToken}`)
+        .send({ grant_type: 'something_else' });
+
+      expect(res.status).toBe(400);
+      expect(res.body).toStrictEqual({
+        error: 'MissingInformation',
+        additionalInfo: {},
+      });
     });
 
     it('should fail when refresh token is invalid', async () => {
@@ -168,8 +194,9 @@ describe('authController', () => {
       );
 
       const res = await supertest(app)
-        .get(`${ROUTE}/refresh-token`)
-        .set('Cookie', `rtc=${invalidRefreshToken}`);
+        .post(`${ROUTE}/refresh-token`)
+        .set('Cookie', `rtc=${invalidRefreshToken}`)
+        .send({ grant_type: API_GRANT_TYPES.REFRESH_TOKEN });
 
       expect(res.status).toBe(401);
       expect(res.body).toStrictEqual({
@@ -181,12 +208,13 @@ describe('authController', () => {
     it('should fail when refresh token is missing / key is incorrect', async () => {
       const validRefreshToken = sign(
         { userId: testUser.id },
-        'REFRESH_VAR_HERE',
+        process.env.REFRESH_TOKEN_KEY as string,
       );
 
       const res = await supertest(app)
-        .get(`${ROUTE}/refresh-token`)
-        .set('Cookie', `blah=${validRefreshToken}`);
+        .post(`${ROUTE}/refresh-token`)
+        .set('Cookie', `blah=${validRefreshToken}`)
+        .send({ grant_type: API_GRANT_TYPES.REFRESH_TOKEN });
 
       expect(res.status).toBe(400);
       expect(res.body).toStrictEqual({
@@ -198,12 +226,13 @@ describe('authController', () => {
     it('should fail when user in a valid refresh token does not exist', async () => {
       const validRefreshToken = sign(
         { userId: 'i-dont-exist' },
-        'REFRESH_VAR_HERE',
+        process.env.REFRESH_TOKEN_KEY as string,
       );
 
       const res = await supertest(app)
-        .get(`${ROUTE}/refresh-token`)
-        .set('Cookie', `rtc=${validRefreshToken}`);
+        .post(`${ROUTE}/refresh-token`)
+        .set('Cookie', `rtc=${validRefreshToken}`)
+        .send({ grant_type: API_GRANT_TYPES.REFRESH_TOKEN });
 
       expect(res.status).toBe(404);
       expect(res.body).toStrictEqual({

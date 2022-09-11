@@ -18,7 +18,7 @@ describe('activities controller', () => {
   beforeEach(async () => {
     [organization, otherOrganization] = await createOrganizations();
     const testUser = await createUserForOrganization(organization.id);
-    token = await loginTestUser(app, testUser.emailAddress);
+    token = loginTestUser(testUser.id);
   });
 
   describe('createTimeLogForDate', () => {
