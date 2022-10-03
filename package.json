@@ -17,5 +17,6 @@
     "api:test-ci:integration": "docker-compose -f docker-compose.dev.yml exec api yarn workspace hour-tracker-api test",
     "api:db:docker:reset": "docker-compose -f docker-compose.dev.yml exec api yarn workspace hour-tracker-api db:reset",
     "frontend:run-dev": "yarn workspace hour-tracker-frontend dev"
-  }
+  },
+  "packageManager": "yarn@3.2.3"
 }
