@@ -6,6 +6,9 @@
     "removeComments": true,
     "strict": true,
     "esModuleInterop": true,
+    "isolatedModules": true,
+    "moduleResolution": "node",
     "types": ["node", "jest"]
-  }
+  },
+  "exclude": ["node_modules", "./src/__test__"]
 }

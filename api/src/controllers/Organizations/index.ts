@@ -6,7 +6,7 @@ import {
   IOrganizationCreatedRes,
 } from '@hour-tracker/core-types/api/organization';
 import { protect, authorize } from '../../middleware/authHandler';
-import { ROLES } from '@hour-tracker/core-constants/roles';
+import { ROLES } from '@hour-tracker/core-constants';
 
 // Create a new organization
 const createOrganization = asyncHandler(
