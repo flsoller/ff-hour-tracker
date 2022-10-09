@@ -9,7 +9,7 @@ import {
 import { compareSync } from 'bcryptjs';
 import { Role, User } from '@prisma/client';
 import { sign, verify } from 'jsonwebtoken';
-import { API_GRANT_TYPES } from '@hour-tracker/core-constants/shared';
+import { API_GRANT_TYPES } from '@hour-tracker/core-constants';
 
 describe('authController', () => {
   const ROUTE = '/api/v0/auth';
