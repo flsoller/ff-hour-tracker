@@ -6,7 +6,7 @@ import {
   IUserCreated,
 } from '@hour-tracker/core-types/api/auth';
 import { authorize, protect } from '../../middleware/authHandler';
-import { ROLES } from '@hour-tracker/core-constants/roles';
+import { ROLES } from '@hour-tracker/core-constants';
 
 /**
  * Registration endpoint

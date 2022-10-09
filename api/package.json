@@ -3,15 +3,16 @@
   "version": "0.0.1",
   "private": true,
   "description": "API for hour tracker app",
-  "main": "server.js",
+  "main": "src/server.ts",
   "scripts": {
     "test": "dotenv -e .env.test jest -i --",
-    "start": "node dist/server.js",
+    "start": "NODE_ENV=production node dist/server.js",
     "dev": "dotenv -e .env.dev nodemon ./src/server.ts",
-    "build": "rimraf dist && tsc",
+    "build": "rm -rf dist && tsc",
     "db:console": "cd .. && docker-compose -f docker-compose.dev.yml exec postgres psql -U postgres -d app_db_dev",
     "prisma-generate": "npx prisma generate",
-    "db:reset": "dotenv -e .env.dev prisma db push --force-reset"
+    "db:reset": "dotenv -e .env.dev prisma db push --force-reset",
+    "db:migrate": "npx prisma migrate deploy"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
   },
   "homepage": "https://github.com/flsoller/ff-hour-tracker#readme",
   "dependencies": {
+    "@hour-tracker/core-constants": "workspace:core/constants",
     "@prisma/client": "^3.12.0",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
@@ -33,11 +35,10 @@
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.3",
-    "pg-hstore": "^2.3.4",
-    "@hour-tracker/core-constants": "1.0.0"
+    "pg-hstore": "^2.3.4"
   },
   "devDependencies": {
-    "@hour-tracker/core-types": "1.0.0",
+    "@hour-tracker/core-types": "workspace:core/types",
     "@tsconfig/node16": "^1.0.2",
     "@types/bcryptjs": "^2.4.2",
     "@types/cookie-parser": "^1.4.3",

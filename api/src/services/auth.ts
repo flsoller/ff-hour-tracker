@@ -10,7 +10,7 @@ import { compare, hash } from 'bcryptjs';
 import { ErrorResponse } from '../utils/error';
 import { sign, verify } from 'jsonwebtoken';
 import { getUser } from './user';
-import { API_GRANT_TYPES } from '@hour-tracker/core-constants/shared';
+import { API_GRANT_TYPES } from '@hour-tracker/core-constants';
 
 async function registerUser({
   emailAddress,
