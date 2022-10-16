@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <Sidebar />
+    <Sidebar v-if="!$route.meta.hideSidebar" />
     <div class="app-container__content">
       <router-view />
     </div>
@@ -12,8 +12,8 @@ import Sidebar from '@/components/AppSidebar.vue';
 </script>
 
 <style lang="scss">
-@import "@/styles/base/normalize.scss";
-@import "@/styles/theme.scss";
+@import '@/styles/base/normalize.scss';
+@import '@/styles/theme.scss';
 
 .app-container {
   display: flex;

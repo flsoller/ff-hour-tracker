@@ -6,6 +6,7 @@ import Configuration from '@/views/Configuration.vue';
 import TimeLogging from '@/views/TimeLogging.vue';
 import Members from '@/views/Members.vue';
 import Reports from '@/views/Reports.vue';
+import Login from '@/views/Login.vue';
 
 const routes: Array<RouteRecordRaw> = [
   /**
@@ -47,6 +48,17 @@ const routes: Array<RouteRecordRaw> = [
     path: '/reports',
     name: 'Reports',
     component: Reports,
+  },
+  /**
+   * Login page
+   */
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: {
+      hideSidebar: true,
+    },
   },
   /**
    * NotFoundComponent for all unmactched routes, to be implemented
