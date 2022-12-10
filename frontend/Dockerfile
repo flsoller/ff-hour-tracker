@@ -1,4 +1,4 @@
-FROM node:14.17.6-alpine
+FROM node:16.18.1-alpine
 ARG BUILD_CONTEXT
 
 WORKDIR /app

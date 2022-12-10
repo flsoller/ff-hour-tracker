@@ -1,12 +1,20 @@
 import api from '../utils/api';
+import { Error } from '../types/ApiError';
 import { ISignIn, ISignInSuccess } from '@hour-tracker/core-types/api/auth';
 
-async function signIn(credentials: ISignIn) {
+async function signIn(
+  credentials: ISignIn
+): Promise<(ISignInSuccess | Error | null)[]> {
   const { emailAddress, password } = credentials;
-  const { accessToken, refreshToken } = await api.post<ISignIn, ISignInSuccess>(
+  const [data, error] = await api.post<ISignIn, ISignInSuccess>(
     'v0/auth/signin',
-    { emailAddress, password }
+    {
+      emailAddress,
+      password,
+    }
   );
+
+  return [data, error];
 }
 
 export { signIn };

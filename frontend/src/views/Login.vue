@@ -1,11 +1,11 @@
 <template>
-  <form class="container" @submit.prevent="onSubmit()">
+  <form class="container" @submit.prevent="onSubmit" id="loginForm">
     <div class="container__login">
       <div class="p-inputgroup container__login__item">
         <span class="p-inputgroup-addon">
           <i class="pi pi-user"></i>
         </span>
-        <InputText placeholder="Email" v-model="email" />
+        <InputText placeholder="Email" v-model="email" type="email" />
       </div>
       <div class="p-inputgroup container__login__item">
         <span class="p-inputgroup-addon">
