@@ -1,4 +1,18 @@
+import { Error } from '../types/ApiError';
 import { AppConstants } from './constants';
+
+/**
+ * Parses http response body or returns null for no-content responses
+ * @param httpResponse - response from fetch request
+ */
+async function getResponseBody<T>(httpResponse: Response): Promise<T | null> {
+  const responseText = await httpResponse.text();
+
+  if (responseText.length) {
+    return JSON.parse(responseText);
+  }
+  return null;
+}
 
 /**
  * Wrapper function for fetch api methods
@@ -8,16 +22,23 @@ import { AppConstants } from './constants';
 async function _apiRequest<T>(
   endpoint: string,
   options: RequestInit
-): Promise<T> {
-  const response = await fetch(`${AppConstants.apiUrl}/${endpoint}`, {
-    ...options,
-  });
+): Promise<[T | null, Error | null]> {
+  try {
+    const response = await fetch(`${AppConstants.apiUrl}/${endpoint}`, {
+      ...options,
+    });
 
-  if (!response.ok) {
-    throw new Error(response.statusText);
+    const body = await getResponseBody<T>(response);
+
+    if (!response.ok) {
+      const { error = '', additionalInfo = {} } = body as Error;
+      return [null, { statusCode: response.status, error, additionalInfo }];
+    }
+
+    return [body as T, null];
+  } catch (error) {
+    return [null, error as any];
   }
-
-  return response.json();
 }
 
 /**
