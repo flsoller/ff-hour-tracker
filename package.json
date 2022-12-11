@@ -19,6 +19,9 @@
     "core:build": "yarn workspace @hour-tracker/core-constants build",
     "api:test-ci:integration": "docker-compose -f docker-compose.dev.yml exec api yarn workspace hour-tracker-api test",
     "api:db:docker:reset": "docker-compose -f docker-compose.dev.yml exec api yarn workspace hour-tracker-api db:reset",
+    "api:db:migrate": "docker-compose -f docker-compose.dev.yml exec api yarn workspace hour-tracker-api db:migrate",
+    "api:db:dev:migrate": "docker-compose -f docker-compose.dev.yml exec api yarn workspace hour-tracker-api db:dev:migrate",
+    "api:db:dev:seed": "docker-compose -f docker-compose.dev.yml exec api yarn workspace hour-tracker-api db:dev:seed",
     "frontend:run-dev": "yarn workspace hour-tracker-frontend dev",
     "frontend:test": "docker-compose -f docker-compose.dev.yml exec web yarn workspace hour-tracker-frontend test"
   },

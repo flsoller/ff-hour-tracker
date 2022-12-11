@@ -7,5 +7,6 @@ beforeEach(async () => {
     prisma.$executeRaw`TRUNCATE members CASCADE;`,
     prisma.$executeRaw`TRUNCATE timelogs CASCADE;`,
     prisma.$executeRaw`TRUNCATE activity_types CASCADE;`,
+    prisma.$executeRaw`TRUNCATE users CASCADE;`,
   ]);
 });
