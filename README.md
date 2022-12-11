@@ -2,7 +2,7 @@
 
 [![Docker Image CI](https://github.com/flsoller/ff-hour-tracker/actions/workflows/docker-image.yml/badge.svg)](https://github.com/flsoller/ff-hour-tracker/actions/workflows/docker-image.yml) [![Tests](https://github.com/flsoller/ff-hour-tracker/actions/workflows/tests.yml/badge.svg)](https://github.com/flsoller/ff-hour-tracker/actions/workflows/tests.yml)
 
-This project will be used for tracking and logging different metrics for voluntary workers or members. This app aims to provide an easy solution for tracking hours and expenses. The requirements are:
+This project started through a request from a friend to help him track and log different metrics for voluntary workers or members. This app aims to provide an easy solution for tracking hours and expenses. The requirements are:
 
 - log work hours by category.
 - log expenses, deposits and payouts.
@@ -43,13 +43,17 @@ docker-compose -f docker-compose.dev.yml up -d
 
 ## Initialize database
 
-When the previous step was successful, we need to set up the postgres schema by following these steps:
+When the previous step was successful, we need to run the initial migration to set up the postgres db by running:
 
 ```
-cd api/ && npm run db:docker:firstinit
+yarn api:db:dev:migrate
 ```
 
-During first init, the schema will be force pushed and the database force reset. Because of the early stages of the project, migrations will not be used at this time. See [Prisma docs](https://www.prisma.io/docs/concepts/components/prisma-migrate/db-push#choosing-db-push-or-prisma-migrate) for further details.
+Next we can seed the db with some dummy data:
+
+```
+yarn api:db:dev:seed
+```
 
 <br>
 
@@ -86,17 +90,35 @@ docker-compose -f docker-compose.dev.yml start
 
 ### API
 
-To run api integration tests, make sure the containers are up and running and run the command from the api folder:
+To run api integration tests, make sure the containers are up and running and run the command from the root folder:
 
 ```
-yarn test-ci:integration
+yarn api:test-ci:integration
+```
+
+### Frontend
+
+To run frontend tests, make sure the containers are up and running and run the command from the root folder:
+
+```
+yarn frontend:test
+```
+
+<br>
+
+## Local development
+
+This repo includes the required yarn release for CLI commands. In order to setup you local development environment and get access to autocomplete in your IDE run from the root folder:
+
+```
+yarn install && api:prisma-generate
 ```
 
 <br>
 
 ## Remove Containers
 
-To permanently remove associated images and volumes run the following command from the root directory:
+To permanently remove associated images, volumes and networks run the following command from the root directory:
 
 ```
 make remove-dev

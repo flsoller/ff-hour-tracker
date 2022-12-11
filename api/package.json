@@ -12,7 +12,12 @@
     "db:console": "cd .. && docker-compose -f docker-compose.dev.yml exec postgres psql -U postgres -d app_db_dev",
     "prisma-generate": "npx prisma generate",
     "db:reset": "dotenv -e .env.dev prisma db push --force-reset",
-    "db:migrate": "npx prisma migrate deploy"
+    "db:migrate": "npx prisma migrate deploy",
+    "db:dev:migrate": "dotenv -e .env.dev npx prisma migrate deploy",
+    "db:dev:seed": "dotenv -e .env.dev npx prisma db seed"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   "repository": {
     "type": "git",
