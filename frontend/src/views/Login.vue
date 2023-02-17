@@ -13,7 +13,11 @@
         </span>
         <Password placeholder="Password" :feedback="false" v-model="password" />
       </div>
-      <Button label="Login" type="submit" :disabled="!validForm" />
+      <Button
+        label="Login"
+        type="submit"
+        :disabled="!validForm || userStore.loading"
+      />
     </div>
   </form>
 </template>
@@ -22,19 +26,17 @@
 import Button from 'primevue/button';
 import Password from 'primevue/password';
 import InputText from 'primevue/inputtext';
-import { signIn } from '../services/auth';
 import { validateEmail, validateInputString } from '../utils/validate';
 import { ref, watch } from 'vue';
+import { useUserStore } from '../stores/user';
 
+const userStore = useUserStore();
 const email = ref('');
 const password = ref('');
 const validForm = ref(false);
 
 async function onSubmit() {
-  await signIn({
-    emailAddress: email.value.toLowerCase(),
-    password: password.value,
-  });
+  await userStore.login(email.value, password.value);
 }
 
 watch([() => email.value, () => password.value], ([newEmail, newPassword]) => {
