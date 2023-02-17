@@ -1,12 +1,16 @@
 import { afterAll, afterEach, beforeAll } from 'vitest';
 import { config } from '@vue/test-utils';
+import { createTestingPinia } from '@pinia/testing';
 import primeVue from 'primevue/config';
 import { server } from './server';
 import 'whatwg-fetch';
 
 // Test setups
 beforeAll(() => {
-  config.global.plugins = [primeVue];
+  config.global.plugins = [
+    primeVue,
+    createTestingPinia({ stubActions: false }),
+  ];
   server.listen();
 });
 
