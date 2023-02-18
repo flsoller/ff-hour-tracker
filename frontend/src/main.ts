@@ -8,6 +8,7 @@ import 'primeicons/primeicons.css';
 import App from './App.vue';
 import router from './router';
 import primeVue from 'primevue/config';
+import ToastService from 'primevue/toastservice';
 
 import BaseInput from './components/UI/BaseInput.vue';
 import BaseButton from './components/UI/BaseButton.vue';
@@ -26,4 +27,5 @@ app.component('base-log-item', BaseTimelogItem);
 app.use(pinia);
 app.use(router);
 app.use(primeVue);
+app.use(ToastService);
 app.mount('#app');
