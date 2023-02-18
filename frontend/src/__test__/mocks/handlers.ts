@@ -23,6 +23,6 @@ export const handlers = [
 
   // Auth routes
   rest.post(`${MOCKED_ENDPOINT}/v0/auth/signin`, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json({ token: 'token' }));
+    return res(ctx.status(200), ctx.json({ accessToken: 'token' }));
   }),
 ];

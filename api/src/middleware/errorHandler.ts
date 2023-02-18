@@ -1,7 +1,7 @@
 import {
   PrismaClientKnownRequestError,
   PrismaClientValidationError,
-} from '@prisma/client/runtime';
+} from '@prisma/client/runtime/library';
 import { ErrorRequestHandler, NextFunction, Request, Response } from 'express';
 import { ErrorResponse } from '../utils/error';
 

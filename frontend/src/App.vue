@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <Toast />
     <Sidebar v-if="!$route.meta.hideSidebar" />
     <div class="app-container__content">
       <router-view />
@@ -9,6 +10,7 @@
 
 <script setup lang="ts">
 import Sidebar from '@/components/AppSidebar.vue';
+import Toast from 'primevue/toast';
 </script>
 
 <style lang="scss">

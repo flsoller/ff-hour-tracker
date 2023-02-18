@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "@hour-tracker/core-types": "1.0.0",
+    "@pinia/testing": "^0.0.14",
     "@types/node": "^17.0.10",
     "@vitejs/plugin-vue": "3.2.0",
     "@vitest/coverage-istanbul": "^0.25.3",
