@@ -1,19 +1,21 @@
-import { expect } from 'vitest';
+import { expect, vi } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
+import { server } from '../mocks/server';
+import { rest } from 'msw';
+import { AppConstants } from '../../utils/constants';
 import { flushPromises } from '../mocks/helpers';
 import LoginView from '../../views/Login.vue';
-import ToastService from 'primevue/toastservice';
 import { useUserStore } from '../../stores/user';
 
 describe('Login View', () => {
   let wrapper: VueWrapper;
 
   beforeEach(() => {
-    wrapper = mount(LoginView, {
-      global: {
-        plugins: [ToastService],
-      },
-    });
+    wrapper = mount(LoginView);
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
   });
 
   describe('component tests', () => {
@@ -57,6 +59,31 @@ describe('Login View', () => {
       expect(userStore.loading).toBe(false);
       expect(userStore.isLoggedIn).toBe(true);
       expect(userStore.accessToken).toBe('token');
+    });
+
+    it('should correctly handle api error response', async () => {
+      server.use(
+        rest.post(`${AppConstants.apiUrl}/v0/auth/signin`, (req, res, ctx) => {
+          return res(
+            ctx.status(400),
+            ctx.json({ error: 'InvalidInformation' })
+          );
+        })
+      );
+      const userStore = useUserStore();
+      await wrapper.find('input[type=email]').setValue('user@email.com');
+      await wrapper.find('input[type=password]').setValue('supersecret');
+      await wrapper.find('form').trigger('submit');
+      expect(userStore.loading).toBe(true);
+      expect(userStore.login).toHaveBeenCalledTimes(1);
+      expect(userStore.login).toHaveBeenCalledWith(
+        'user@email.com',
+        'supersecret'
+      );
+      await flushPromises();
+      expect(userStore.loading).toBe(false);
+      expect(userStore.isLoggedIn).toBe(false);
+      expect(userStore.accessToken).toBe(null);
     });
   });
 });
