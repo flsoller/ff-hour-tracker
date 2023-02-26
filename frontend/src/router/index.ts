@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import { useUserStore } from '../stores/user';
 
 // View imports
 import Dashboard from '@/views/Dashboard.vue';
@@ -16,6 +17,9 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'Dashboard',
     component: Dashboard,
+    meta: {
+      protected: true,
+    },
   },
   /**
    * Configuration page
@@ -24,6 +28,9 @@ const routes: Array<RouteRecordRaw> = [
     path: '/config',
     name: 'Configuration',
     component: Configuration,
+    meta: {
+      protected: true,
+    },
   },
   /**
    * Time logging page
@@ -32,6 +39,9 @@ const routes: Array<RouteRecordRaw> = [
     path: '/timelog',
     name: 'Time Logging',
     component: TimeLogging,
+    meta: {
+      protected: true,
+    },
   },
   /**
    * Member management page
@@ -40,6 +50,9 @@ const routes: Array<RouteRecordRaw> = [
     path: '/members',
     name: 'Member Management',
     component: Members,
+    meta: {
+      protected: true,
+    },
   },
   /**
    * Reports page
@@ -48,6 +61,9 @@ const routes: Array<RouteRecordRaw> = [
     path: '/reports',
     name: 'Reports',
     component: Reports,
+    meta: {
+      protected: true,
+    },
   },
   /**
    * Login page
@@ -69,6 +85,12 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore();
+  if (to.meta.protected && !userStore.isLoggedIn) next('/login');
+  else next();
 });
 
 export default router;
