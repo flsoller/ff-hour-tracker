@@ -11,12 +11,9 @@ describe('api module', () => {
       expect(res).toStrictEqual([{ key: 'value' }, null]);
       expect(fetchSpy).toHaveBeenCalledTimes(1);
       expect(apiGetSpy).toHaveBeenCalledWith(testEndpoint);
-      expect(fetchSpy).toHaveBeenCalledWith(
-        'http://localhost:5000/api/apioktest',
-        {
-          method: 'GET',
-        }
-      );
+      expect(fetchSpy).toHaveBeenCalledWith('http://api:5000/api/apioktest', {
+        method: 'GET',
+      });
     });
 
     it('should correctly return an error message', async () => {
@@ -60,7 +57,7 @@ describe('api module', () => {
       expect(fetchSpy).toBeCalledTimes(1);
       expect(fetchSpy).toHaveBeenCalledWith(
         // base URL as defined in env file
-        'http://localhost:5000/api/apiposttest',
+        'http://api:5000/api/apiposttest',
         {
           method: 'POST',
           body: JSON.stringify({ pay: 'load' }),
