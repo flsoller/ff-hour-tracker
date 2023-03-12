@@ -1,0 +1,22 @@
+{
+  "name": "hour-tracker-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "description": "E2E for hour tracker app",
+  "scripts": {
+    "test": "npx playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flsoller/ff-hour-tracker.git"
+  },
+  "author": "Florian Soller",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/flsoller/ff-hour-tracker/issues"
+  },
+  "homepage": "https://github.com/flsoller/ff-hour-tracker#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.31.2"
+  }
+}
