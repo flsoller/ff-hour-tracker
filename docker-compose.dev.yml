@@ -75,6 +75,25 @@ services:
     networks:
       - appnetwork
 
+  # e2e container
+  e2e:
+    container_name: ff-hour-tracker-e2e
+    build:
+      context: .
+      dockerfile: ./e2e/Dockerfile
+      args:
+        - BUILD_CONTEXT=e2e
+    ports:
+      - '9323:9323'
+    volumes:
+      - './e2e:/app/e2e'
+      - /app/node_modules
+      - /app/e2e/node_modules
+    networks:
+      - appnetwork
+    depends_on:
+      - web
+
 networks:
   appnetwork:
     driver: bridge

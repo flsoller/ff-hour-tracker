@@ -1,5 +1,5 @@
 <template>
-  <nav class="sidebar">
+  <nav class="sidebar" data-testid="sidebar">
     <router-link
       :to="sidebarItem.routerLink"
       v-for="sidebarItem in sidebarContent"

@@ -5,7 +5,12 @@
         <span class="p-inputgroup-addon">
           <i class="pi pi-user"></i>
         </span>
-        <InputText placeholder="Email" v-model="email" type="email" />
+        <InputText
+          placeholder="Email"
+          v-model="email"
+          type="email"
+          data-testid="email"
+        />
       </div>
       <div class="p-inputgroup container__login__item">
         <span class="p-inputgroup-addon">
@@ -14,6 +19,7 @@
         <Password placeholder="Password" :feedback="false" v-model="password" />
       </div>
       <Button
+        data-testid="login"
         label="Login"
         type="submit"
         :disabled="!validForm || userStore.loading"

@@ -8,7 +8,7 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Build docker
         run: |
           echo ---building and starting up docker---
@@ -22,3 +22,19 @@ jobs:
         run: |
           echo ---running frontend tests---
           docker-compose -f docker-compose.dev.yml exec -T web yarn workspace hour-tracker-frontend test
+      - name: Prepare e2e tests
+        run: |
+          echo ---running preparations for e2e tests---
+          docker-compose -f docker-compose.dev.yml exec -T api yarn workspace hour-tracker-api db:dev:migrate
+          docker-compose -f docker-compose.dev.yml exec -T api yarn workspace hour-tracker-api db:dev:seed
+      - name: Run e2e tests
+        run: |
+          echo ---running e2e tests---
+          docker-compose -f docker-compose.dev.yml exec -T e2e yarn workspace hour-tracker-e2e test
+      - name: Get e2e test report
+        run: docker cp ff-hour-tracker-e2e:app/e2e/playwright-report .
+      - uses: actions/upload-artifact@v3
+        with:
+          name: e2e-report
+          path: ./playwright-report/index.html
+          retention-days: 1
