@@ -1,0 +1,51 @@
+version: '3.8'
+services:
+  # web frontend container
+  web:
+    image: flsoller/hour-tracker-api-frontend:${TAG}
+    environment:
+      - NODE_ENV=test
+      - PORT=3000
+    ports:
+      - '3000:3000'
+    networks:
+      - appnetwork
+    depends_on:
+      - api
+
+  # api server container
+  api:
+    image: flsoller/hour-tracker-api-dev:${TAG}
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=test
+      - PORT=5000
+      - REFRESH_TOKEN_KEY=localdockerenvrefresh
+      - ACCESS_TOKEN_KEY=localdockerenvaccess
+    ports:
+      - '5000:5000'
+    networks:
+      - appnetwork
+    depends_on:
+      - postgres_tests
+
+  # db container for running integration tests against
+  postgres_tests:
+    image: postgres:13.4
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: app_integration_tests
+    ports:
+      - '5433:5432'
+    networks:
+      - appnetwork
+
+networks:
+  appnetwork:
+    driver: bridge
+
+volumes:
+  postgres-db:
+    driver: local
