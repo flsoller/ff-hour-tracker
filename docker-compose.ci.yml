@@ -13,6 +13,21 @@ services:
     depends_on:
       - api
 
+  # e2e container
+  e2e:
+    container_name: ff-hour-tracker-e2e
+    build:
+      context: .
+      dockerfile: ./e2e/Dockerfile
+      args:
+        - BUILD_CONTEXT=e2e
+    ports:
+      - '9323:9323'
+    networks:
+      - appnetwork
+    depends_on:
+      - web
+
   # api server container
   api:
     image: flsoller/hour-tracker-api-dev:${TAG}
@@ -28,6 +43,7 @@ services:
       - appnetwork
     depends_on:
       - postgres_tests
+      - postgres
 
   # db container for running integration tests against
   postgres_tests:
@@ -39,6 +55,19 @@ services:
       POSTGRES_DB: app_integration_tests
     ports:
       - '5433:5432'
+    networks:
+      - appnetwork
+
+  # db container for e2e tests
+  postgres:
+    image: postgres:13.4
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: app_db_dev
+    ports:
+      - '5432:5432'
     networks:
       - appnetwork
 
