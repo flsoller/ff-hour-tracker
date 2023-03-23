@@ -17,20 +17,19 @@ test.describe('Login page', () => {
     await expect(page.getByTestId('sidebar')).not.toBeVisible();
   });
 
-  // Skipped test for now due to different proxy required within docker network
-  // test('should login the user and route to the base URL / dashboard', async ({
-  //   page,
-  // }) => {
-  //   const loginBtn = page.getByTestId('login');
+  test('should login the user and route to the base URL / dashboard', async ({
+    page,
+  }) => {
+    const loginBtn = page.getByTestId('login');
 
-  //   // Login with test user generated in seed script
-  //   await page.getByTestId('email').fill('admin@user.com');
-  //   await page.getByPlaceholder('Password').fill('support-user-pw');
+    // Login with test user generated in seed script
+    await page.getByTestId('email').fill('admin@user.com');
+    await page.getByPlaceholder('Password').fill('support-user-pw');
 
-  //   await expect(loginBtn).toBeEnabled();
-  //   await loginBtn.click();
-  //   await expect(page).toHaveURL('/');
-  //   await expect(page.getByTestId('sidebar')).toBeVisible();
-  //   await expect(page.getByTestId('dashboard')).toBeVisible();
-  // });
+    await expect(loginBtn).toBeEnabled();
+    await loginBtn.click();
+    await expect(page).toHaveURL('/');
+    await expect(page.getByTestId('sidebar')).toBeVisible();
+    await expect(page.getByTestId('dashboard')).toBeVisible();
+  });
 });
