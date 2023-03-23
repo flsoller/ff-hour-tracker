@@ -10,7 +10,7 @@
   "author": "Florian Soller",
   "license": "UNLICENSED",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode $NODE_ENV",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "NODE_ENV=test vitest run --coverage"
