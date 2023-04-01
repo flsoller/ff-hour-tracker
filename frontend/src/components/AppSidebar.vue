@@ -5,11 +5,7 @@
       v-for="sidebarItem in sidebarContent"
       class="sidebar__item"
     >
-      <font-awesome-icon
-        :icon="sidebarItem.icon"
-        size="lg"
-        class="sidebar__item__icon"
-      />
+      <i class="sidebar__item__icon pi" :class="sidebarItem.icon"></i>
       <div class="sidebar__item__label">
         <span>{{ sidebarItem.label }}</span>
       </div>
@@ -19,46 +15,37 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import {
-  faHouse,
-  faTools,
-  faUserClock,
-  faUsers,
-  faChartLine,
-  IconDefinition,
-} from '@fortawesome/free-solid-svg-icons';
 
 interface SidebarContent {
   routerLink: string;
-  icon: IconDefinition;
+  icon: string;
   label: string;
 }
 
 const sidebarContent = ref<SidebarContent[]>([
   {
     routerLink: '/',
-    icon: faHouse,
+    icon: 'pi-home',
     label: 'Dashboard',
   },
   {
     routerLink: '/timelog',
-    icon: faUserClock,
+    icon: 'pi-clock',
     label: 'Timesheet',
   },
   {
     routerLink: '/config',
-    icon: faTools,
+    icon: 'pi-cog',
     label: 'Configuration',
   },
   {
     routerLink: '/members',
-    icon: faUsers,
+    icon: 'pi-users',
     label: 'Members',
   },
   {
     routerLink: '/reports',
-    icon: faChartLine,
+    icon: 'pi-file-o',
     label: 'Reports',
   },
 ]);
@@ -87,14 +74,17 @@ const sidebarContent = ref<SidebarContent[]>([
 
     &__icon {
       min-width: 1.5rem;
+      font-size: 1.5rem;
 
       @media (max-width: $medium) {
         min-width: 0;
+        font-size: 1.25rem;
       }
     }
 
     @media (max-width: $medium) {
       flex-direction: column;
+      align-items: center;
     }
 
     &__label {
