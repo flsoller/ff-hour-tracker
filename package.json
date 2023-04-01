@@ -25,7 +25,13 @@
     "api:db:dev:seed": "docker-compose -f docker-compose.dev.yml exec api yarn workspace hour-tracker-api db:dev:seed",
     "frontend:run-dev": "yarn workspace hour-tracker-frontend dev",
     "frontend:test": "docker-compose -f docker-compose.dev.yml exec web yarn workspace hour-tracker-frontend test",
-    "e2e:test": "docker-compose -f docker-compose.dev.yml exec e2e yarn workspace hour-tracker-e2e test"
+    "e2e:test": "docker-compose -f docker-compose.dev.yml exec e2e yarn workspace hour-tracker-e2e test",
+    "postinstall": "husky install"
   },
-  "packageManager": "yarn@3.2.3"
+  "packageManager": "yarn@3.2.3",
+  "devDependencies": {
+    "@commitlint/cli": "^17.5.1",
+    "@commitlint/config-conventional": "^17.4.4",
+    "husky": "^8.0.0"
+  }
 }
