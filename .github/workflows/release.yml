@@ -9,13 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger API deployment
-        uses: distributhor/workflow-webhook@v2
-        env:
-          webhook_url: ${{ secrets.API_DEPLOY_HOOK }}
+        uses: joelwmale/webhook-action@ee20d8c79e728c2d339b114fd27772ee0226aa41
+        with:
+          url: ${{ secrets.API_DEPLOY_HOOK }}
       - name: Trigger Frontend deployment
-        uses: distributhor/workflow-webhook@v2
-        env:
-          webhook_url: ${{ secrets.FRONTEND_DEPLOY_HOOK }}
+        uses: joelwmale/webhook-action@ee20d8c79e728c2d339b114fd27772ee0226aa41
+        with:
+          url: ${{ secrets.FRONTEND_DEPLOY_HOOK }}
 
   # Create changelog and release tag
   create-release:
