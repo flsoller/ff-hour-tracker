@@ -25,6 +25,15 @@ if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
   app.use(cors());
 }
 
+// Cors config for production
+if (process.env.NODE_ENV === 'production') {
+  app.use(
+    cors({
+      origin: process.env.CORS_ORIGIN,
+    }),
+  );
+}
+
 // JSON body-parser middleware
 app.use(express.json());
 

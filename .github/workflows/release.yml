@@ -1,0 +1,40 @@
+name: Release
+on:
+  workflow_dispatch:
+    branches: master
+
+jobs:
+  # Deploy api and server
+  deploy-services:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger API deployment
+        uses: distributhor/workflow-webhook@v2
+        env:
+          webhook_url: ${{ secrets.API_DEPLOY_HOOK }}
+      - name: Trigger Frontend deployment
+        uses: distributhor/workflow-webhook@v2
+        env:
+          webhook_url: ${{ secrets.FRONTEND_DEPLOY_HOOK }}
+
+  # Create changelog and release tag
+  create-release:
+    needs: deploy-services
+    runs-on: ubuntu-latest
+    steps:
+      - name: Conventional Changelog Action
+        id: changelog
+        uses: TriPSs/conventional-changelog-action@v3
+        with:
+          github-token: ${{ secrets.github_token }}
+          output-file: 'false'
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        if: ${{ steps.changelog.outputs.skipped == 'false' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+        with:
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          release_name: ${{ steps.changelog.outputs.tag }}
+          body: ${{ steps.changelog.outputs.clean_changelog }}
