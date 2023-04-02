@@ -23,7 +23,10 @@ const register = asyncHandler(
  */
 const signIn = asyncHandler(async (req: Request, res: Response) => {
   const { accessToken, refreshToken } = await userSignIn(req.body);
-  res.cookie('rtc', refreshToken, { httpOnly: true });
+  res.cookie('rtc', refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+  });
   res.status(200).json({ accessToken });
 });
 
