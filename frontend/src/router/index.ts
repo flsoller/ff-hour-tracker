@@ -76,10 +76,7 @@ const routes: Array<RouteRecordRaw> = [
       hideSidebar: true,
     },
   },
-  /**
-   * NotFoundComponent for all unmactched routes, to be implemented
-   */
-  // { path: '/:pathMatch(.*)', component: NotFoundComponent },
+  { path: '/:pathMatch(.*)', redirect: '/' },
 ];
 
 const router = createRouter({
