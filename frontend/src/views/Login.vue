@@ -23,7 +23,15 @@
         label="Login"
         type="submit"
         :disabled="!validForm || userStore.loading"
+        :loading="userStore.loading"
       />
+    </div>
+    <div
+      class="container__login__info"
+      v-if="showInfo"
+      data-testid="infoContainer"
+    >
+      <Message severity="info" sticky>{{ infoContent }}</Message>
     </div>
   </form>
 </template>
@@ -32,6 +40,7 @@
 import Button from 'primevue/button';
 import Password from 'primevue/password';
 import InputText from 'primevue/inputtext';
+import Message from 'primevue/message';
 import { validateEmail, validateInputString } from '../utils/validate';
 import { ref, watch } from 'vue';
 import { useUserStore } from '../stores/user';
@@ -40,9 +49,16 @@ const userStore = useUserStore();
 const email = ref('');
 const password = ref('');
 const validForm = ref(false);
+const showInfo = ref(false);
+const infoContent =
+  'The free resources enabling this project can take up to 30 seconds to initialize. Please wait...';
 
 async function onSubmit() {
+  const infoTimer = setTimeout(() => {
+    showInfo.value = true;
+  }, 2000);
   await userStore.login(email.value, password.value);
+  clearTimeout(infoTimer);
 }
 
 watch([() => email.value, () => password.value], ([newEmail, newPassword]) => {
@@ -90,6 +106,16 @@ watch([() => email.value, () => password.value], ([newEmail, newPassword]) => {
 
     &__item {
       padding-bottom: 0.2rem;
+    }
+
+    &__info {
+      position: absolute;
+      bottom: 0;
+      max-width: 90%;
+
+      @media (min-width: $medium) {
+        bottom: 1rem;
+      }
     }
   }
 }
