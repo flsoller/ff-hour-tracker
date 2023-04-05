@@ -21,6 +21,8 @@ services:
       dockerfile: ./e2e/Dockerfile
       args:
         - BUILD_CONTEXT=e2e
+    environment:
+      - CI=1
     ports:
       - '9323:9323'
     networks:
