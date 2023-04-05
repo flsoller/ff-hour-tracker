@@ -28,8 +28,33 @@ test.describe('Login page', () => {
 
     await expect(loginBtn).toBeEnabled();
     await loginBtn.click();
+    await expect(loginBtn).toHaveClass(/p-button-loading/);
     await expect(page).toHaveURL('/');
     await expect(page.getByTestId('sidebar')).toBeVisible();
     await expect(page.getByTestId('dashboard')).toBeVisible();
+  });
+
+  test('should show user feedback on api response delay and error', async ({
+    page,
+  }) => {
+    await page.getByTestId('email').fill('admin@user.com');
+    await page.getByPlaceholder('Password').fill('support-user-pw');
+    await expect(page.getByTestId('infoContainer')).not.toBeVisible();
+    await page.route('**/v0/auth/signin', async (route) => {
+      setTimeout(async () => {
+        await route.fetch();
+        route.fulfill({
+          status: 401,
+        });
+      }, 3000);
+    });
+    await page.getByTestId('login').click();
+    await expect(page.getByTestId('infoContainer')).toBeVisible();
+    await expect(
+      page.getByText('The free resources enabling this project')
+    ).toBeVisible();
+    await expect(
+      page.getByText('Invalid Credentials', { exact: true })
+    ).toBeVisible();
   });
 });
