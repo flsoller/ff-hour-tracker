@@ -4,6 +4,7 @@
       :to="sidebarItem.routerLink"
       v-for="sidebarItem in sidebarContent"
       class="sidebar__item"
+      :data-testid="sidebarItem.testId"
     >
       <i class="sidebar__item__icon pi" :class="sidebarItem.icon"></i>
       <div class="sidebar__item__label">
@@ -20,6 +21,7 @@ interface SidebarContent {
   routerLink: string;
   icon: string;
   label: string;
+  testId: string;
 }
 
 const sidebarContent = ref<SidebarContent[]>([
@@ -27,26 +29,31 @@ const sidebarContent = ref<SidebarContent[]>([
     routerLink: '/',
     icon: 'pi-home',
     label: 'Dashboard',
+    testId: 'dashboardLink',
   },
   {
     routerLink: '/timelog',
     icon: 'pi-clock',
     label: 'Timesheet',
+    testId: 'timesheetLink',
   },
   {
     routerLink: '/config',
     icon: 'pi-cog',
     label: 'Configuration',
+    testId: 'configLink',
   },
   {
     routerLink: '/members',
     icon: 'pi-users',
     label: 'Members',
+    testId: 'membersLink',
   },
   {
     routerLink: '/reports',
     icon: 'pi-file-o',
     label: 'Reports',
+    testId: 'reportsLink',
   },
 ]);
 </script>
