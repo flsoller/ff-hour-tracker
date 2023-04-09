@@ -1,10 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`createMember should create one member 1`] = `
+exports[`members createMember should create one member 1`] = `
 Object {
   "emailAddress": "arthur@coolguy.com",
   "firstName": "Arthur",
   "id": Any<String>,
   "lastName": "Morgan",
+}
+`;
+
+exports[`members getMembersPaginated should not return values for a user of a different org 1`] = `
+Object {
+  "data": Array [],
+  "totalCount": 0,
+}
+`;
+
+exports[`members getMembersPaginated should return members paginated in correct format 1`] = `
+Object {
+  "emailAddress": "b@two.com",
+  "firstName": "first",
+  "id": Any<String>,
+  "lastName": "b",
 }
 `;

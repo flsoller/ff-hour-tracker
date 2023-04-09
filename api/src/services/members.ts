@@ -3,6 +3,7 @@ import { Member, Organization } from '@prisma/client';
 import { ErrorResponse } from '../utils/error';
 import { prisma } from '../utils/prisma';
 import { getOrganizationById } from './organizations';
+import { isTypeOfNumbers, isValidOrderQuery } from '../utils/validators';
 
 async function addMember(
   firstName: string,
@@ -54,4 +55,39 @@ async function getMemberById(
   });
 }
 
-export { addMember, isMemberEmailUnique, getMemberById };
+async function getMembers(
+  limit: number,
+  offset: number,
+  order: 'asc' | 'desc',
+  user: IExpressReqUser,
+) {
+  if (!isTypeOfNumbers([limit, offset]) || !isValidOrderQuery(order)) {
+    throw new ErrorResponse('InvalidQueryParams', 400);
+  }
+
+  const members = await prisma.member.findMany({
+    where: {
+      orgId: user.orgId,
+    },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      emailAddress: true,
+    },
+    take: limit,
+    skip: offset,
+    orderBy: [
+      {
+        lastName: order,
+      },
+    ],
+  });
+
+  return {
+    data: members,
+    totalCount: await prisma.member.count({ where: { orgId: user.orgId } }),
+  };
+}
+
+export { addMember, isMemberEmailUnique, getMemberById, getMembers };
