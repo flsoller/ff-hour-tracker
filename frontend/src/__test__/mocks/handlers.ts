@@ -25,4 +25,21 @@ export const handlers = [
   rest.post(`${MOCKED_ENDPOINT}/v0/auth/signin`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json({ accessToken: 'token' }));
   }),
+
+  // Members routes
+  rest.get(`${MOCKED_ENDPOINT}/v0/members`, (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        data: [
+          {
+            firstName: 'Paige',
+            lastName: 'Turner',
+            emailAddress: 'pt@mail.com',
+          },
+        ],
+        totalCount: 1,
+      })
+    );
+  }),
 ];
