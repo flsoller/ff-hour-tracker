@@ -11,7 +11,15 @@ beforeAll(() => {
     primeVue,
     createTestingPinia({ stubActions: false }),
   ];
-  server.listen();
+  server.listen({
+    onUnhandledRequest(req) {
+      console.error(
+        'Found an unhandled %s request to %s',
+        req.method,
+        req.url.href
+      );
+    },
+  });
 });
 
 // Reset request handlers between tests

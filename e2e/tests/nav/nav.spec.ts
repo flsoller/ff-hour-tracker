@@ -1,4 +1,5 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from '@playwright/test';
+import { userLogin } from '../../helpers/userActions';
 
 test.describe('App navigation', () => {
   test.describe('path matching', () => {
@@ -13,11 +14,7 @@ test.describe('App navigation', () => {
 
   test.describe('sidebar navigation', () => {
     test.beforeEach(async ({ page }) => {
-      await page.goto('/');
-      await page.getByTestId('email').fill('admin@user.com');
-      await page.getByPlaceholder('Password').fill('support-user-pw');
-      await page.getByTestId('login').click();
-      await expect(page).toHaveURL('/');
+      await userLogin(page);
     });
 
     test('should navigate to the correct paths via sidebar', async ({
