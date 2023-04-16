@@ -39,12 +39,12 @@ test.describe('Members', () => {
 
       for (const member of membersToCreate) {
         await expect(
-          page.getByText(member.emailAddress, {
+          page.getByText(member.firstName, {
             exact: true,
           })
         ).toBeVisible();
         await expect(
-          page.getByText(member.emailAddress, {
+          page.getByText(member.lastName, {
             exact: true,
           })
         ).toBeVisible();
@@ -71,12 +71,12 @@ test.describe('Members', () => {
 
       for (const member of sortedMembers.slice(0, 5)) {
         await expect(
-          page.getByText(member.emailAddress, {
+          page.getByText(member.firstName, {
             exact: true,
           })
         ).toBeVisible();
         await expect(
-          page.getByText(member.emailAddress, {
+          page.getByText(member.lastName, {
             exact: true,
           })
         ).toBeVisible();
@@ -92,12 +92,12 @@ test.describe('Members', () => {
 
       for (const member of sortedMembers.slice(5)) {
         await expect(
-          page.getByText(member.emailAddress, {
+          page.getByText(member.firstName, {
             exact: true,
           })
         ).toBeVisible();
         await expect(
-          page.getByText(member.emailAddress, {
+          page.getByText(member.lastName, {
             exact: true,
           })
         ).toBeVisible();
