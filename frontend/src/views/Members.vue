@@ -3,14 +3,14 @@
     <DataTable
       :value="members.data"
       :totalRecords="members.totalCount"
-      :loading="loading"
+      :loading="membersStore.loading"
       lazy
       stripedRows
       class="members-table__outline"
       scrollable
       scrollHeight="20rem"
       paginator
-      :rows="defaultPageLimit"
+      :rows="membersStore.defaultPageLimit"
       :rowsPerPageOptions="[5, 10, 20]"
       @page="onPaginationChange($event)"
       @sort="onSortingChange($event)"
@@ -18,13 +18,21 @@
       <template #header>
         <div class="members-table__header">
           <span>Members</span>
-          <Button icon="pi pi-plus" raised label="Add Member" />
+          <Button
+            icon="pi pi-plus"
+            raised
+            label="Add Member"
+            @click="onAddMember()"
+          />
         </div>
       </template>
       <Column field="firstName" header="First Name"></Column>
       <Column field="lastName" sortable header="Last Name"></Column>
       <Column field="emailAddress" header="Email Address"></Column>
-      <template v-if="members.totalCount === 0 && !loading" #footer>
+      <template
+        v-if="membersStore.members.totalCount === 0 && !membersStore.loading"
+        #footer
+      >
         <div class="members-table__footer">
           <span>No Members added yet, start adding to see data.</span>
         </div>
@@ -34,50 +42,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, Ref } from 'vue';
-import { getMembers } from '../services/members';
-import {
-  IGetMembersPaginatedReq,
-  IGetMembersPaginatedRes,
-} from '@hour-tracker/core-types/api/members';
-import { useToastService } from '../services/toast';
+import { onMounted } from 'vue';
+import { useMembersStore } from '../stores/members';
+import { useDialog } from 'primevue/usedialog';
 import DataTable, {
   DataTablePageEvent,
   DataTableSortEvent,
 } from 'primevue/datatable';
 import Column from 'primevue/column';
 import Button from 'primevue/button';
+import AddMember from '../components/AddMember.vue';
+import { storeToRefs } from 'pinia';
 
-const members: Ref<IGetMembersPaginatedRes> = ref({ data: [], totalCount: 0 });
-const toast = useToastService();
-const loading = ref(true);
-const defaultPageLimit = 5;
+const membersStore = useMembersStore();
+const { members } = storeToRefs(membersStore);
+const dialog = useDialog();
 
 onMounted(async () => {
-  await getMembersData({
-    limit: `${defaultPageLimit}`,
-    offset: '0',
-    order: 'asc',
-  });
+  await membersStore.getMembersPaginated();
 });
 
-async function getMembersData(params: IGetMembersPaginatedReq) {
-  loading.value = true;
-  const [data, error] = await getMembers(params);
-
-  if (error) {
-    toast.showToast('error', 'Unexpected error while loading members data');
-  }
-
-  members.value = {
-    data: data?.data || [],
-    totalCount: data?.totalCount || 0,
-  };
-  loading.value = false;
-}
-
 async function onPaginationChange($event: DataTablePageEvent) {
-  await getMembersData({
+  await membersStore.getMembersPaginated({
     limit: `${$event.rows}`,
     offset: `${$event.first}`,
     order: $event.sortOrder === -1 ? 'desc' : 'asc',
@@ -85,8 +71,17 @@ async function onPaginationChange($event: DataTablePageEvent) {
 }
 
 async function onSortingChange($event: DataTableSortEvent) {
-  await getMembersData({
+  await membersStore.getMembersPaginated({
     order: $event.sortOrder === -1 ? 'desc' : 'asc',
+  });
+}
+
+function onAddMember() {
+  dialog.open(AddMember, {
+    props: {
+      modal: true,
+      header: 'Add Member',
+    },
   });
 }
 </script>

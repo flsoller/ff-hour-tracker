@@ -2,6 +2,7 @@ import { afterAll, afterEach, beforeAll } from 'vitest';
 import { config } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
 import primeVue from 'primevue/config';
+import DialogService from 'primevue/dialogservice';
 import { server } from './server';
 import 'whatwg-fetch';
 
@@ -9,6 +10,7 @@ import 'whatwg-fetch';
 beforeAll(() => {
   config.global.plugins = [
     primeVue,
+    DialogService,
     createTestingPinia({ stubActions: false }),
   ];
   server.listen({
