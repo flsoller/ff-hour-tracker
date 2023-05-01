@@ -8,7 +8,7 @@ import 'primeicons/primeicons.css';
 import App from './App.vue';
 import router from './router';
 import primeVue from 'primevue/config';
-import ToastService from 'primevue/toastservice';
+import DialogService from 'primevue/dialogservice';
 
 const pinia = createPinia();
 const app = createApp(App);
@@ -16,5 +16,5 @@ const app = createApp(App);
 app.use(pinia);
 app.use(router);
 app.use(primeVue);
-app.use(ToastService);
+app.use(DialogService);
 app.mount('#app');

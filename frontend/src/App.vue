@@ -1,6 +1,7 @@
 <template>
   <div class="app-container">
     <Toast />
+    <DynamicDialog />
     <Sidebar v-if="!$route.meta.hideSidebar" />
     <div class="app-container__content">
       <router-view />
@@ -11,6 +12,7 @@
 <script setup lang="ts">
 import Sidebar from '@/components/AppSidebar.vue';
 import Toast from 'primevue/toast';
+import DynamicDialog from 'primevue/dynamicdialog';
 </script>
 
 <style lang="scss">

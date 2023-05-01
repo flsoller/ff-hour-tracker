@@ -1219,14 +1219,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pinia/testing@npm:^0.0.14":
-  version: 0.0.14
-  resolution: "@pinia/testing@npm:0.0.14"
+"@pinia/testing@npm:0.0.16":
+  version: 0.0.16
+  resolution: "@pinia/testing@npm:0.0.16"
   dependencies:
     vue-demi: "*"
   peerDependencies:
-    pinia: ">=2.0.19"
-  checksum: 314dfa5f0eb8efe8055152ea1409f709c3a06614cdc15aaae8f92d424371bdaae844531358235d2ad922456c54059df96ac9da84298fd8b72be0d6a1b65459af
+    pinia: ">=2.0.34"
+  checksum: d1157624d1b9f6c45b947b03e583068d44fe3e46fd43cb2414d663c2436a5b28716217bb021cecadb1402d9658db7cb2a57c0b2bd54fb7db70158e43863da035
   languageName: node
   linkType: hard
 
@@ -1801,13 +1801,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-vue@npm:4.1.0":
-  version: 4.1.0
-  resolution: "@vitejs/plugin-vue@npm:4.1.0"
+"@vitejs/plugin-vue@npm:4.2.1":
+  version: 4.2.1
+  resolution: "@vitejs/plugin-vue@npm:4.2.1"
   peerDependencies:
     vite: ^4.0.0
     vue: ^3.2.25
-  checksum: 532192a3da39f3fd6ba9d4fa9de74533cf6e222785c26bcb75bde9f826c5c4a22ad6f0bb09fae83e3393f9d8d24b6982d547683b1967972a4350e8e76aecf3cb
+  checksum: a7266a45378d5fd7813699cf97dfac0e313dc63bd245a1c932848b2b5dc58aede922231d5a534baeeb7e2842c7172f17194a4833bd6a7a6ed61dc0a31d60c7c9
   languageName: node
   linkType: hard
 
@@ -4909,14 +4909,14 @@ __metadata:
   resolution: "hour-tracker-frontend@workspace:frontend"
   dependencies:
     "@hour-tracker/core-types": 1.0.0
-    "@pinia/testing": ^0.0.14
+    "@pinia/testing": 0.0.16
     "@types/node": ^17.0.10
-    "@vitejs/plugin-vue": 4.1.0
+    "@vitejs/plugin-vue": 4.2.1
     "@vitest/coverage-istanbul": 0.30.1
     "@vue/test-utils": 2.3.2
     jsdom: ^20.0.3
     msw: 1.2.1
-    pinia: 2.0.33
+    pinia: 2.0.35
     primeicons: 6.0.1
     primevue: 3.26.1
     sass: 1.55.0
@@ -7425,9 +7425,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pinia@npm:2.0.33":
-  version: 2.0.33
-  resolution: "pinia@npm:2.0.33"
+"pinia@npm:2.0.35":
+  version: 2.0.35
+  resolution: "pinia@npm:2.0.35"
   dependencies:
     "@vue/devtools-api": ^6.5.0
     vue-demi: "*"
@@ -7440,7 +7440,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: efd9cf1d61521ab2a4549f93ada6e2c1b9feeb6c8f2f482281a53c0079e0008f02adaebb07a782865ccfe896876ac60447ef4586fc6eeaeaf17d634767e22638
+  checksum: cecb1e1e97ed77f69166dc3815dfd05f712ac725763eb74059f5e4804b5902976c278a3d14ab5227892459e8d0b6d9645104e1d049e733228b696be98de450f0
   languageName: node
   linkType: hard
 
