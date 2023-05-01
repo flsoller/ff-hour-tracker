@@ -39,12 +39,12 @@ test.describe('Members', () => {
 
       for (const member of membersToCreate) {
         await expect(
-          page.getByText(member.emailAddress, {
+          page.getByText(member.firstName, {
             exact: true,
           })
         ).toBeVisible();
         await expect(
-          page.getByText(member.emailAddress, {
+          page.getByText(member.lastName, {
             exact: true,
           })
         ).toBeVisible();
@@ -71,12 +71,12 @@ test.describe('Members', () => {
 
       for (const member of sortedMembers.slice(0, 5)) {
         await expect(
-          page.getByText(member.emailAddress, {
+          page.getByText(member.firstName, {
             exact: true,
           })
         ).toBeVisible();
         await expect(
-          page.getByText(member.emailAddress, {
+          page.getByText(member.lastName, {
             exact: true,
           })
         ).toBeVisible();
@@ -92,12 +92,12 @@ test.describe('Members', () => {
 
       for (const member of sortedMembers.slice(5)) {
         await expect(
-          page.getByText(member.emailAddress, {
+          page.getByText(member.firstName, {
             exact: true,
           })
         ).toBeVisible();
         await expect(
-          page.getByText(member.emailAddress, {
+          page.getByText(member.lastName, {
             exact: true,
           })
         ).toBeVisible();
@@ -131,6 +131,53 @@ test.describe('Members', () => {
       expect(tableData[1]).toBe(
         `${sortedMembers[0].firstName}${sortedMembers[0].lastName}${sortedMembers[0].emailAddress}`
       );
+    });
+  });
+
+  test.describe('add members', () => {
+    test('should create a new member via add member modal', async ({
+      page,
+    }) => {
+      await userLogin(page, userEmail, password);
+      await goToPage(page, 'members');
+      await page.getByText('Add Member', { exact: true }).click();
+      await expect(page.getByRole('dialog')).toBeVisible();
+      await page.getByTestId('firstName').fill('Firstname');
+      await page.getByTestId('lastName').fill('Lastname');
+      await page.getByTestId('email').fill('first.last@user.com');
+      await page.getByTestId('addMember').click();
+      await expect(
+        page.getByText('New member added: Firstname Lastname', { exact: true })
+      ).toBeVisible();
+      await expect(page.getByRole('dialog')).not.toBeVisible();
+      const rows = page.getByRole('row');
+      const tableData = await rows.evaluateAll((list) =>
+        list.map((el) => el.textContent)
+      );
+      expect(tableData[1]).toBe('FirstnameLastnamefirst.last@user.com');
+    });
+
+    test('should show an error snackbar if adding member fails', async ({
+      page,
+    }) => {
+      await userLogin(page, userEmail, password);
+      await goToPage(page, 'members');
+      await page.route('**/v0/members', async (route) => {
+        await route.fetch();
+        route.fulfill({
+          status: 400,
+        });
+      });
+      await page.getByText('Add Member', { exact: true }).click();
+      await page.getByTestId('firstName').fill('Firstname');
+      await page.getByTestId('lastName').fill('Lastname');
+      await page.getByTestId('email').fill('first.last@user.com');
+      await page.getByTestId('addMember').click();
+      await expect(
+        page.getByText('Unexpected error while adding a member', {
+          exact: true,
+        })
+      ).toBeVisible();
     });
   });
 });
