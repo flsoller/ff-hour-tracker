@@ -9,7 +9,8 @@
     "frontend",
     "api",
     "./core/*",
-    "e2e"
+    "e2e",
+    "aws_cdk"
   ],
   "private": true,
   "scripts": {
