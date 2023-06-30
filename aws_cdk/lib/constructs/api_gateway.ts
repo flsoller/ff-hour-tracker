@@ -1,19 +1,20 @@
-import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { CorsHttpMethod, HttpApi } from '@aws-cdk/aws-apigatewayv2-alpha';
 import { HttpLambdaAuthorizer } from '@aws-cdk/aws-apigatewayv2-authorizers-alpha';
+import { RemovalPolicy } from 'aws-cdk-lib';
+import { API_GATEWAY } from '../constants/constructs';
 
-interface ApiGatewayProps extends cdk.StackProps {
+interface ApiGatewayProps {
   authService: HttpLambdaAuthorizer;
 }
 
-export class ApiGwV2Stack extends cdk.Stack {
+export class HourTrackerApiGateway extends Construct {
   public readonly httpApiGateway: HttpApi;
 
   constructor(scope: Construct, id: string, props: ApiGatewayProps) {
-    super(scope, id, props);
+    super(scope, id);
 
-    this.httpApiGateway = new HttpApi(this, 'HourTrackerApi', {
+    const gateway = new HttpApi(this, API_GATEWAY.NAME, {
       description: 'REST API for hour tracker app',
       corsPreflight: {
         allowHeaders: ['Content-Type', 'Authorization'],
@@ -31,14 +32,14 @@ export class ApiGwV2Stack extends cdk.Stack {
       createDefaultStage: false,
       defaultAuthorizer: props.authService,
     });
-
-    this.httpApiGateway.applyRemovalPolicy(cdk.RemovalPolicy.DESTROY);
-
-    this.httpApiGateway.addStage('dev', {
+    gateway.applyRemovalPolicy(RemovalPolicy.DESTROY);
+    gateway.addStage('custom', {
       throttle: {
         rateLimit: 50,
-        burstLimit: 75,
+        burstLimit: 25,
       },
     });
+
+    this.httpApiGateway = gateway;
   }
 }
