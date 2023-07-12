@@ -22,7 +22,7 @@ export class HourTrackerApi extends cdk.Stack {
       }
     );
 
-    new UsersService(this, HOUR_TRACKER.USERS_API, {
+    new UsersService(this, HOUR_TRACKER.API_USERS, {
       apiGateway: apiGateway.httpApiGateway,
     });
   }
