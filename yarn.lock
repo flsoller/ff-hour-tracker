@@ -46,35 +46,35 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-cdk/aws-apigatewayv2-alpha@npm:^2.82.0-alpha.0":
-  version: 2.82.0-alpha.0
-  resolution: "@aws-cdk/aws-apigatewayv2-alpha@npm:2.82.0-alpha.0"
+"@aws-cdk/aws-apigatewayv2-alpha@npm:^2.85.0-alpha.0":
+  version: 2.85.0-alpha.0
+  resolution: "@aws-cdk/aws-apigatewayv2-alpha@npm:2.85.0-alpha.0"
   peerDependencies:
-    aws-cdk-lib: 2.82.0
+    aws-cdk-lib: 2.85.0
     constructs: ^10.0.0
-  checksum: 16f3023da735580942538aed31121269a078e12b6555191f2802878f6303ef15ed41cadec8646048b10e1724463a329dcdc956b3af83d5e4dd47bb601696a318
+  checksum: d43cc0de2b82668c83cc0b2014ee79874cfc2562cd3635dc0366713f21c777cb36b988a4f823d0e0eb6ba3d1a200c7f1011e71090c12c010d07627f81e75c103
   languageName: node
   linkType: hard
 
-"@aws-cdk/aws-apigatewayv2-authorizers-alpha@npm:^2.82.0-alpha.0":
-  version: 2.82.0-alpha.0
-  resolution: "@aws-cdk/aws-apigatewayv2-authorizers-alpha@npm:2.82.0-alpha.0"
+"@aws-cdk/aws-apigatewayv2-authorizers-alpha@npm:^2.85.0-alpha.0":
+  version: 2.85.0-alpha.0
+  resolution: "@aws-cdk/aws-apigatewayv2-authorizers-alpha@npm:2.85.0-alpha.0"
   peerDependencies:
-    "@aws-cdk/aws-apigatewayv2-alpha": 2.82.0-alpha.0
-    aws-cdk-lib: 2.82.0
+    "@aws-cdk/aws-apigatewayv2-alpha": 2.85.0-alpha.0
+    aws-cdk-lib: 2.85.0
     constructs: ^10.0.0
-  checksum: 3d130cc38504fe9540b89f728f5d9fd9acbdbbfc31145ff5d0a58c7c21d8a22127d7b68224a1a03c874c72ff69853e81f48d17813038d735bc85b2d425925d01
+  checksum: 3db292c6fa1f99d2ec89ce792b5bf13813e73503bbb8715961ccd6224eb21164d62e6cb889be45c92865b4955780b05e9c42f945ac373588654e180ff8df9d13
   languageName: node
   linkType: hard
 
-"@aws-cdk/aws-apigatewayv2-integrations-alpha@npm:^2.82.0-alpha.0":
-  version: 2.82.0-alpha.0
-  resolution: "@aws-cdk/aws-apigatewayv2-integrations-alpha@npm:2.82.0-alpha.0"
+"@aws-cdk/aws-apigatewayv2-integrations-alpha@npm:^2.85.0-alpha.0":
+  version: 2.85.0-alpha.0
+  resolution: "@aws-cdk/aws-apigatewayv2-integrations-alpha@npm:2.85.0-alpha.0"
   peerDependencies:
-    "@aws-cdk/aws-apigatewayv2-alpha": 2.82.0-alpha.0
-    aws-cdk-lib: 2.82.0
+    "@aws-cdk/aws-apigatewayv2-alpha": 2.85.0-alpha.0
+    aws-cdk-lib: 2.85.0
     constructs: ^10.0.0
-  checksum: 78218f8e0a3ed2d2d9ee53e1039a64762d6c3b31ff94825d227728a5f06f00e3a4077ea5ce4203c11c8cd80693fa82f76ac39ffcc0123b8b234bdde86bf9cbf9
+  checksum: b519647214c68e788e4af7d598eb60f7948e2d23b1771f6c4f16fc7c504205bd1fce37ee66a86ad863a6c8d259f75fb96e45b9bc8e6762707164d6a5439f74c2
   languageName: node
   linkType: hard
 
@@ -3015,9 +3015,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aws-cdk-lib@npm:^2.82.0":
-  version: 2.82.0
-  resolution: "aws-cdk-lib@npm:2.82.0"
+"aws-cdk-lib@npm:^2.85.0":
+  version: 2.85.0
+  resolution: "aws-cdk-lib@npm:2.85.0"
   dependencies:
     "@aws-cdk/asset-awscli-v1": ^2.2.177
     "@aws-cdk/asset-kubectl-v20": ^2.1.1
@@ -3034,13 +3034,13 @@ __metadata:
     yaml: 1.10.2
   peerDependencies:
     constructs: ^10.0.0
-  checksum: b9e0caf87b49c9b5bb4a63a0aa3f4e6301de882971018da85315ba9e09ca29a617cbb393f1f3b70e982a2b6ae412adb7f16b331418db551ea6d9384cdd35fbdd
+  checksum: 2bcb61a7ff78bf17bd979da81fb89997d9d2b52b9a26b6c91bba8d8d6735699a995db0272902b4262f8cda2e5edd6d3793ed5a4093497021a6f0bbd1810c43b5
   languageName: node
   linkType: hard
 
-"aws-cdk@npm:^2.82.0":
-  version: 2.82.0
-  resolution: "aws-cdk@npm:2.82.0"
+"aws-cdk@npm:^2.85.0":
+  version: 2.85.0
+  resolution: "aws-cdk@npm:2.85.0"
   dependencies:
     fsevents: 2.3.2
   dependenciesMeta:
@@ -3048,7 +3048,7 @@ __metadata:
       optional: true
   bin:
     cdk: bin/cdk
-  checksum: 97f16d954481b1d73770e638559f5ac836e6aca8a591207aac98a7117cdc16fb1984272e6d4ae2ef76999f8b5bf634235f298b66d94fd3a194d0379495559e85
+  checksum: e00b93ab79d523a904af371fd16b695a7ee24b7f62307851c4551aab8440289d3a6bd6ca8f6c6d1fc957755ad2ca8011046182c4e93ad2bfa67187078bc31e44
   languageName: node
   linkType: hard
 
@@ -3056,13 +3056,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "aws_cdk@workspace:aws_cdk"
   dependencies:
-    "@aws-cdk/aws-apigatewayv2-alpha": ^2.82.0-alpha.0
-    "@aws-cdk/aws-apigatewayv2-authorizers-alpha": ^2.82.0-alpha.0
-    "@aws-cdk/aws-apigatewayv2-integrations-alpha": ^2.82.0-alpha.0
+    "@aws-cdk/aws-apigatewayv2-alpha": ^2.85.0-alpha.0
+    "@aws-cdk/aws-apigatewayv2-authorizers-alpha": ^2.85.0-alpha.0
+    "@aws-cdk/aws-apigatewayv2-integrations-alpha": ^2.85.0-alpha.0
     "@types/jest": ^29.5.1
     "@types/node": 20.1.7
-    aws-cdk: ^2.82.0
-    aws-cdk-lib: ^2.82.0
+    aws-cdk: ^2.85.0
+    aws-cdk-lib: ^2.85.0
     constructs: ^10.0.0
     jest: ^29.5.0
     source-map-support: ^0.5.21
