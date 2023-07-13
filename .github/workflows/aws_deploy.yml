@@ -1,0 +1,35 @@
+name: Deploy infrastructure to AWS
+
+on:
+  workflow_call:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # interact with GitHub's OIDC Token endpoint
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-node@7c12f8017d5436eb855f1ed4399f037a36fbd9e8
+        with:
+          node-version: '18'
+
+      - name: Configure temporary AWS credentials with OIDC
+        uses: aws-actions/configure-aws-credentials@5727f247b64f324ec403ac56ae05e220fd02b65f
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Install serverless-api package dependencies
+        run: |
+          yarn plugin import workspace-tools
+          yarn workspaces focus aws_cdk
+
+      # Hardcoded develop stage name for now
+      - name: Deploy CDK stack
+        working-directory: ./aws_cdk
+        run: yarn cdk deploy -c stage_name=develop

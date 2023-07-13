@@ -1,18 +1,19 @@
-import * as cdk from 'aws-cdk-lib';
+import { RemovalPolicy } from 'aws-cdk-lib';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import { HttpApi, HttpMethod } from '@aws-cdk/aws-apigatewayv2-alpha';
 import { HttpLambdaIntegration } from '@aws-cdk/aws-apigatewayv2-integrations-alpha';
+import { USERS_SERVICE } from '../constants/constructs';
 
-interface UsersStackProps extends cdk.StackProps {
+interface UsersProps {
   apiGateway: HttpApi;
 }
 
-export class UsersStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props: UsersStackProps) {
-    super(scope, id, props);
+export class UsersService extends Construct {
+  constructor(scope: Construct, id: string, props: UsersProps) {
+    super(scope, id);
 
-    const usersService = new lambda.Function(this, 'UsersService', {
+    const usersService = new lambda.Function(this, USERS_SERVICE.NAME, {
       runtime: lambda.Runtime.NODEJS_18_X,
       memorySize: 128,
       handler: 'index.handler',
@@ -24,10 +25,10 @@ export class UsersStack extends cdk.Stack {
         };
       `),
     });
-    usersService.applyRemovalPolicy(cdk.RemovalPolicy.DESTROY);
+    usersService.applyRemovalPolicy(RemovalPolicy.DESTROY);
 
     const usersServiceIntegration = new HttpLambdaIntegration(
-      'UsersIntegration',
+      USERS_SERVICE.LAMBDA_INTEGRATION,
       usersService
     );
 
