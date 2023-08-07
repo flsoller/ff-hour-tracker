@@ -1,7 +1,7 @@
 name: Deploy infrastructure to AWS
 
 on:
-  workflow_call:
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -32,4 +32,4 @@ jobs:
       # Hardcoded develop stage name for now
       - name: Deploy CDK stack
         working-directory: ./aws_cdk
-        run: yarn cdk deploy -c stage_name=develop
+        run: yarn cdk deploy -c stage_name=develop --require-approval never
