@@ -17,7 +17,6 @@ export class UsersService extends Construct {
       runtime: lambda.Runtime.NODEJS_18_X,
       memorySize: 128,
       handler: 'index.handler',
-      reservedConcurrentExecutions: 2,
       // TO-DO investigate s3 zip or docker based ECR source deployments
       code: lambda.Code.fromInline(`
         exports.handler = async (event) => {
