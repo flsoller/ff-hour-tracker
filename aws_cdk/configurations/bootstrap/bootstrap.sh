@@ -8,6 +8,15 @@ createBootstrapPolicy() {
     --policy-document file://cdkCfExecutionPolicy.json
 }
 
+# Create a custom bootstrap policy for limiting permissions
+updateBootstrapPolicy() {
+  ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
+  aws iam create-policy-version \
+    --policy-arn arn:aws:iam::$ACCOUNT_ID:policy/cdkCfExecutionPolicy \
+    --policy-document file://cdkCfExecutionPolicy.json \
+    --set-as-default
+}
+
 # Bootstrap cdk toolkit with custom CF execution policy
 bootstrapAccount() {
   ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
@@ -19,5 +28,6 @@ bootstrapAccount() {
 
 case $1 in
 createBootstrapPolicy) createBootstrapPolicy ;;
+updateBootstrapPolicy) updateBootstrapPolicy ;;
 bootstrapAccount) bootstrapAccount ;;
 esac
