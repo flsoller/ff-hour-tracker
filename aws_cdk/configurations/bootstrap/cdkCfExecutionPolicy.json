@@ -3,7 +3,7 @@
   "Statement": [
     {
       "Effect": "Allow",
-      "Action": ["apigateway:*", "cloudwatch:*", "lambda:*", "logs:*"],
+      "Action": ["apigateway:*", "cloudwatch:*", "lambda:*", "logs:*", "ssm:*"],
       "Resource": "*",
       "Condition": {
         "StringEquals": {

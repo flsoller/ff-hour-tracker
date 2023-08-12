@@ -4,7 +4,6 @@ import * as cdk from 'aws-cdk-lib';
 import { HourTrackerApi } from '../lib';
 
 const app = new cdk.App();
-const stackStage = app.node.tryGetContext('stage_name');
-new HourTrackerApi(app, `HourTrackerApi-${stackStage}`);
+new HourTrackerApi(app, 'HourTrackerApi');
 
 app.synth();
