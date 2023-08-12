@@ -35,9 +35,10 @@ export class HourTrackerApiGateway extends Construct {
     gateway.applyRemovalPolicy(RemovalPolicy.DESTROY);
     gateway.addStage('custom', {
       throttle: {
-        rateLimit: 50,
-        burstLimit: 25,
+        rateLimit: 10,
+        burstLimit: 5,
       },
+      autoDeploy: true,
     });
 
     this.httpApiGateway = gateway;

@@ -1,4 +1,4 @@
-name: AWS_Deploy_Stack
+name: AWS_Offboard_Stack
 
 on:
   workflow_dispatch:
@@ -30,6 +30,6 @@ jobs:
           yarn plugin import workspace-tools
           yarn workspaces focus aws_cdk
 
-      - name: Deploy CDK Stack
+      - name: Destroy CDK Stack
         working-directory: ./aws_cdk
-        run: yarn cdk deploy --require-approval never
+        run: yarn cdk destroy --all --force
