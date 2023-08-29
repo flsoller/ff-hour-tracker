@@ -1,0 +1,4 @@
+name: AWS_ECR_Build
+
+on:
+  workflow_dispatch:
