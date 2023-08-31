@@ -1,0 +1,15 @@
+{
+  "name": "@hour-tracker/api-authorizer",
+  "version": "1.0.0",
+  "description": "Default API Gateway authorizer",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "esbuild index.ts --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/index.js"
+  },
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.119",
+    "esbuild": "^0.19.2"
+  }
+}
