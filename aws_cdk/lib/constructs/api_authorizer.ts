@@ -1,11 +1,13 @@
 import { Construct } from 'constructs';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
+import * as ecr from 'aws-cdk-lib/aws-ecr';
 import {
   HttpLambdaAuthorizer,
   HttpLambdaResponseType,
 } from '@aws-cdk/aws-apigatewayv2-authorizers-alpha';
 import { Duration, RemovalPolicy } from 'aws-cdk-lib';
 import { DEFAULT_AUTHORIZER } from '../constants/constructs';
+import { HOUR_TRACKER } from '../constants/stacks';
 
 export class AuthorizerService extends Construct {
   public readonly authorizer: HttpLambdaAuthorizer;
@@ -13,19 +15,19 @@ export class AuthorizerService extends Construct {
   constructor(scope: Construct, id: string) {
     super(scope, id);
 
-    const authorizerService = new lambda.Function(
+    const ecrRepo = ecr.Repository.fromRepositoryName(
+      this,
+      `${id}-repo`,
+      HOUR_TRACKER.API_AUTHORIZER
+    );
+
+    const authorizerService = new lambda.DockerImageFunction(
       this,
       DEFAULT_AUTHORIZER.NAME,
       {
-        runtime: lambda.Runtime.NODEJS_18_X,
-        memorySize: 128,
-        handler: 'index.handler',
-        // TO-DO investigate s3 zip or docker based ECR source deployments
-        code: lambda.Code.fromInline(`
-            exports.handler = async (event) => {
-              console.log('event: ', event)
-            };
-          `),
+        code: lambda.DockerImageCode.fromEcr(ecrRepo, {
+          tagOrDigest: 'latest',
+        }),
       }
     );
     authorizerService.applyRemovalPolicy(RemovalPolicy.DESTROY);
