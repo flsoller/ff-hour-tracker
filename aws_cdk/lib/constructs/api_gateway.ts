@@ -1,6 +1,6 @@
 import { Construct } from 'constructs';
-import { CorsHttpMethod, HttpApi } from '@aws-cdk/aws-apigatewayv2-alpha';
-import { HttpLambdaAuthorizer } from '@aws-cdk/aws-apigatewayv2-authorizers-alpha';
+import { CorsHttpMethod, HttpApi } from 'aws-cdk-lib/aws-apigatewayv2';
+import { HttpLambdaAuthorizer } from 'aws-cdk-lib/aws-apigatewayv2-authorizers';
 import { RemovalPolicy } from 'aws-cdk-lib';
 import { API_GATEWAY } from '../constants/constructs';
 
