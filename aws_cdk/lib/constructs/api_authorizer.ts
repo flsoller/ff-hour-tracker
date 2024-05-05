@@ -4,7 +4,7 @@ import * as ecr from 'aws-cdk-lib/aws-ecr';
 import {
   HttpLambdaAuthorizer,
   HttpLambdaResponseType,
-} from '@aws-cdk/aws-apigatewayv2-authorizers-alpha';
+} from 'aws-cdk-lib/aws-apigatewayv2-authorizers';
 import { Duration, RemovalPolicy } from 'aws-cdk-lib';
 import { DEFAULT_AUTHORIZER } from '../constants/constructs';
 import { HOUR_TRACKER } from '../constants/stacks';
