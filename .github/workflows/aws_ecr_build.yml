@@ -2,6 +2,7 @@ name: AWS_ECR_Build
 
 on:
   workflow_dispatch:
+  workflow_call:
 
 jobs:
   build-images:
@@ -27,6 +28,7 @@ jobs:
           # In the future, role will be scoped per account (dev, test, prod)
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: ${{ secrets.AWS_REGION }}
+          mask-aws-account-id: true
 
       - name: Login to Amazon ECR
         id: login-ecr

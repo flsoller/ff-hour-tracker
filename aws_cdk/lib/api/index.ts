@@ -1,9 +1,9 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import { AuthorizerService } from './constructs/api_authorizer';
-import { HourTrackerApiGateway } from './constructs/api_gateway';
-import { UsersService } from './constructs/users';
-import { HOUR_TRACKER } from './constants/stacks';
+import { AuthorizerService } from './authorizer';
+import { HourTrackerApiGateway } from './gateway';
+import { UsersService } from './users';
+import { HOUR_TRACKER } from '../constants/stacks';
 
 export class HourTrackerApi extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
