@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  offboard:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -32,4 +32,4 @@ jobs:
 
       - name: Destroy CDK Stack
         working-directory: ./aws_cdk
-        run: yarn cdk destroy --all --force
+        run: yarn cdk destroy HourTrackerApi --force

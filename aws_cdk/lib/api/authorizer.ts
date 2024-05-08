@@ -8,6 +8,7 @@ import {
 import { Duration, RemovalPolicy } from 'aws-cdk-lib';
 import { DEFAULT_AUTHORIZER } from '../constants/constructs';
 import { HOUR_TRACKER } from '../constants/stacks';
+import { HOUR_TRACKER_ECR_REPO_NAMES } from '../constants/ecr';
 
 export class AuthorizerService extends Construct {
   public readonly authorizer: HttpLambdaAuthorizer;
@@ -18,7 +19,7 @@ export class AuthorizerService extends Construct {
     const ecrRepo = ecr.Repository.fromRepositoryName(
       this,
       `${id}-repo`,
-      HOUR_TRACKER.API_AUTHORIZER
+      HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHORIZER
     );
 
     const authorizerService = new lambda.DockerImageFunction(
