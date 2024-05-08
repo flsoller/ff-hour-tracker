@@ -1,0 +1,5 @@
+# Initial pre so workflow is avaliable to use for development
+name: AWS_Pipeline_API
+
+on:
+  workflow_dispatch:
