@@ -2,6 +2,9 @@ name: AWS_Pipeline_API
 
 on:
   workflow_dispatch:
+  push:
+    branches-ignore:
+      - master
 
 jobs:
   deploy_ecr_stack:
@@ -21,6 +24,7 @@ jobs:
     uses: ./.github/workflows/aws_deploy.yml
     with:
       desired_stack: HourTrackerApi
+      parameter_hash_or_version: '--parameters hashOrVersion=${{ github.sha }}'
 
   destroy_api_stack:
     needs: deploy_api_stack

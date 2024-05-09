@@ -1,4 +1,5 @@
 import { Construct } from 'constructs';
+import * as cdk from 'aws-cdk-lib';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as ecr from 'aws-cdk-lib/aws-ecr';
 import {
@@ -7,13 +8,16 @@ import {
 } from 'aws-cdk-lib/aws-apigatewayv2-authorizers';
 import { Duration, RemovalPolicy } from 'aws-cdk-lib';
 import { DEFAULT_AUTHORIZER } from '../constants/constructs';
-import { HOUR_TRACKER } from '../constants/stacks';
 import { HOUR_TRACKER_ECR_REPO_NAMES } from '../constants/ecr';
+
+interface AuthorizerProps {
+  hashOrVersion: cdk.CfnParameter;
+}
 
 export class AuthorizerService extends Construct {
   public readonly authorizer: HttpLambdaAuthorizer;
 
-  constructor(scope: Construct, id: string) {
+  constructor(scope: Construct, id: string, props: AuthorizerProps) {
     super(scope, id);
 
     const ecrRepo = ecr.Repository.fromRepositoryName(
@@ -27,7 +31,7 @@ export class AuthorizerService extends Construct {
       DEFAULT_AUTHORIZER.NAME,
       {
         code: lambda.DockerImageCode.fromEcr(ecrRepo, {
-          tagOrDigest: 'latest',
+          tagOrDigest: props.hashOrVersion.valueAsString,
         }),
       }
     );
