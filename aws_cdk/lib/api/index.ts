@@ -9,9 +9,17 @@ export class HourTrackerApi extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
+    const hashOrVersion = new cdk.CfnParameter(this, 'hashOrVersion', {
+      description: 'The version or hash used to reference the images',
+      type: 'String',
+    });
+
     const defaultAuthorizer = new AuthorizerService(
       this,
-      HOUR_TRACKER.API_AUTHORIZER
+      HOUR_TRACKER.API_AUTHORIZER,
+      {
+        hashOrVersion,
+      }
     );
 
     const apiGateway = new HourTrackerApiGateway(
