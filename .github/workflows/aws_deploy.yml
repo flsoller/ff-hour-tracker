@@ -16,6 +16,11 @@ on:
         description: 'The name of the stack that should be deployed'
         required: true
         type: string
+      parameter_hash_or_version:
+        description: 'The sha or version used to reference the image tags'
+        required: false
+        type: string
+        default: ''
 
 jobs:
   deploy_aws_resource:
@@ -45,4 +50,4 @@ jobs:
 
       - name: 'Deploying CDK Stack: ${{ inputs.desired_stack }}'
         working-directory: ./aws_cdk
-        run: yarn cdk deploy ${{ inputs.desired_stack }} --require-approval never
+        run: yarn cdk deploy ${{ inputs.desired_stack }} --require-approval never ${{ inputs.parameter_hash_or_version }}
