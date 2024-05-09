@@ -1,5 +1,30 @@
-# Initial pre so workflow is avaliable to use for development
 name: AWS_Pipeline_API
 
 on:
   workflow_dispatch:
+
+jobs:
+  deploy_ecr_stack:
+    secrets: inherit
+    uses: ./.github/workflows/aws_deploy.yml
+    with:
+      desired_stack: HourTrackerImageRepositories
+
+  build_images:
+    needs: deploy_ecr_stack
+    secrets: inherit
+    uses: ./.github/workflows/aws_ecr_build.yml
+
+  deploy_api_stack:
+    needs: build_images
+    secrets: inherit
+    uses: ./.github/workflows/aws_deploy.yml
+    with:
+      desired_stack: HourTrackerApi
+
+  destroy_api_stack:
+    needs: deploy_api_stack
+    secrets: inherit
+    uses: ./.github/workflows/aws_destroy.yml
+    with:
+      desired_stack: HourTrackerApi
