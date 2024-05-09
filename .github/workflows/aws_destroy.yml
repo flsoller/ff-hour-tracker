@@ -1,10 +1,24 @@
-name: AWS_Offboard_Stack
+name: AWS_Destroy_Stack
 
 on:
   workflow_dispatch:
+    inputs:
+      desired_stack:
+        description: 'The name of the stack that should be destroyed'
+        required: true
+        type: choice
+        options:
+          - HourTrackerImageRepositories
+          - HourTrackerApi
+  workflow_call:
+    inputs:
+      desired_stack:
+        description: 'The name of the stack that should be destroyed'
+        required: true
+        type: string
 
 jobs:
-  offboard:
+  destroy_aws_resource:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -16,7 +30,7 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: '20.12.2'
+          node-version: ${{ vars.NODE_VERSION }}
 
       - name: Configure AWS Credentials For GitHub Actions
         uses: aws-actions/configure-aws-credentials@v4
@@ -24,12 +38,11 @@ jobs:
           # In the future, role will be scoped per account (dev, test, prod)
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: ${{ secrets.AWS_REGION }}
+          mask-aws-account-id: true
 
       - name: Install CDK Workspace Dependencies
-        run: |
-          yarn plugin import workspace-tools
-          yarn workspaces focus aws_cdk
+        run: yarn workspaces focus aws_cdk
 
-      - name: Destroy CDK Stack
+      - name: 'Destroying CDK Stack: ${{ inputs.desired_stack }}'
         working-directory: ./aws_cdk
-        run: yarn cdk destroy HourTrackerApi --force
+        run: yarn cdk destroy ${{ inputs.desired_stack }} --force

@@ -2,9 +2,23 @@ name: AWS_Deploy_Stack
 
 on:
   workflow_dispatch:
+    inputs:
+      desired_stack:
+        description: 'The name of the stack that should be deployed'
+        required: true
+        type: choice
+        options:
+          - HourTrackerImageRepositories
+          - HourTrackerApi
+  workflow_call:
+    inputs:
+      desired_stack:
+        description: 'The name of the stack that should be deployed'
+        required: true
+        type: string
 
 jobs:
-  deploy_ecr_repos:
+  deploy_aws_resource:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -16,7 +30,7 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: '20.12.2'
+          node-version: ${{ vars.NODE_VERSION }}
 
       - name: Configure AWS Credentials For GitHub Actions
         uses: aws-actions/configure-aws-credentials@v4
@@ -27,47 +41,8 @@ jobs:
           mask-aws-account-id: true
 
       - name: Install CDK Workspace Dependencies
-        run: |
-          yarn plugin import workspace-tools
-          yarn workspaces focus aws_cdk
+        run: yarn workspaces focus aws_cdk
 
-      - name: Deploy CDK Stack
+      - name: 'Deploying CDK Stack: ${{ inputs.desired_stack }}'
         working-directory: ./aws_cdk
-        run: yarn cdk deploy HourTrackerImageRepositories --require-approval never
-
-  build_images:
-    needs: deploy_ecr_repos
-    secrets: inherit
-    uses: ./.github/workflows/aws_ecr_build.yml
-
-  deploy_api:
-    needs: build_images
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20.12.2'
-
-      - name: Configure AWS Credentials For GitHub Actions
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          # In the future, role will be scoped per account (dev, test, prod)
-          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-          aws-region: ${{ secrets.AWS_REGION }}
-          mask-aws-account-id: true
-
-      - name: Install CDK Workspace Dependencies
-        run: |
-          yarn plugin import workspace-tools
-          yarn workspaces focus aws_cdk
-
-      - name: Deploy CDK Stack
-        working-directory: ./aws_cdk
-        run: yarn cdk deploy HourTrackerApi --require-approval never
+        run: yarn cdk deploy ${{ inputs.desired_stack }} --require-approval never
