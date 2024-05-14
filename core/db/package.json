@@ -1,0 +1,26 @@
+{
+  "name": "@hour-tracker/core-db",
+  "description": "Database package for ff-hour-tracker app",
+  "license": "UNLICENSED",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "esbuild src/index.ts --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/index.js",
+    "db:prototyping:push": "dotenv -e .env.dev drizzle-kit push",
+    "db:seed:dev": "dotenv -e .env.dev tsx ./src/seeder/seed.ts",
+    "db:migration:generate": "sh -c 'drizzle-kit generate --name ${0}'",
+    "db:migration:dev:migrate": "dotenv -e .env.dev drizzle-kit migrate"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "0.9.3",
+    "drizzle-orm": "0.30.10",
+    "postgres": "3.4.4"
+  },
+  "devDependencies": {
+    "dotenv": "16.4.5",
+    "dotenv-cli": "7.4.2",
+    "drizzle-kit": "0.21.2",
+    "esbuild": "0.21.2",
+    "tsx": "4.10.2",
+    "typescript": "5.4.5"
+  }
+}
