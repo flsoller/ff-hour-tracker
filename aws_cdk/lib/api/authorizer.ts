@@ -1,5 +1,4 @@
 import { Construct } from 'constructs';
-import * as cdk from 'aws-cdk-lib';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as ecr from 'aws-cdk-lib/aws-ecr';
 import {
@@ -11,7 +10,8 @@ import { DEFAULT_AUTHORIZER } from '../constants/constructs';
 import { HOUR_TRACKER_ECR_REPO_NAMES } from '../constants/ecr';
 
 interface AuthorizerProps {
-  hashOrVersion: cdk.CfnParameter;
+  hashOrVersion: string;
+  dbConnectionString: string;
 }
 
 export class AuthorizerService extends Construct {
@@ -31,8 +31,11 @@ export class AuthorizerService extends Construct {
       DEFAULT_AUTHORIZER.NAME,
       {
         code: lambda.DockerImageCode.fromEcr(ecrRepo, {
-          tagOrDigest: props.hashOrVersion.valueAsString,
+          tagOrDigest: props.hashOrVersion,
         }),
+        environment: {
+          DATABASE_URL: props.dbConnectionString,
+        },
       }
     );
     authorizerService.applyRemovalPolicy(RemovalPolicy.DESTROY);
