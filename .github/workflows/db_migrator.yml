@@ -3,9 +3,6 @@ name: Database_Migrator
 on:
   workflow_dispatch:
   workflow_call:
-  push:
-    branches-ignore:
-      - master
 
 jobs:
   build_image:
