@@ -14,6 +14,19 @@ services:
     volumes:
       - postgres-db:/var/lib/postgresql/data
 
+  # db migration container
+  postgres_migrator:
+    build:
+      context: .
+      dockerfile: ./core/db/Dockerfile
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432/app_db_dev
+      - DEV_OR_INTEGRATION_USE=true
+    ports:
+      - '5420:5420'
+    networks:
+      - appnetwork
+
 networks:
   appnetwork:
     driver: bridge
