@@ -21,6 +21,8 @@
     "api:build": "yarn workspace hour-tracker-api build",
     "authorizer:build": "yarn workspace @hour-tracker/api-authorizer build",
     "core:build": "yarn workspace @hour-tracker/core-constants build",
+    "core:db:build": "yarn workspace @hour-tracker/core-db build",
+    "core:db:migrate": "yarn workspace @hour-tracker/core-db db:migrate",
     "api:test-ci:integration": "docker-compose -f docker-compose.dev.yml exec api yarn workspace hour-tracker-api test",
     "api:db:docker:reset": "docker-compose -f docker-compose.dev.yml exec api yarn workspace hour-tracker-api db:reset",
     "api:db:migrate": "docker-compose -f docker-compose.dev.yml exec api yarn workspace hour-tracker-api db:migrate",

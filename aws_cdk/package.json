@@ -1,7 +1,6 @@
 {
   "name": "aws_cdk",
   "version": "0.1.0",
-  "bin": "bin/aws_cdk.js",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",

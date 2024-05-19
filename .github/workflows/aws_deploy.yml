@@ -50,4 +50,7 @@ jobs:
 
       - name: 'Deploying CDK Stack: ${{ inputs.desired_stack }}'
         working-directory: ./aws_cdk
-        run: yarn cdk deploy ${{ inputs.desired_stack }} --require-approval never ${{ inputs.parameter_hash_or_version }}
+        run: |
+          yarn cdk deploy ${{ inputs.desired_stack }} \
+          --require-approval never \
+          ${{ inputs.parameter_hash_or_version }}

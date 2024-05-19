@@ -4,11 +4,11 @@
   "license": "UNLICENSED",
   "main": "./dist/index.js",
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/index.js",
-    "db:prototyping:push": "dotenv -e .env.dev drizzle-kit push",
+    "build": "esbuild --outdir=dist src/*/*.ts src/*.ts --bundle --minify --sourcemap --platform=node --target=es2020",
     "db:seed:dev": "dotenv -e .env.dev tsx ./src/seeder/seed.ts",
-    "db:migration:generate": "sh -c 'drizzle-kit generate --name ${0}'",
-    "db:migration:dev:migrate": "dotenv -e .env.dev drizzle-kit migrate"
+    "db:migration:dev:generate": "sh -c 'drizzle-kit generate --name ${0}'",
+    "db:migration:dev:migrate": "dotenv -e .env.dev drizzle-kit migrate",
+    "db:migrate": "node ./dist/migrate.js"
   },
   "dependencies": {
     "@neondatabase/serverless": "0.9.3",
