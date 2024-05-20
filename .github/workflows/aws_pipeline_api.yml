@@ -2,9 +2,7 @@ name: AWS_Pipeline_API
 
 on:
   workflow_dispatch:
-  push:
-    branches-ignore:
-      - master
+  workflow_call:
 
 jobs:
   deploy_ecr_stack:
