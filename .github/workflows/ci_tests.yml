@@ -1,0 +1,5 @@
+name: CI_Testing_Pipeline
+
+on:
+  workflow_dispatch:
+  workflow_call:
