@@ -9,6 +9,19 @@ services:
     networks:
       - appnetwork
 
+  # db migration container
+  postgres_tests:
+    image: postgres:16.3
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: app_integration_tests
+    ports:
+      - '5433:5432'
+    networks:
+      - appnetwork
+
 networks:
   appnetwork:
     driver: bridge

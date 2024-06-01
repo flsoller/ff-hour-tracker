@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AuthorizerLambda should contain the correct Lambda properties 1`] = `
+{
+  "DeletionPolicy": "Delete",
+  "Properties": {
+    "Code": {
+      "ImageUri": {
+        "Fn::Join": [
+          "",
+          [
+            {
+              "Ref": "AWS::AccountId",
+            },
+            ".dkr.ecr.",
+            {
+              "Ref": "AWS::Region",
+            },
+            ".",
+            {
+              "Ref": "AWS::URLSuffix",
+            },
+            "/hour-tracker-api-authorizer:",
+            {
+              "Ref": "hashOrVersion",
+            },
+          ],
+        ],
+      },
+    },
+    "Environment": {
+      "Variables": {
+        "DATABASE_URL": {
+          "Ref": "SsmParameterValueHOURTRACKERTESTINGDATABASEURLC96584B6F00A464EAD1953AFF4B05118Parameter",
+        },
+      },
+    },
+    "PackageType": "Image",
+    "Role": {
+      "Fn::GetAtt": [
+        "hourtrackerapiauthorizerhourtrackerdefaultauthorizerserviceServiceRoleC8047161",
+        "Arn",
+      ],
+    },
+  },
+  "Type": "AWS::Lambda::Function",
+  "UpdateReplacePolicy": "Delete",
+}
+`;

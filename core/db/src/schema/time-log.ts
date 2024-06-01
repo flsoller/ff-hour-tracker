@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { pgTable, timestamp, uuid, integer } from 'drizzle-orm/pg-core';
+import { timestamp, uuid, integer } from 'drizzle-orm/pg-core';
 import { activityTypes } from './activity-type';
 import { organizations } from './organization';
 import { members } from './member';

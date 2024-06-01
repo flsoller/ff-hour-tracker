@@ -6,7 +6,11 @@ on:
       - master
 
 jobs:
+  run_tests:
+    uses: ./.github/workflows/ci_tests.yml
+
   reset_neon_testing_branch:
+    needs: run_tests
     runs-on: ubuntu-latest
     steps:
       - name: Reset Neon Testing branch to parent
