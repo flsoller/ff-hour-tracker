@@ -1,11 +1,4 @@
-import {
-  pgTable,
-  pgEnum,
-  text,
-  uniqueIndex,
-  uuid,
-  timestamp,
-} from 'drizzle-orm/pg-core';
+import { text, uniqueIndex, uuid, timestamp } from 'drizzle-orm/pg-core';
 import { organizations } from './organization';
 import { relations } from 'drizzle-orm';
 import { hourTrackerSchema } from './shared/schema';

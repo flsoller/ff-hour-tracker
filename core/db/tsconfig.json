@@ -6,6 +6,7 @@
     "declaration": true,
     "strict": true,
     "noImplicitAny": true,
+    "esModuleInterop": true,
     "strictNullChecks": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
@@ -18,5 +19,5 @@
     "experimentalDecorators": true,
     "strictPropertyInitialization": false
   },
-  "exclude": ["node_modules", "cdk.out"]
+  "exclude": ["node_modules"]
 }
