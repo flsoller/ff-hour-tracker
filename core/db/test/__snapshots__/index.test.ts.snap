@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Migrations should apply all migrations to provided DB 1`] = `
+{
+  "created_at": Any<String>,
+  "hash": "b1b46e7d016aa5eadbb00c35014b3303d3972618801b8304c187f5fdbf7393c4",
+  "id": 1,
+}
+`;
