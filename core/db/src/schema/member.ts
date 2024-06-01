@@ -1,11 +1,5 @@
 import { relations } from 'drizzle-orm';
-import {
-  pgTable,
-  text,
-  timestamp,
-  uuid,
-  uniqueIndex,
-} from 'drizzle-orm/pg-core';
+import { text, timestamp, uuid, uniqueIndex } from 'drizzle-orm/pg-core';
 import { organizations } from './organization';
 import { timeLogs } from './time-log';
 import { hourTrackerSchema } from './shared/schema';

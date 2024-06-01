@@ -1,0 +1,36 @@
+import { Template } from 'aws-cdk-lib/assertions';
+import * as cdk from 'aws-cdk-lib';
+import { HourTrackerImageRepositories } from '../../lib/ecr';
+import { HOUR_TRACKER_ECR_REPO_NAMES } from '../../lib/constants/ecr';
+import { cdkResourceFinder } from '../helpers';
+
+let app: cdk.App;
+let ecrStack: HourTrackerImageRepositories;
+let template: Template;
+
+beforeEach(() => {
+  app = new cdk.App({
+    context: { '@aws-cdk/core:newStyleStackSynthesis': false },
+  });
+  ecrStack = new HourTrackerImageRepositories(
+    app,
+    'HourTrackerImageRepository'
+  );
+  template = Template.fromStack(ecrStack);
+});
+
+describe('HourTrackerImageRepositories', () => {
+  it('should contain the correct amount of repositories', () => {
+    template.resourceCountIs('AWS::ECR::Repository', 1);
+  });
+
+  describe('API_AUTHORIZER', () => {
+    it('should have the correct repository parameters', () => {
+      const resource = cdkResourceFinder(
+        template,
+        HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHORIZER
+      );
+      expect(resource).toMatchSnapshot();
+    });
+  });
+});
