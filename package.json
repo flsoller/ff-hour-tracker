@@ -20,6 +20,7 @@
     "api:start": "yarn workspace hour-tracker-api start",
     "api:build": "yarn workspace hour-tracker-api build",
     "authorizer:build": "yarn workspace @hour-tracker/api-authorizer build",
+    "authenticator:build": "yarn workspace @hour-tracker/api-authenticator build",
     "core:build": "yarn workspace @hour-tracker/core-constants build",
     "core:db:build": "yarn workspace @hour-tracker/core-db build",
     "core:db:migrate": "yarn workspace @hour-tracker/core-db db:migrate",

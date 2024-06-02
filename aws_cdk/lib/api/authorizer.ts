@@ -12,6 +12,7 @@ import { HOUR_TRACKER_ECR_REPO_NAMES } from '../constants/ecr';
 interface AuthorizerProps {
   hashOrVersion: string;
   dbConnectionString: string;
+  jwtSecretString: string;
 }
 
 export class AuthorizerService extends Construct {
@@ -35,6 +36,7 @@ export class AuthorizerService extends Construct {
         }),
         environment: {
           DATABASE_URL: props.dbConnectionString,
+          JWT_SECRET: props.jwtSecretString,
         },
       }
     );

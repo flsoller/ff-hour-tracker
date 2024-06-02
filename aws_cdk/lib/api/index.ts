@@ -5,7 +5,8 @@ import { HourTrackerApiGateway } from './gateway';
 import { UsersService } from './users';
 import { HOUR_TRACKER } from '../constants/stacks';
 import * as ssm from 'aws-cdk-lib/aws-ssm';
-import { ENVIRONMENTS, ENVIRONMENT_PARAMS } from '../constants/environments';
+import { ENVIRONMENT_PARAMS } from '../constants/environments';
+import { AuthenticationService } from './authenticator';
 
 export class HourTrackerApi extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -18,14 +19,21 @@ export class HourTrackerApi extends cdk.Stack {
 
     const dbConnectionString = ssm.StringParameter.valueForStringParameter(
       this,
-      ENVIRONMENT_PARAMS[ENVIRONMENTS.TESTING].DATABASE_URL_KEY
+      ENVIRONMENT_PARAMS.DATABASE_URL_KEY
     );
+
+    const jwtSecretString = ssm.StringParameter.valueForStringParameter(
+      this,
+      ENVIRONMENT_PARAMS.JWT_SECRET
+    );
+
     const defaultAuthorizer = new AuthorizerService(
       this,
       HOUR_TRACKER.API_AUTHORIZER,
       {
         hashOrVersion,
         dbConnectionString,
+        jwtSecretString,
       }
     );
 
@@ -36,6 +44,13 @@ export class HourTrackerApi extends cdk.Stack {
         authService: defaultAuthorizer.authorizer,
       }
     );
+
+    new AuthenticationService(this, HOUR_TRACKER.API_AUTHENTICATOR, {
+      apiGateway: apiGateway.httpApiGateway,
+      dbConnectionString,
+      hashOrVersion,
+      jwtSecretString,
+    });
 
     new UsersService(this, HOUR_TRACKER.API_USERS, {
       apiGateway: apiGateway.httpApiGateway,
