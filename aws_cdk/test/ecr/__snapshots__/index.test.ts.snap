@@ -1,5 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`HourTrackerImageRepositories API_AUTHENTICATOR should have the correct repository parameters 1`] = `
+{
+  "DeletionPolicy": "Delete",
+  "Properties": {
+    "EmptyOnDelete": true,
+    "ImageScanningConfiguration": {
+      "ScanOnPush": false,
+    },
+    "LifecyclePolicy": {
+      "LifecyclePolicyText": "{"rules":[{"rulePriority":1,"description":"Keep max 2 versioned images identified by 'vX.X.X' pattern","selection":{"tagStatus":"tagged","tagPatternList":["v*.*.*"],"countType":"imageCountMoreThan","countNumber":2},"action":{"type":"expire"}},{"rulePriority":2,"description":"Keep max 1 image that is not a tagged version","selection":{"tagStatus":"any","countType":"imageCountMoreThan","countNumber":1},"action":{"type":"expire"}}]}",
+    },
+    "RepositoryName": "hour-tracker-api-authenticator",
+  },
+  "Type": "AWS::ECR::Repository",
+  "UpdateReplacePolicy": "Delete",
+}
+`;
+
 exports[`HourTrackerImageRepositories API_AUTHORIZER should have the correct repository parameters 1`] = `
 {
   "DeletionPolicy": "Delete",
@@ -9,7 +27,7 @@ exports[`HourTrackerImageRepositories API_AUTHORIZER should have the correct rep
       "ScanOnPush": false,
     },
     "LifecyclePolicy": {
-      "LifecyclePolicyText": "{"rules":[{"rulePriority":1,"description":"Keep max 2 versioned images identified by 'vX.X.X' pattern","selection":{"tagStatus":"tagged","tagPatternList":["v*.*.*"],"countType":"imageCountMoreThan","countNumber":2},"action":{"type":"expire"}},{"rulePriority":2,"description":"Keep max 2 images that are not a tagged version","selection":{"tagStatus":"any","countType":"imageCountMoreThan","countNumber":2},"action":{"type":"expire"}}]}",
+      "LifecyclePolicyText": "{"rules":[{"rulePriority":1,"description":"Keep max 2 versioned images identified by 'vX.X.X' pattern","selection":{"tagStatus":"tagged","tagPatternList":["v*.*.*"],"countType":"imageCountMoreThan","countNumber":2},"action":{"type":"expire"}},{"rulePriority":2,"description":"Keep max 1 image that is not a tagged version","selection":{"tagStatus":"any","countType":"imageCountMoreThan","countNumber":1},"action":{"type":"expire"}}]}",
     },
     "RepositoryName": "hour-tracker-api-authorizer",
   },

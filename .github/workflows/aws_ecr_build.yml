@@ -15,7 +15,9 @@ jobs:
         include:
           - repository: hour-tracker-api-authorizer
             dockerfile: aws_api/authorizer/Dockerfile
-            build-arg: BUILD_CONTEXT=aws_api/authorizer
+            platform: linux/amd64
+          - repository: hour-tracker-api-authenticator
+            dockerfile: aws_api/authenticator/Dockerfile
             platform: linux/amd64
 
     steps:
@@ -46,7 +48,6 @@ jobs:
         with:
           context: .
           file: ${{ matrix.dockerfile }}
-          build-args: ${{ matrix.build-arg }}
           platforms: ${{ matrix.platform }}
           provenance: false
           push: true
