@@ -1,7 +1,7 @@
 {
-  "name": "@hour-tracker/api-authorizer",
+  "name": "@hour-tracker/api-authenticator",
   "version": "1.0.0",
-  "description": "Default API Gateway authorizer",
+  "description": "API authenticator service",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {

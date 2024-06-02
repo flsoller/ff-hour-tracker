@@ -11,8 +11,8 @@ const defaultVersionLifecycle: cdk.aws_ecr.LifecycleRule = {
 };
 
 const defaultLifecycle: cdk.aws_ecr.LifecycleRule = {
-  description: 'Keep max 2 images that are not a tagged version',
-  maxImageCount: 2,
+  description: 'Keep max 1 image that is not a tagged version',
+  maxImageCount: 1,
   rulePriority: 2,
 };
 
@@ -21,16 +21,21 @@ export class HourTrackerImageRepositories extends cdk.Stack {
     super(scope, id, props);
 
     // Authorizer ECR image repo
-    const authorizerRepo = new ecr.Repository(
-      this,
-      HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHORIZER,
-      {
-        repositoryName: HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHORIZER,
-        emptyOnDelete: true,
-        imageScanOnPush: false,
-        removalPolicy: cdk.RemovalPolicy.DESTROY,
-        lifecycleRules: [defaultVersionLifecycle, defaultLifecycle],
-      }
-    );
+    new ecr.Repository(this, HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHORIZER, {
+      repositoryName: HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHORIZER,
+      emptyOnDelete: true,
+      imageScanOnPush: false,
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      lifecycleRules: [defaultVersionLifecycle, defaultLifecycle],
+    });
+
+    // Authenticator ECR image repo
+    new ecr.Repository(this, HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHENTICATOR, {
+      repositoryName: HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHENTICATOR,
+      emptyOnDelete: true,
+      imageScanOnPush: false,
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      lifecycleRules: [defaultVersionLifecycle, defaultLifecycle],
+    });
   }
 }

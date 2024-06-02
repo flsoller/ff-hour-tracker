@@ -20,7 +20,8 @@
         "ecr:UploadLayerPart"
       ],
       "Resource": [
-        "arn:aws:ecr:eu-central-1:*:repository/hour-tracker-api-authorizer"
+        "arn:aws:ecr:eu-central-1:*:repository/hour-tracker-api-authorizer",
+        "arn:aws:ecr:eu-central-1:*:repository/hour-tracker-api-authenticator"
       ]
     }
   ]

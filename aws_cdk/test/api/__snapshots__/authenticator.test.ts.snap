@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AuthorizerLambda should contain the correct Lambda properties 1`] = `
+exports[`AuthenticatorLambda should contain the correct Lambda properties 1`] = `
 {
   "DeletionPolicy": "Delete",
   "Properties": {
@@ -20,7 +20,7 @@ exports[`AuthorizerLambda should contain the correct Lambda properties 1`] = `
             {
               "Ref": "AWS::URLSuffix",
             },
-            "/hour-tracker-api-authorizer:",
+            "/hour-tracker-api-authenticator:",
             {
               "Ref": "hashOrVersion",
             },
@@ -41,7 +41,7 @@ exports[`AuthorizerLambda should contain the correct Lambda properties 1`] = `
     "PackageType": "Image",
     "Role": {
       "Fn::GetAtt": [
-        "hourtrackerapiauthorizerhourtrackerdefaultauthorizerserviceServiceRoleC8047161",
+        "hourtrackerapiauthenticatorhourtrackerauthenticationserviceServiceRole32E99438",
         "Arn",
       ],
     },

@@ -11,3 +11,8 @@ export const DEFAULT_AUTHORIZER = {
   NAME: 'hour-tracker-default-authorizer-service',
   LAMBDA_AUTHORIZER: 'hour-tracker-default-lambda-authorizer',
 };
+
+export const AUTHENTICATOR_SERVICE = {
+  NAME: 'hour-tracker-authentication-service',
+  LAMBDA_INTEGRATION: 'hour-tracker-authentication-service-lambda-integration',
+};
