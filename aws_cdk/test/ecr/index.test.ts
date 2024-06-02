@@ -21,7 +21,7 @@ beforeEach(() => {
 
 describe('HourTrackerImageRepositories', () => {
   it('should contain the correct amount of repositories', () => {
-    template.resourceCountIs('AWS::ECR::Repository', 1);
+    template.resourceCountIs('AWS::ECR::Repository', 2);
   });
 
   describe('API_AUTHORIZER', () => {
@@ -29,6 +29,16 @@ describe('HourTrackerImageRepositories', () => {
       const resource = cdkResourceFinder(
         template,
         HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHORIZER
+      );
+      expect(resource).toMatchSnapshot();
+    });
+  });
+
+  describe('API_AUTHENTICATOR', () => {
+    it('should have the correct repository parameters', () => {
+      const resource = cdkResourceFinder(
+        template,
+        HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHENTICATOR
       );
       expect(resource).toMatchSnapshot();
     });
