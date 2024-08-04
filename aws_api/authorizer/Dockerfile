@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/nodejs:20.2024.05.29.09 as builder
+FROM public.ecr.aws/lambda/nodejs:20.2024.07.10.10-arm64 as builder
 RUN corepack enable
 
 WORKDIR /usr/app
@@ -15,7 +15,7 @@ COPY ./aws_api/authorizer aws_api/authorizer/
 
 RUN yarn authorizer:build
 
-FROM public.ecr.aws/lambda/nodejs:20.2024.05.29.09
+FROM public.ecr.aws/lambda/nodejs:20.2024.07.10.10-arm64
 WORKDIR ${LAMBDA_TASK_ROOT}
 COPY --from=builder /usr/app/aws_api/authorizer/dist/* ./
 CMD ["index.handler"]
