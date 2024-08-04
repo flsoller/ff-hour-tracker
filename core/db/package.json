@@ -2,7 +2,8 @@
   "name": "@hour-tracker/core-db",
   "description": "Database package for ff-hour-tracker app",
   "license": "UNLICENSED",
-  "main": "./dist/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "dotenv -e .env.test jest -i --",
     "build": "esbuild --outdir=dist src/*/*.ts src/*.ts --bundle --minify --sourcemap --platform=node --target=es2020",

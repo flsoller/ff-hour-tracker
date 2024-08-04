@@ -10,6 +10,11 @@ on:
         options:
           - HourTrackerImageRepositories
           - HourTrackerApi
+      parameter_hash_or_version:
+        description: 'The sha or version used to reference the image tags'
+        required: false
+        type: string
+        default: ''
   workflow_call:
     inputs:
       desired_stack:
