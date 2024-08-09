@@ -13,9 +13,15 @@ jobs:
           - module: '@hour-tracker/core-db'
             command: test
             with_db: true
+            requires_migration: false
+          - module: '@hour-tracker/api-authenticator'
+            command: test
+            with_db: true
+            requires_migration: true
           - module: 'aws_cdk'
             command: test
             with_db: false
+            requires_migration: false
 
     steps:
       - name: Checkout
@@ -32,6 +38,13 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
           cache: 'yarn'
+      
+      - name: Apply migrations for tests ${{ matrix.module }}
+        if: ${{ matrix.requires_migration == true }}
+        run: |
+          yarn workspaces focus @hour-tracker/core-db
+          yarn workspace @hour-tracker/core-db build
+          yarn workspace @hour-tracker/core-db db:migration:test:migrate
 
       - name: Install ${{ matrix.module }} dependencies
         run: yarn workspaces focus ${{ matrix.module }}

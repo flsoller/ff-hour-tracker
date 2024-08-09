@@ -15,10 +15,10 @@ jobs:
         include:
           - repository: hour-tracker-api-authorizer
             dockerfile: aws_api/authorizer/Dockerfile
-            platform: linux/amd64
+            platform: linux/arm64
           - repository: hour-tracker-api-authenticator
             dockerfile: aws_api/authenticator/Dockerfile
-            platform: linux/amd64
+            platform: linux/arm64
 
     steps:
       - name: Checkout
@@ -36,7 +36,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
         with:
-          mask-password: 'true'
+          mask-password: "true"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3

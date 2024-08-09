@@ -33,10 +33,10 @@ export class HourTrackerApiGateway extends Construct {
       defaultAuthorizer: props.authService,
     });
     gateway.applyRemovalPolicy(RemovalPolicy.DESTROY);
-    gateway.addStage('custom', {
+    gateway.addStage('live', {
       throttle: {
-        rateLimit: 10,
-        burstLimit: 5,
+        rateLimit: 1,
+        burstLimit: 1,
       },
       autoDeploy: true,
     });

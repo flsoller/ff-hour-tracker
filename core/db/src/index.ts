@@ -1,6 +1,7 @@
 import { localDb } from './clients/pg';
 import { serverlessDb } from './clients/serverless-pg';
 import { USE_LOCAL_CLIENT } from './config';
+import * as drizzleOrm from 'drizzle-orm';
 
 // Model imports for exposing them with the db package
 import { activityTypes } from './schema/activity-type';
@@ -26,3 +27,4 @@ export const models = {
   timeLogs,
   users,
 };
+export const DrizzleORM = drizzleOrm
