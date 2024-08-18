@@ -4,6 +4,9 @@ exports[`AuthorizerLambda should contain the correct Lambda properties 1`] = `
 {
   "DeletionPolicy": "Delete",
   "Properties": {
+    "Architectures": [
+      "arm64",
+    ],
     "Code": {
       "ImageUri": {
         "Fn::Join": [
