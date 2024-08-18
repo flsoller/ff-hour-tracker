@@ -2,14 +2,14 @@ import {
   HttpApi,
   HttpMethod,
   HttpNoneAuthorizer,
-} from 'aws-cdk-lib/aws-apigatewayv2';
-import { RemovalPolicy } from 'aws-cdk-lib';
-import * as ecr from 'aws-cdk-lib/aws-ecr';
-import * as lambda from 'aws-cdk-lib/aws-lambda';
-import { HttpLambdaIntegration } from 'aws-cdk-lib/aws-apigatewayv2-integrations';
-import { Construct } from 'constructs';
-import { AUTHENTICATOR_SERVICE } from '../constants/constructs';
-import { HOUR_TRACKER_ECR_REPO_NAMES } from '../constants/ecr';
+} from "aws-cdk-lib/aws-apigatewayv2";
+import { RemovalPolicy } from "aws-cdk-lib";
+import * as ecr from "aws-cdk-lib/aws-ecr";
+import * as lambda from "aws-cdk-lib/aws-lambda";
+import { HttpLambdaIntegration } from "aws-cdk-lib/aws-apigatewayv2-integrations";
+import { Construct } from "constructs";
+import { AUTHENTICATOR_SERVICE } from "../constants/constructs";
+import { HOUR_TRACKER_ECR_REPO_NAMES } from "../constants/ecr";
 
 interface AuthenticatorProps {
   hashOrVersion: string;
@@ -35,6 +35,7 @@ export class AuthenticationService extends Construct {
         code: lambda.DockerImageCode.fromEcr(ecrRepo, {
           tagOrDigest: props.hashOrVersion,
         }),
+        architecture: lambda.Architecture.ARM_64,
         environment: {
           DATABASE_URL: props.dbConnectionString,
           JWT_SECRET: props.jwtSecretString,
@@ -50,7 +51,7 @@ export class AuthenticationService extends Construct {
 
     props.apiGateway.addRoutes({
       integration: authenticatorServiceIntegration,
-      path: '/auth/signin',
+      path: "/auth/signin",
       methods: [HttpMethod.POST],
       authorizer: new HttpNoneAuthorizer(),
     });

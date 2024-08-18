@@ -12,21 +12,21 @@ COPY tsconfig.json ./
 COPY yarn.lock ./
 COPY .yarnrc.yml ./
 COPY .yarn/releases .yarn/releases/
+COPY turbo.json ./
 COPY ./aws_api/authenticator/package.json aws_api/authenticator/
-COPY ./core/lambda-api/package.json core/lambda-api/
+COPY ./packages/lambda-api/package.json packages/lambda-api/
+COPY ./packages/tsconfig/package.json packages/tsconfig/
 COPY ./core/db/package.json core/db/
 
 RUN yarn install
 
 # COPY RELEVANT PACKAGES CODE
 COPY ./aws_api/authenticator aws_api/authenticator/
-COPY ./core/lambda-api core/lambda-api/
+COPY ./packages packages/
 COPY ./core/db core/db/
 
-# BUILD RELEVANT PACKAGES
-RUN yarn workspace @hour-tracker/core-db build
-RUN yarn workspace @hour-tracker/lambda-api build
-RUN yarn workspace @hour-tracker/api-authenticator build
+# BUILD
+RUN yarn turbo:build
 
 # INSTALL PRODUCTION DEPENDENCIES
 RUN yarn workspaces focus @hour-tracker/api-authenticator --production

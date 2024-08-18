@@ -1,14 +1,19 @@
 import { Context, APIGatewayProxyEventV2 } from "aws-lambda";
-import { handlers } from "@hour-tracker/lambda-api";
-import { ROUTE_HANDLING_MAP } from "./routes";
+import { handleError } from "@hour-tracker/lambda-api/errorHandler";
+import { NotFoundError } from "@hour-tracker/lambda-api/errors";
+import { getRouteHandler, ROUTE_HANDLING_MAP } from "./routes";
 
 export const handler = async (
   event: APIGatewayProxyEventV2,
   context: Context
 ): Promise<unknown> => {
   try {
-    return await ROUTE_HANDLING_MAP[event.requestContext.routeKey](event);
+    const routeHandler = getRouteHandler(event.requestContext.routeKey);
+    if (!routeHandler) {
+      throw new NotFoundError();
+    }
+    return await routeHandler(event);
   } catch (error) {
-    return handlers.handleError(error);
+    return handleError(error);
   }
 };

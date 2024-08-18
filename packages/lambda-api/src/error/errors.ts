@@ -1,4 +1,4 @@
-import { HttpStatusCode } from '../http/status.constant';
+import { HttpStatusCode } from "@hour-tracker/lambda-api/httpStatus";
 
 export class APIError extends Error {
   statusCode: HttpStatusCode = HttpStatusCode.INTERNAL_SERVER_ERROR;

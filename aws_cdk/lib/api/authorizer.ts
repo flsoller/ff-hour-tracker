@@ -1,13 +1,13 @@
-import { Construct } from 'constructs';
-import * as lambda from 'aws-cdk-lib/aws-lambda';
-import * as ecr from 'aws-cdk-lib/aws-ecr';
+import { Construct } from "constructs";
+import * as lambda from "aws-cdk-lib/aws-lambda";
+import * as ecr from "aws-cdk-lib/aws-ecr";
 import {
   HttpLambdaAuthorizer,
   HttpLambdaResponseType,
-} from 'aws-cdk-lib/aws-apigatewayv2-authorizers';
-import { Duration, RemovalPolicy } from 'aws-cdk-lib';
-import { DEFAULT_AUTHORIZER } from '../constants/constructs';
-import { HOUR_TRACKER_ECR_REPO_NAMES } from '../constants/ecr';
+} from "aws-cdk-lib/aws-apigatewayv2-authorizers";
+import { Duration, RemovalPolicy } from "aws-cdk-lib";
+import { DEFAULT_AUTHORIZER } from "../constants/constructs";
+import { HOUR_TRACKER_ECR_REPO_NAMES } from "../constants/ecr";
 
 interface AuthorizerProps {
   hashOrVersion: string;
@@ -34,6 +34,7 @@ export class AuthorizerService extends Construct {
         code: lambda.DockerImageCode.fromEcr(ecrRepo, {
           tagOrDigest: props.hashOrVersion,
         }),
+        architecture: lambda.Architecture.ARM_64,
         environment: {
           DATABASE_URL: props.dbConnectionString,
           JWT_SECRET: props.jwtSecretString,
