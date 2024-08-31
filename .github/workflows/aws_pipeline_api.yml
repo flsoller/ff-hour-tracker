@@ -15,18 +15,3 @@ jobs:
     needs: deploy_ecr_stack
     secrets: inherit
     uses: ./.github/workflows/aws_ecr_build.yml
-
-  deploy_api_stack:
-    needs: build_images
-    secrets: inherit
-    uses: ./.github/workflows/aws_deploy.yml
-    with:
-      desired_stack: HourTrackerApi
-      parameter_hash_or_version: '--parameters hashOrVersion=${{ github.sha }}'
-
-  destroy_api_stack:
-    needs: deploy_api_stack
-    secrets: inherit
-    uses: ./.github/workflows/aws_destroy.yml
-    with:
-      desired_stack: HourTrackerApi

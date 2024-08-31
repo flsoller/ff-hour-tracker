@@ -8,3 +8,7 @@ const ROUTE_KEYS = {
 export const ROUTE_HANDLING_MAP = {
   [ROUTE_KEYS.SIGNIN]: handleSignIn,
 };
+
+export function getRouteHandler(routeKey: string) {
+  return ROUTE_HANDLING_MAP[routeKey] ?? null;
+}

@@ -2,6 +2,7 @@
   "name": "@hour-tracker/api-authenticator",
   "version": "1.0.0",
   "description": "API authenticator service",
+  "private": true,
   "scripts": {
     "test": "yarn workspace @hour-tracker/lambda-api build && dotenv -e .env.test jest -i --",
     "build": "rm -rf dist && tsc && esbuild --outdir=dist src/*/*.ts src/*.ts --bundle --sourcemap --platform=node --target=es2020 --packages=external"
@@ -14,6 +15,7 @@
     "jsonwebtoken": "9.0.2"
   },
   "devDependencies": {
+    "@hour-tracker/typescript-config": "workspace:*",
     "@types/aws-lambda": "8.10.138",
     "@types/bcryptjs": "2.4.2",
     "@types/jest": "29.5.12",

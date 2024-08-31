@@ -1,0 +1,28 @@
+{
+  "name": "@hour-tracker/lambda-api",
+  "private": true,
+  "scripts": {
+    "dev": "tsc --watch",
+    "build": "tsc"
+  },
+  "description": "Support package for shared lambda api code",
+  "license": "UNLICENSED",
+  "exports": {
+    "./errors": {
+      "types": "./src/error/errors.ts",
+      "default": "./dist/error/errors.js"
+    },
+    "./errorHandler": {
+      "types": "./src/error/handler.ts",
+      "default": "./dist/error/handler.js"
+    },
+    "./httpStatus": {
+      "types": "./src/http/status.constant.ts",
+      "default": "./dist/http/status.constant.js"
+    }
+  },
+  "devDependencies": {
+    "@hour-tracker/typescript-config": "workspace:*",
+    "typescript": "5.4.5"
+  }
+}

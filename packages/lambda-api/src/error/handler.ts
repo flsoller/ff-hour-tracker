@@ -1,5 +1,5 @@
-import { HttpStatusCode } from '../http/status.constant';
-import { APIError } from './errors';
+import { HttpStatusCode } from "@hour-tracker/lambda-api/httpStatus";
+import { APIError } from "@hour-tracker/lambda-api/errors";
 
 export function handleError(error: unknown) {
   // Client error response
@@ -11,7 +11,7 @@ export function handleError(error: unknown) {
     return {
       statusCode: error.statusCode,
       body: JSON.stringify({
-        message: error.message || '',
+        message: error.message || "",
         details: error.details,
       }),
     };
@@ -22,7 +22,7 @@ export function handleError(error: unknown) {
   return {
     statusCode: internalServerError.statusCode,
     body: JSON.stringify({
-      message: 'API error while processing request',
+      message: "API error while processing request",
       details: [],
     }),
   };
