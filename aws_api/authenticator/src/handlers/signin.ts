@@ -1,5 +1,5 @@
 import { APIGatewayProxyEventV2 } from "aws-lambda";
-import { errors } from "@hour-tracker/lambda-api";
+import { BadRequestError } from "@hour-tracker/lambda-api/errors";
 import { compare } from "bcryptjs";
 import { db, models, DrizzleORM } from "@hour-tracker/core-db";
 import { createAccessToken } from "../services/jwt";
@@ -18,12 +18,12 @@ export async function handleSignIn(
 
   if (!user) {
     // Purposefully throwing bad request error to not give away too much info
-    throw new errors.BadRequestError("InvalidInformation");
+    throw new BadRequestError("InvalidInformation");
   }
 
   const validCredentials = await compare(password, user.password);
   if (!validCredentials) {
-    throw new errors.BadRequestError("InvalidInformation");
+    throw new BadRequestError("InvalidInformation");
   }
 
   return {
