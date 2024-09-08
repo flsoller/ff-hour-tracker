@@ -21,7 +21,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: core/db/Dockerfile
+          file: packages/db/Dockerfile
           push: true
           tags: flsoller/hour-tracker-migration-runner:${{ github.sha }}
           cache-from: type=gha,scope=build-flsoller/hour-tracker-migration-runner
