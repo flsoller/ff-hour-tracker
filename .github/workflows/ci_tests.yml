@@ -10,15 +10,15 @@ jobs:
     strategy:
       matrix:
         include:
-          - module: '@hour-tracker/core-db'
+          - module: "@hour-tracker/core-db"
             command: test
             with_db: true
             requires_migration: false
-          - module: '@hour-tracker/api-authenticator'
+          - module: "@hour-tracker/api-authenticator"
             command: test
             with_db: true
             requires_migration: true
-          - module: 'aws_cdk'
+          - module: "infrastructure"
             command: test
             with_db: false
             requires_migration: false
@@ -37,8 +37,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ vars.NODE_VERSION }}
-          cache: 'yarn'
-      
+          cache: "yarn"
+
       - name: Apply migrations for tests ${{ matrix.module }}
         if: ${{ matrix.requires_migration == true }}
         run: |

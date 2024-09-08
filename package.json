@@ -9,7 +9,7 @@
     "frontend",
     "core/*",
     "e2e",
-    "aws_cdk",
+    "infrastructure",
     "aws_api/*",
     "packages/*"
   ],
