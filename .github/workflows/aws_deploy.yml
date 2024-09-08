@@ -4,28 +4,28 @@ on:
   workflow_dispatch:
     inputs:
       desired_stack:
-        description: 'The name of the stack that should be deployed'
+        description: "The name of the stack that should be deployed"
         required: true
         type: choice
         options:
           - HourTrackerImageRepositories
           - HourTrackerApi
       parameter_hash_or_version:
-        description: 'The sha or version used to reference the image tags'
+        description: "The sha or version used to reference the image tags"
         required: false
         type: string
-        default: ''
+        default: "--parameters hashOrVersion="
   workflow_call:
     inputs:
       desired_stack:
-        description: 'The name of the stack that should be deployed'
+        description: "The name of the stack that should be deployed"
         required: true
         type: string
       parameter_hash_or_version:
-        description: 'The sha or version used to reference the image tags'
+        description: "The sha or version used to reference the image tags"
         required: false
         type: string
-        default: ''
+        default: ""
 
 jobs:
   deploy_aws_resource:
@@ -51,10 +51,10 @@ jobs:
           mask-aws-account-id: true
 
       - name: Install CDK Workspace Dependencies
-        run: yarn workspaces focus aws_cdk
+        run: yarn workspaces focus infrastructure
 
-      - name: 'Deploying CDK Stack: ${{ inputs.desired_stack }}'
-        working-directory: ./aws_cdk
+      - name: "Deploying CDK Stack: ${{ inputs.desired_stack }}"
+        working-directory: ./infrastructure
         run: |
           yarn cdk deploy ${{ inputs.desired_stack }} \
           --require-approval never \

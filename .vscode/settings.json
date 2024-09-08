@@ -1,4 +1,3 @@
 {
-  "eslint.workingDirectories": ["./api", "./frontend", "./e2e", "./aws_cdk"],
   "typescript.tsdk": "node_modules/typescript/lib"
 }

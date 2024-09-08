@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       desired_stack:
-        description: 'The name of the stack that should be destroyed'
+        description: "The name of the stack that should be destroyed"
         required: true
         type: choice
         options:
@@ -13,7 +13,7 @@ on:
   workflow_call:
     inputs:
       desired_stack:
-        description: 'The name of the stack that should be destroyed'
+        description: "The name of the stack that should be destroyed"
         required: true
         type: string
 
@@ -41,8 +41,8 @@ jobs:
           mask-aws-account-id: true
 
       - name: Install CDK Workspace Dependencies
-        run: yarn workspaces focus aws_cdk
+        run: yarn workspaces focus infrastructure
 
-      - name: 'Destroying CDK Stack: ${{ inputs.desired_stack }}'
-        working-directory: ./aws_cdk
+      - name: "Destroying CDK Stack: ${{ inputs.desired_stack }}"
+        working-directory: ./infrastructure
         run: yarn cdk destroy ${{ inputs.desired_stack }} --force
