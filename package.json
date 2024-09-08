@@ -6,24 +6,15 @@
   "author": "Florian Soller <flsoller@gmail.com>",
   "license": "UNLICENSED",
   "workspaces": [
-    "frontend",
-    "core/*",
-    "e2e",
+    "apps/*",
+    "apps/api/*",
     "infrastructure",
-    "aws_api/*",
     "packages/*"
   ],
   "private": true,
   "scripts": {
     "turbo:build": "turbo run build",
-    "authorizer:build": "yarn workspace @hour-tracker/api-authorizer build",
-    "authenticator:build": "yarn workspace @hour-tracker/api-authenticator build",
-    "core:build": "yarn workspace @hour-tracker/core-constants build",
-    "core:db:build": "yarn workspace @hour-tracker/core-db build",
     "core:db:migrate": "yarn workspace @hour-tracker/core-db db:migrate",
-    "frontend:run-dev": "yarn workspace hour-tracker-frontend dev",
-    "frontend:test": "docker-compose -f docker-compose.dev.yml exec web yarn workspace hour-tracker-frontend test",
-    "e2e:test": "docker-compose -f docker-compose.dev.yml exec e2e yarn workspace hour-tracker-e2e test",
     "postinstall": "husky install"
   },
   "packageManager": "yarn@4.4.0",
