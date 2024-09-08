@@ -14,10 +14,10 @@ jobs:
       matrix:
         include:
           - repository: hour-tracker-api-authorizer
-            dockerfile: aws_api/authorizer/Dockerfile
+            dockerfile: apps/api/authorizer/Dockerfile
             platform: linux/arm64
           - repository: hour-tracker-api-authenticator
-            dockerfile: aws_api/authenticator/Dockerfile
+            dockerfile: apps/api/authenticator/Dockerfile
             platform: linux/arm64
 
     steps:
