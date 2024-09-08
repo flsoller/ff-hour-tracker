@@ -29,7 +29,7 @@ services:
   postgres_migrator:
     build:
       context: .
-      dockerfile: ./core/db/Dockerfile
+      dockerfile: ./packages/db/Dockerfile
     environment:
       - DATABASE_URL=postgres://postgres:postgres@postgres:5432/app_db_dev
       - DEV_OR_INTEGRATION_USE=true
