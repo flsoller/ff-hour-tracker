@@ -10,16 +10,19 @@ jobs:
     strategy:
       matrix:
         include:
-          - module: "@hour-tracker/core-db"
-            command: test
+          - module: "@hour-tracker/db-migrator"
+            dependencyCommand: yarn install
+            testCommand: yarn turbo:test:db-migrator
             with_db: true
             requires_migration: false
           - module: "@hour-tracker/api-authenticator"
-            command: test
+            dependencyCommand: yarn install
+            testCommand: yarn turbo:test:api-authenticator
             with_db: true
             requires_migration: true
           - module: "infrastructure"
-            command: test
+            dependencyCommand: yarn workspaces focus infrastructure
+            testCommand: yarn workspace infrastructure test
             with_db: false
             requires_migration: false
 
@@ -42,12 +45,11 @@ jobs:
       - name: Apply migrations for tests ${{ matrix.module }}
         if: ${{ matrix.requires_migration == true }}
         run: |
-          yarn workspaces focus @hour-tracker/core-db
-          yarn workspace @hour-tracker/core-db build
-          yarn workspace @hour-tracker/core-db db:migration:test:migrate
+          yarn workspaces focus @hour-tracker/db-migrator
+          yarn workspace @hour-tracker/db-migrator db:migration:test:migrate
 
       - name: Install ${{ matrix.module }} dependencies
-        run: yarn workspaces focus ${{ matrix.module }}
+        run: ${{ matrix.dependencyCommand }}
 
       - name: Run tests for ${{ matrix.module }}
-        run: yarn workspace ${{ matrix.module }} ${{ matrix.command }}
+        run: ${{ matrix.testCommand }}

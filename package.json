@@ -14,14 +14,16 @@
   "private": true,
   "scripts": {
     "turbo:build": "turbo run build",
-    "core:db:migrate": "yarn workspace @hour-tracker/core-db db:migrate",
+    "turbo:test:db-migrator": "turbo run test --filter @hour-tracker/db-migrator",
+    "turbo:test:api-authenticator": "turbo run test --filter @hour-tracker/api-authenticator",
+    "migrator:db:migrate": "yarn workspace @hour-tracker/db-migrator db:migrate",
     "postinstall": "husky install"
   },
-  "packageManager": "yarn@4.4.0",
+  "packageManager": "yarn@4.5.0",
   "devDependencies": {
-    "@commitlint/cli": "19.4.0",
-    "@commitlint/config-conventional": "19.2.2",
-    "husky": "9.1.4",
-    "turbo": "2.0.12"
+    "@commitlint/cli": "19.5.0",
+    "@commitlint/config-conventional": "19.5.0",
+    "husky": "9.1.6",
+    "turbo": "2.1.2"
   }
 }

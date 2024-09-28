@@ -1,7 +1,7 @@
 import { APIGatewayProxyEventV2 } from "aws-lambda";
 import { BadRequestError } from "@hour-tracker/lambda-api/errors";
 import { compare } from "bcryptjs";
-import { db, models, DrizzleORM } from "@hour-tracker/core-db";
+import { db, models, DrizzleORM } from "@hour-tracker/db";
 import { createAccessToken } from "../services/jwt";
 import { SignInResponse } from "../common/types/signin.types";
 
