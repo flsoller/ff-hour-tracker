@@ -1,5 +1,5 @@
-import { DrizzleORM } from '@hour-tracker/core-db';
-import { db, models } from '@hour-tracker/core-db';
+import { DrizzleORM } from "@hour-tracker/db";
+import { db, models } from "@hour-tracker/db";
 jest.setTimeout(10000);
 
 beforeEach(async () => {
