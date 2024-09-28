@@ -1,5 +1,5 @@
-import { sql } from 'drizzle-orm';
-import { db } from '../../src';
+import { sql } from "drizzle-orm";
+import { db } from "@hour-tracker/db";
 
 export default async () => {
   try {
@@ -11,6 +11,6 @@ export default async () => {
   } catch (error) {
     // Administrator closing the connection throws an error but this is the desired effect for teardown
     // and end the Jest run. Just logging here that the connection was closed.
-    console.log('Closed DB connection after integration test run');
+    console.log("Closed DB connection after integration test run");
   }
 };

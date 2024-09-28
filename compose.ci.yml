@@ -9,7 +9,7 @@ services:
     networks:
       - appnetwork
 
-  # db migration container
+  # db test container
   postgres_tests:
     image: postgres:16.3
     restart: unless-stopped
