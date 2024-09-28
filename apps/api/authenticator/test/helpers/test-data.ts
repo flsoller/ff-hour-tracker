@@ -1,4 +1,4 @@
-import { db, models } from "@hour-tracker/core-db";
+import { db, models } from "@hour-tracker/db";
 import { hash } from "bcryptjs";
 import { APIGatewayProxyEventV2 } from "aws-lambda";
 

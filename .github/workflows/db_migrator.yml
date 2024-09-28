@@ -21,7 +21,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: packages/db/Dockerfile
+          file: apps/db-migrator/Dockerfile
           push: true
           tags: flsoller/hour-tracker-migration-runner:${{ github.sha }}
           cache-from: type=gha,scope=build-flsoller/hour-tracker-migration-runner
@@ -47,4 +47,4 @@ jobs:
           echo ---migration container is running---
       - name: Run migration
         run: |
-          docker compose -f compose.ci.yml exec -T postgres_migrator yarn core:db:migrate
+          docker compose -f compose.ci.yml exec -T postgres_migrator yarn migrator:db:migrate

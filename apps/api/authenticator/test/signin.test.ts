@@ -15,7 +15,7 @@ describe("SignIn", () => {
 
   beforeEach(async () => {
     const [organization] = await createOrganizations();
-    orgId = organization.id;
+    orgId = organization!.id;
   });
 
   describe("handleSignIn", () => {
@@ -23,7 +23,7 @@ describe("SignIn", () => {
       const [user] = await createUserForOrganization(orgId);
       const event = createAuthenticatorEvent<SignInEventBody>(
         {
-          emailAddress: user.emailAddress,
+          emailAddress: user!.emailAddress,
           password: "12345",
         },
         "/auth/signin",
@@ -49,7 +49,7 @@ describe("SignIn", () => {
       const [user] = await createUserForOrganization(orgId);
       const event = createAuthenticatorEvent<SignInEventBody>(
         {
-          emailAddress: user.emailAddress,
+          emailAddress: user!.emailAddress,
           password: "abc",
         },
         "/auth/signin",
