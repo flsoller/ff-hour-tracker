@@ -21,7 +21,7 @@ COPY packages/db ./packages/db
 COPY packages/tsconfig ./packages/tsconfig
 
 # BUILD
-RUN yarn turbo:build
+RUN yarn turbo:build-ci
 
 # INSTALL PRODUCTION DEPENDENCIES
 RUN yarn workspaces focus @hour-tracker/db-migrator --production

@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HourTrackerOrganizationManager should contain the correct Lambda properties 1`] = `
+{
+  "DeletionPolicy": "Delete",
+  "Properties": {
+    "Architectures": [
+      "arm64",
+    ],
+    "Code": {
+      "ImageUri": {
+        "Fn::Join": [
+          "",
+          [
+            {
+              "Ref": "AWS::AccountId",
+            },
+            ".dkr.ecr.",
+            {
+              "Ref": "AWS::Region",
+            },
+            ".",
+            {
+              "Ref": "AWS::URLSuffix",
+            },
+            "/hour-tracker-org-manager:",
+            {
+              "Ref": "hashOrVersion",
+            },
+          ],
+        ],
+      },
+    },
+    "Environment": {
+      "Variables": {
+        "DATABASE_URL": {
+          "Ref": "SsmParameterValueHOURTRACKERDATABASEURLC96584B6F00A464EAD1953AFF4B05118Parameter",
+        },
+      },
+    },
+    "PackageType": "Image",
+    "Role": {
+      "Fn::GetAtt": [
+        "hourtrackerorganizationmanagerServiceRoleCE3CF813",
+        "Arn",
+      ],
+    },
+  },
+  "Type": "AWS::Lambda::Function",
+  "UpdateReplacePolicy": "Delete",
+}
+`;

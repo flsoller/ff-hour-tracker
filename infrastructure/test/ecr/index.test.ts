@@ -1,8 +1,8 @@
-import { Template } from 'aws-cdk-lib/assertions';
-import * as cdk from 'aws-cdk-lib';
-import { HourTrackerImageRepositories } from '../../lib/ecr';
-import { HOUR_TRACKER_ECR_REPO_NAMES } from '../../lib/constants/ecr';
-import { cdkResourceFinder } from '../helpers';
+import { Template } from "aws-cdk-lib/assertions";
+import * as cdk from "aws-cdk-lib";
+import { HourTrackerImageRepositories } from "../../lib/ecr";
+import { HOUR_TRACKER_ECR_REPO_NAMES } from "../../lib/constants/ecr";
+import { cdkResourceFinder } from "../helpers";
 
 let app: cdk.App;
 let ecrStack: HourTrackerImageRepositories;
@@ -10,22 +10,22 @@ let template: Template;
 
 beforeEach(() => {
   app = new cdk.App({
-    context: { '@aws-cdk/core:newStyleStackSynthesis': false },
+    context: { "@aws-cdk/core:newStyleStackSynthesis": false },
   });
   ecrStack = new HourTrackerImageRepositories(
     app,
-    'HourTrackerImageRepository'
+    "HourTrackerImageRepository"
   );
   template = Template.fromStack(ecrStack);
 });
 
-describe('HourTrackerImageRepositories', () => {
-  it('should contain the correct amount of repositories', () => {
-    template.resourceCountIs('AWS::ECR::Repository', 2);
+describe("HourTrackerImageRepositories", () => {
+  it("should contain the correct amount of repositories", () => {
+    template.resourceCountIs("AWS::ECR::Repository", 3);
   });
 
-  describe('API_AUTHORIZER', () => {
-    it('should have the correct repository parameters', () => {
+  describe("API_AUTHORIZER", () => {
+    it("should have the correct repository parameters", () => {
       const resource = cdkResourceFinder(
         template,
         HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHORIZER
@@ -34,11 +34,21 @@ describe('HourTrackerImageRepositories', () => {
     });
   });
 
-  describe('API_AUTHENTICATOR', () => {
-    it('should have the correct repository parameters', () => {
+  describe("API_AUTHENTICATOR", () => {
+    it("should have the correct repository parameters", () => {
       const resource = cdkResourceFinder(
         template,
         HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHENTICATOR
+      );
+      expect(resource).toMatchSnapshot();
+    });
+  });
+
+  describe("ORGANIZATION_MANAGER", () => {
+    it("should have the correct repository parameters", () => {
+      const resource = cdkResourceFinder(
+        template,
+        HOUR_TRACKER_ECR_REPO_NAMES.ORGANIZATION_MANAGER
       );
       expect(resource).toMatchSnapshot();
     });

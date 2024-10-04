@@ -12,16 +12,14 @@ COPY yarn.lock ./
 COPY .yarnrc.yml ./
 COPY .yarn/releases .yarn/releases/
 COPY turbo.json ./
-COPY ./apps/api/authenticator/package.json apps/api/authenticator/
-COPY ./packages/lambda-api/package.json packages/lambda-api/
+COPY ./apps/org-manager/package.json apps/org-manager/
 COPY ./packages/tsconfig/package.json packages/tsconfig/
 COPY ./packages/db/package.json packages/db/
 
 RUN yarn install
 
 # COPY RELEVANT PACKAGES CODE
-COPY ./apps/api/authenticator apps/api/authenticator/
-COPY ./packages/lambda-api packages/lambda-api/
+COPY ./apps/org-manager apps/org-manager/
 COPY ./packages/tsconfig packages/tsconfig/
 COPY ./packages/db packages/db/
 
@@ -29,7 +27,7 @@ COPY ./packages/db packages/db/
 RUN yarn turbo:build-ci
 
 # INSTALL PRODUCTION DEPENDENCIES
-RUN yarn workspaces focus @hour-tracker/api-authenticator --production
+RUN yarn workspaces focus @hour-tracker/organization-manager --production
 RUN cp -RL node_modules /tmp/node_modules/
 
 
@@ -40,7 +38,7 @@ FROM public.ecr.aws/lambda/nodejs:20.2024.07.10.10-arm64
 WORKDIR ${LAMBDA_TASK_ROOT}
 
 # COPY RELEVANT FILES
-COPY --from=builder /usr/app/apps/api/authenticator/dist/ ./apps/api/authenticator/
+COPY --from=builder /usr/app/apps/org-manager/dist/ ./apps/org-manager/
 COPY --from=builder /tmp/node_modules/ ./node_modules/
 
-CMD ["apps/api/authenticator/index.handler"]
+CMD ["apps/org-manager/index.handler"]

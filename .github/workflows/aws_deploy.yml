@@ -8,8 +8,9 @@ on:
         required: true
         type: choice
         options:
-          - HourTrackerImageRepositories
           - HourTrackerApi
+          - HourTrackerOrganizationManager
+          - HourTrackerImageRepositories
       parameter_hash_or_version:
         description: "The sha or version used to reference the image tags"
         required: false
