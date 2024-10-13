@@ -30,3 +30,11 @@ jobs:
     needs: build_migrator_and_apply_pending_migrations
     secrets: inherit
     uses: ./.github/workflows/aws_pipeline_api.yml
+
+  deploy_dev_organization:
+    needs: run_aws_api_pipeline
+    secrets: inherit
+    uses: ./.github/workflows/organization_manager.yml
+    with:
+      organization_name: "Dev Organization"
+      enable_support_admin: true

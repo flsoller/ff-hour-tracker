@@ -7,6 +7,21 @@ on:
         description: "The name of the organization"
         required: true
         type: string
+      enable_support_admin:
+        description: "If a support admin user should be created"
+        required: true
+        type: boolean
+        default: true
+  workflow_call:
+    inputs:
+      organization_name:
+        description: "The name of the organization"
+        required: true
+        type: string
+      enable_support_admin:
+        description: "If a support admin user should be created"
+        required: true
+        type: boolean
 
 jobs:
   call_org_manager:
@@ -22,3 +37,20 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Configure AWS Credentials For GitHub Actions
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          # In the future, role will be scoped per account (dev, test, prod)
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          mask-aws-account-id: true
+
+      - name: Create invoke payload and invoke Lambda
+        run: |
+          touch payload.json
+          echo "{\"action\":\"MANAGE_ORGANIZATION\",\"payload\":{\"enableSupportAdmin\":${{ inputs.enable_support_admin }},\"users\":[],\"organization\": {\"name\": \"${{ inputs.organization_name }}\"}}}" > payload.json
+
+      - name: Invoke Lambda with payload
+        run: |
+          aws lambda invoke --function-name ${{ secrets.AWS_DEV_ORG_MANAGER_FN }} --cli-binary-format raw-in-base64-out --payload file://payload.json response.json
