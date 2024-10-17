@@ -14,7 +14,7 @@ RUN yarn install
 
 COPY ./apps/api/authorizer apps/api/authorizer/
 
-RUN yarn turbo:build
+RUN yarn turbo:build-ci
 
 FROM public.ecr.aws/lambda/nodejs:20.2024.07.10.10-arm64
 WORKDIR ${LAMBDA_TASK_ROOT}

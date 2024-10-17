@@ -8,8 +8,9 @@ on:
         required: true
         type: choice
         options:
-          - HourTrackerImageRepositories
+          - HourTrackerOrganizationManager
           - HourTrackerApi
+          - HourTrackerImageRepositories
   workflow_call:
     inputs:
       desired_stack:

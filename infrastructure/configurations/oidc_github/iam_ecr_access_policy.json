@@ -4,7 +4,9 @@
     {
       "Sid": "GetAuthorizationToken",
       "Effect": "Allow",
-      "Action": ["ecr:GetAuthorizationToken"],
+      "Action": [
+        "ecr:GetAuthorizationToken"
+      ],
       "Resource": "*"
     },
     {
@@ -21,7 +23,8 @@
       ],
       "Resource": [
         "arn:aws:ecr:eu-central-1:*:repository/hour-tracker-api-authorizer",
-        "arn:aws:ecr:eu-central-1:*:repository/hour-tracker-api-authenticator"
+        "arn:aws:ecr:eu-central-1:*:repository/hour-tracker-api-authenticator",
+        "arn:aws:ecr:eu-central-1:*:repository/hour-tracker-org-manager"
       ]
     }
   ]

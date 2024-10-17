@@ -15,3 +15,11 @@ jobs:
     needs: deploy_ecr_stack
     secrets: inherit
     uses: ./.github/workflows/aws_ecr_build.yml
+
+  deploy_organization_manager_stack:
+    needs: build_images
+    secrets: inherit
+    uses: ./.github/workflows/aws_deploy.yml
+    with:
+      desired_stack: HourTrackerOrganizationManager
+      parameter_hash_or_version: "--parameters hashOrVersion=${{ github.sha }}"

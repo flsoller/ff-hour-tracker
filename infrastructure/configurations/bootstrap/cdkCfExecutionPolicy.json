@@ -9,7 +9,8 @@
         "lambda:*",
         "logs:*",
         "ssm:*",
-        "ecr:*"
+        "ecr:*",
+        "acm:GetCertificate"
       ],
       "Resource": "*",
       "Condition": {
