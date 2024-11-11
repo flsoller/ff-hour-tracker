@@ -1,4 +1,6 @@
 {
+  "id": "9f664f61-c727-451c-b884-4ec3e05a6139",
+  "prevId": "8c50de66-c647-477f-8a46-67da80b8595e",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -48,6 +50,7 @@
       },
       "indexes": {
         "activity_type_activity_name_organization_id_unique_constraint": {
+          "name": "activity_type_activity_name_organization_id_unique_constraint",
           "columns": [
             {
               "expression": "activity_name",
@@ -62,34 +65,33 @@
               "nulls": "last"
             }
           ],
-          "with": {},
-          "name": "activity_type_activity_name_organization_id_unique_constraint",
           "isUnique": true,
+          "concurrently": false,
           "method": "btree",
-          "concurrently": false
+          "with": {}
         }
       },
       "foreignKeys": {
         "activity_types_organization_id_organizations_id_fk": {
           "name": "activity_types_organization_id_organizations_id_fk",
           "tableFrom": "activity_types",
+          "tableTo": "organizations",
+          "schemaTo": "hour_tracker",
           "columnsFrom": [
             "organization_id"
           ],
-          "tableTo": "organizations",
-          "schemaTo": "hour_tracker",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "cascade",
-          "onDelete": "restrict"
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
-      "isRLSEnabled": false,
-      "checkConstraints": {}
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "hour_tracker.members": {
       "name": "members",
@@ -143,6 +145,7 @@
       },
       "indexes": {
         "member_email_address_organization_id_unique_constraint": {
+          "name": "member_email_address_organization_id_unique_constraint",
           "columns": [
             {
               "expression": "email_address",
@@ -157,34 +160,33 @@
               "nulls": "last"
             }
           ],
-          "with": {},
-          "name": "member_email_address_organization_id_unique_constraint",
           "isUnique": true,
+          "concurrently": false,
           "method": "btree",
-          "concurrently": false
+          "with": {}
         }
       },
       "foreignKeys": {
         "members_organization_id_organizations_id_fk": {
           "name": "members_organization_id_organizations_id_fk",
           "tableFrom": "members",
+          "tableTo": "organizations",
+          "schemaTo": "hour_tracker",
           "columnsFrom": [
             "organization_id"
           ],
-          "tableTo": "organizations",
-          "schemaTo": "hour_tracker",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "cascade",
-          "onDelete": "restrict"
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
-      "isRLSEnabled": false,
-      "checkConstraints": {}
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "hour_tracker.organizations": {
       "name": "organizations",
@@ -229,8 +231,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
-      "isRLSEnabled": false,
-      "checkConstraints": {}
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "hour_tracker.time_logs": {
       "name": "time_logs",
@@ -285,51 +287,51 @@
         "time_logs_activity_type_id_activity_types_id_fk": {
           "name": "time_logs_activity_type_id_activity_types_id_fk",
           "tableFrom": "time_logs",
+          "tableTo": "activity_types",
+          "schemaTo": "hour_tracker",
           "columnsFrom": [
             "activity_type_id"
           ],
-          "tableTo": "activity_types",
-          "schemaTo": "hour_tracker",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "cascade",
-          "onDelete": "restrict"
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
         },
         "time_logs_organization_id_organizations_id_fk": {
           "name": "time_logs_organization_id_organizations_id_fk",
           "tableFrom": "time_logs",
+          "tableTo": "organizations",
+          "schemaTo": "hour_tracker",
           "columnsFrom": [
             "organization_id"
           ],
-          "tableTo": "organizations",
-          "schemaTo": "hour_tracker",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "cascade",
-          "onDelete": "restrict"
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
         },
         "time_logs_member_id_members_id_fk": {
           "name": "time_logs_member_id_members_id_fk",
           "tableFrom": "time_logs",
+          "tableTo": "members",
+          "schemaTo": "hour_tracker",
           "columnsFrom": [
             "member_id"
           ],
-          "tableTo": "members",
-          "schemaTo": "hour_tracker",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "cascade",
-          "onDelete": "restrict"
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
-      "isRLSEnabled": false,
-      "checkConstraints": {}
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "hour_tracker.users": {
       "name": "users",
@@ -368,6 +370,13 @@
           "notNull": true,
           "default": "'USER'"
         },
+        "active": {
+          "name": "active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
         "organization_id": {
           "name": "organization_id",
           "type": "uuid",
@@ -391,6 +400,7 @@
       },
       "indexes": {
         "user_email_address_organization_id_unique_constraint": {
+          "name": "user_email_address_organization_id_unique_constraint",
           "columns": [
             {
               "expression": "email_address",
@@ -405,34 +415,33 @@
               "nulls": "last"
             }
           ],
-          "with": {},
-          "name": "user_email_address_organization_id_unique_constraint",
           "isUnique": true,
+          "concurrently": false,
           "method": "btree",
-          "concurrently": false
+          "with": {}
         }
       },
       "foreignKeys": {
         "users_organization_id_organizations_id_fk": {
           "name": "users_organization_id_organizations_id_fk",
           "tableFrom": "users",
+          "tableTo": "organizations",
+          "schemaTo": "hour_tracker",
           "columnsFrom": [
             "organization_id"
           ],
-          "tableTo": "organizations",
-          "schemaTo": "hour_tracker",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "cascade",
-          "onDelete": "restrict"
+          "onDelete": "restrict",
+          "onUpdate": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
-      "isRLSEnabled": false,
-      "checkConstraints": {}
+      "checkConstraints": {},
+      "isRLSEnabled": false
     }
   },
   "enums": {
@@ -448,15 +457,13 @@
   "schemas": {
     "hour_tracker": "hour_tracker"
   },
-  "_meta": {
-    "schemas": {},
-    "tables": {},
-    "columns": {}
-  },
-  "id": "8c50de66-c647-477f-8a46-67da80b8595e",
-  "prevId": "00000000-0000-0000-0000-000000000000",
   "sequences": {},
+  "roles": {},
   "policies": {},
   "views": {},
-  "roles": {}
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
 }
