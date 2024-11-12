@@ -1,0 +1,1 @@
+ALTER TABLE "hour_tracker"."users" ADD COLUMN "active" boolean DEFAULT true NOT NULL;

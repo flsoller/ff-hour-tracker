@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
+    "db:migrations:kit-up": "yarn drizzle-kit up",
     "db:seed:dev": "dotenv -e .env.dev tsx ./src/seeder/seed.ts",
     "db:migration:dev:generate": "sh -c 'drizzle-kit generate --name ${0}'",
     "db:migration:dev:migrate": "dotenv -e .env.dev drizzle-kit migrate",
@@ -16,8 +17,8 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@hour-tracker/db": "workspace:*",
-    "drizzle-kit": "0.24.2",
-    "drizzle-orm": "0.33.0"
+    "drizzle-kit": "0.28.0",
+    "drizzle-orm": "0.36.1"
   },
   "devDependencies": {
     "@hour-tracker/typescript-config": "workspace:*",
