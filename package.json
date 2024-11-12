@@ -17,6 +17,7 @@
     "turbo:build-ci": "turbo run build",
     "turbo:test:db-migrator": "turbo run test --filter @hour-tracker/db-migrator",
     "turbo:test:api-authenticator": "turbo run test --filter @hour-tracker/api-authenticator",
+    "turbo:test:api-authorizer": "turbo run test --filter @hour-tracker/api-authorizer",
     "turbo:test:org-manager": "turbo run test --filter @hour-tracker/organization-manager",
     "migrator:db:migrate": "yarn workspace @hour-tracker/db-migrator db:migrate",
     "postinstall": "husky install"

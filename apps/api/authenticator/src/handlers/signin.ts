@@ -27,6 +27,6 @@ export async function handleSignIn(
   }
 
   return {
-    accessToken: createAccessToken(user.id),
+    accessToken: createAccessToken(user.id, user.organizationId),
   };
 }
