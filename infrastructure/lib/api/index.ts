@@ -1,20 +1,20 @@
-import * as cdk from 'aws-cdk-lib';
-import { Construct } from 'constructs';
-import { AuthorizerService } from './authorizer';
-import { HourTrackerApiGateway } from './gateway';
-import { UsersService } from './users';
-import { HOUR_TRACKER } from '../constants/stacks';
-import * as ssm from 'aws-cdk-lib/aws-ssm';
-import { ENVIRONMENT_PARAMS } from '../constants/environments';
-import { AuthenticationService } from './authenticator';
+import * as cdk from "aws-cdk-lib";
+import { Construct } from "constructs";
+import { AuthorizerService } from "./authorizer";
+import { HourTrackerApiGateway } from "./gateway";
+import { HOUR_TRACKER } from "../constants/stacks";
+import * as ssm from "aws-cdk-lib/aws-ssm";
+import { ENVIRONMENT_PARAMS } from "../constants/environments";
+import { AuthenticationService } from "./authenticator";
+import { MembersService } from "./members";
 
 export class HourTrackerApi extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const hashOrVersion = new cdk.CfnParameter(this, 'hashOrVersion', {
-      description: 'The version or hash used to reference the images',
-      type: 'String',
+    const hashOrVersion = new cdk.CfnParameter(this, "hashOrVersion", {
+      description: "The version or hash used to reference the images",
+      type: "String",
     }).valueAsString;
 
     const dbConnectionString = ssm.StringParameter.valueForStringParameter(
@@ -52,8 +52,10 @@ export class HourTrackerApi extends cdk.Stack {
       jwtSecretString,
     });
 
-    new UsersService(this, HOUR_TRACKER.API_USERS, {
+    new MembersService(this, HOUR_TRACKER.API_MEMBERS, {
       apiGateway: apiGateway.httpApiGateway,
+      dbConnectionString,
+      hashOrVersion,
     });
   }
 }

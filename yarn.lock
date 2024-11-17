@@ -1797,6 +1797,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@hour-tracker/api-members@workspace:apps/api/members":
+  version: 0.0.0-use.local
+  resolution: "@hour-tracker/api-members@workspace:apps/api/members"
+  dependencies:
+    "@hour-tracker/db": "workspace:*"
+    "@hour-tracker/lambda-api": "workspace:*"
+    "@hour-tracker/typescript-config": "workspace:*"
+    "@types/aws-lambda": "npm:8.10.138"
+    "@types/jest": "npm:29.5.12"
+    dotenv: "npm:16.4.5"
+    dotenv-cli: "npm:7.4.2"
+    jest: "npm:29.7.0"
+    ts-jest: "npm:29.1.4"
+    typescript: "npm:5.4.5"
+  languageName: unknown
+  linkType: soft
+
 "@hour-tracker/core-types@npm:1.0.0, @hour-tracker/core-types@workspace:packages/types":
   version: 0.0.0-use.local
   resolution: "@hour-tracker/core-types@workspace:packages/types"
