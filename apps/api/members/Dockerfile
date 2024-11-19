@@ -1,6 +1,7 @@
 #########################
 ###### BUILD STAGE ######
 #########################
+FROM public.ecr.aws/x6n7b2o2/newrelic-lambda-layers-nodejs:20-arm64 AS layer
 FROM public.ecr.aws/lambda/nodejs:20.2024.07.10.10-arm64 AS builder
 RUN corepack enable
 
@@ -37,10 +38,11 @@ RUN cp -RL node_modules /tmp/node_modules/
 ###### PROD STAGE #######
 #########################
 FROM public.ecr.aws/lambda/nodejs:20.2024.07.10.10-arm64
-WORKDIR ${LAMBDA_TASK_ROOT}
+COPY --from=layer /opt/ /opt/
 
+WORKDIR ${LAMBDA_TASK_ROOT}
 # COPY RELEVANT FILES
 COPY --from=builder /usr/app/apps/api/members/dist/ ./apps/api/members/
 COPY --from=builder /tmp/node_modules/ ./node_modules/
 
-CMD ["apps/api/members/index.handler"]
+CMD ["apps/api/members/newrelic-lambda-wrapper.handler"]
