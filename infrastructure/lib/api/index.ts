@@ -27,6 +27,16 @@ export class HourTrackerApi extends cdk.Stack {
       ENVIRONMENT_PARAMS.JWT_SECRET
     );
 
+    const newRelicAccountId = ssm.StringParameter.valueForStringParameter(
+      this,
+      ENVIRONMENT_PARAMS.NEW_RELIC_ACCOUNT_ID
+    );
+
+    const newRelicIngestLicense = ssm.StringParameter.valueForStringParameter(
+      this,
+      ENVIRONMENT_PARAMS.NEW_RELIC_LICENSE_KEY
+    );
+
     const defaultAuthorizer = new AuthorizerService(
       this,
       HOUR_TRACKER.API_AUTHORIZER,
@@ -34,6 +44,8 @@ export class HourTrackerApi extends cdk.Stack {
         hashOrVersion,
         dbConnectionString,
         jwtSecretString,
+        newRelicAccountId,
+        newRelicIngestLicense,
       }
     );
 
@@ -50,12 +62,16 @@ export class HourTrackerApi extends cdk.Stack {
       dbConnectionString,
       hashOrVersion,
       jwtSecretString,
+      newRelicAccountId,
+      newRelicIngestLicense,
     });
 
     new MembersService(this, HOUR_TRACKER.API_MEMBERS, {
       apiGateway: apiGateway.httpApiGateway,
       dbConnectionString,
       hashOrVersion,
+      newRelicAccountId,
+      newRelicIngestLicense,
     });
   }
 }

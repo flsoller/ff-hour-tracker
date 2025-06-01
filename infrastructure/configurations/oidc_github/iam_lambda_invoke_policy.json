@@ -6,7 +6,7 @@
       "Effect": "Allow",
       "Action": "lambda:InvokeFunction",
       "Resource": [
-        "arn:aws:lambda:eu-central-1:*:function:HourTrackerOrganization*"
+        "arn:aws:lambda:eu-central-1:*:function:HourTrackerAPI-OrgManager*"
       ]
     }
   ]

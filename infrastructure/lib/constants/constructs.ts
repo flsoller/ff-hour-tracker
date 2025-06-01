@@ -1,5 +1,6 @@
 export const API_GATEWAY = {
   NAME: "hour-tracker-api-gateway",
+  LOG_GROUP_NAME: "hour-tracker-api-gateway-log-group",
 };
 
 export const DEFAULT_AUTHORIZER = {
