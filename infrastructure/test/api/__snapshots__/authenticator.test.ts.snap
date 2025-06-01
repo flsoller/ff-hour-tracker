@@ -39,8 +39,17 @@ exports[`AuthenticatorLambda should contain the correct Lambda properties 1`] = 
         "JWT_SECRET": {
           "Ref": "SsmParameterValueHOURTRACKERJWTSECRETC96584B6F00A464EAD1953AFF4B05118Parameter",
         },
+        "NEW_RELIC_ACCOUNT_ID": {
+          "Ref": "SsmParameterValueNEWRELICACCOUNTIDC96584B6F00A464EAD1953AFF4B05118Parameter",
+        },
+        "NEW_RELIC_LAMBDA_HANDLER": "apps/api/authenticator/index.handler",
+        "NEW_RELIC_LICENSE_KEY": {
+          "Ref": "SsmParameterValueNEWRELICLICENSEKEYC96584B6F00A464EAD1953AFF4B05118Parameter",
+        },
       },
     },
+    "FunctionName": "HourTrackerAPI-Authenticator",
+    "MemorySize": 256,
     "PackageType": "Image",
     "Role": {
       "Fn::GetAtt": [
@@ -48,6 +57,7 @@ exports[`AuthenticatorLambda should contain the correct Lambda properties 1`] = 
         "Arn",
       ],
     },
+    "Timeout": 20,
   },
   "Type": "AWS::Lambda::Function",
   "UpdateReplacePolicy": "Delete",

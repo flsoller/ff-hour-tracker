@@ -51,7 +51,7 @@ export function createAuthorizerEvent<T>(
     rawPath: path,
     rawQueryString: "",
     headers: {
-      authorization,
+      authorization: `Bearer ${authorization}`,
       accept: "*/*",
       "accept-encoding": "gzip, deflate, br",
       "content-length": "58",
