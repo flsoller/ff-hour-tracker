@@ -11,7 +11,7 @@ jobs:
 
   reset_neon_testing_branch:
     needs: run_tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     steps:
       - name: Reset Neon Testing branch to parent
         uses: neondatabase/reset-branch-action@v1

@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-images:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     permissions:
       id-token: write
       contents: read
@@ -58,5 +58,5 @@ jobs:
           provenance: false
           push: true
           tags: ${{ steps.login-ecr.outputs.registry }}/${{ matrix.repository }}:${{ github.sha }}
-          cache-from: type=gha,scope=build-${{ matrix.repository }}
-          cache-to: type=gha,mode=max,scope=build-${{ matrix.repository }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
