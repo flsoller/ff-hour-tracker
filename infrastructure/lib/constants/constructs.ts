@@ -1,10 +1,6 @@
-export const USERS_SERVICE = {
-  NAME: "hour-tracker-users-service",
-  LAMBDA_INTEGRATION: "hour-tracker-users-service-lambda-integration",
-};
-
 export const API_GATEWAY = {
   NAME: "hour-tracker-api-gateway",
+  LOG_GROUP_NAME: "hour-tracker-api-gateway-log-group",
 };
 
 export const DEFAULT_AUTHORIZER = {
@@ -19,4 +15,9 @@ export const AUTHENTICATOR_SERVICE = {
 
 export const ORGANIZATION_MANAGER = {
   NAME: "hour-tracker-organization-manager",
+};
+
+export const MEMBERS_SERVICE = {
+  NAME: "hour-tracker-members-service",
+  LAMBDA_INTEGRATION: "hour-tracker-members-service-lambda-integration",
 };

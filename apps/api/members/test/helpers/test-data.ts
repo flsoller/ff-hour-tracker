@@ -22,10 +22,7 @@ export async function createOrganizations() {
   return [organization, otherOrganization];
 }
 
-export async function createUserForOrganization(
-  organizationId: string,
-  overrides = {}
-) {
+export async function createUserForOrganization(organizationId: string) {
   const pwHash = await hash("12345", 12);
   return db
     .insert(models.users)
@@ -35,13 +32,12 @@ export async function createUserForOrganization(
       name: "Mr. Test",
       organizationId,
       role: "USER",
-      ...overrides,
     })
     .returning();
 }
 
-export function createAuthorizerEvent<T>(
-  authorization: string,
+export function createApiRequestEvent<T>(
+  eventBody: T,
   path: string,
   method: string
 ): APIGatewayProxyEventV2 {
@@ -51,7 +47,6 @@ export function createAuthorizerEvent<T>(
     rawPath: path,
     rawQueryString: "",
     headers: {
-      authorization: `Bearer ${authorization}`,
       accept: "*/*",
       "accept-encoding": "gzip, deflate, br",
       "content-length": "58",
@@ -75,7 +70,7 @@ export function createAuthorizerEvent<T>(
       time: "29/Jul/2024:19:49:26 +0000",
       timeEpoch: 1722282566285,
     },
-    body: JSON.stringify({}),
+    body: JSON.stringify(eventBody as T),
     isBase64Encoded: false,
   };
 }
