@@ -9,14 +9,15 @@ import { UserContext } from "./types/context.type";
 
 export const handler = async (
   event: APIGatewayProxyEventV2
-): Promise<APIGatewaySimpleAuthorizerWithContextResult<UserContext | null>> => {
-  const token = event.headers.authorization;
+): Promise<APIGatewaySimpleAuthorizerWithContextResult<UserContext | {}>> => {
+  const token = event.headers.authorization?.split("Bearer ")[1];
+  console.log("API Gateway Event:", event);
 
   // Deny access when no token
   if (!token) {
     return {
       isAuthorized: false,
-      context: null,
+      context: {},
     };
   }
 
@@ -26,7 +27,7 @@ export const handler = async (
   if (!userId || !organizationId) {
     return {
       isAuthorized: false,
-      context: null,
+      context: {},
     };
   }
 
@@ -40,6 +41,6 @@ export const handler = async (
           organizationId,
           role: user?.role ?? "",
         }
-      : null,
+      : {},
   };
 };

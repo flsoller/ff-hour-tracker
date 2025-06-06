@@ -22,6 +22,9 @@ jobs:
           - repository: hour-tracker-org-manager
             dockerfile: apps/org-manager/Dockerfile
             platform: linux/arm64
+          - repository: hour-tracker-members-service
+            dockerfile: apps/api/members/Dockerfile
+            platform: linux/arm64
 
     steps:
       - name: Checkout

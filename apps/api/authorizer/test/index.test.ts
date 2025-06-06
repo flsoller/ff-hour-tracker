@@ -28,7 +28,7 @@ describe("Authorizer", () => {
       const event = createAuthorizerEvent(token, "/some/route", "POST");
       const res = await handler(event);
       expect(res.isAuthorized).toBe(true);
-      expect(res.context).toStrictEqual({
+      expect(res.context).toEqual({
         userId: user!.id,
         organizationId: user!.organizationId,
         role: user!.role,
@@ -48,7 +48,7 @@ describe("Authorizer", () => {
       const event = createAuthorizerEvent(token, "/some/route", "POST");
       const res = await handler(event);
       expect(res.isAuthorized).toBe(false);
-      expect(res.context).toBe(null);
+      expect(res.context).toStrictEqual({});
     });
 
     it("should prohibit access for valid token but inactive user", async () => {
@@ -64,7 +64,7 @@ describe("Authorizer", () => {
       const event = createAuthorizerEvent(token, "/some/route", "POST");
       const res = await handler(event);
       expect(res.isAuthorized).toBe(false);
-      expect(res.context).toBe(null);
+      expect(res.context).toStrictEqual({});
     });
   });
 });

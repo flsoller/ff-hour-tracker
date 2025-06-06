@@ -36,6 +36,13 @@ exports[`HourTrackerOrganizationManager should contain the correct Lambda proper
         "DATABASE_URL": {
           "Ref": "SsmParameterValueHOURTRACKERDATABASEURLC96584B6F00A464EAD1953AFF4B05118Parameter",
         },
+        "NEW_RELIC_ACCOUNT_ID": {
+          "Ref": "SsmParameterValueNEWRELICACCOUNTIDC96584B6F00A464EAD1953AFF4B05118Parameter",
+        },
+        "NEW_RELIC_LAMBDA_HANDLER": "apps/org-manager/index.handler",
+        "NEW_RELIC_LICENSE_KEY": {
+          "Ref": "SsmParameterValueNEWRELICLICENSEKEYC96584B6F00A464EAD1953AFF4B05118Parameter",
+        },
         "SUPPORT_USER_EMAIL": {
           "Ref": "SsmParameterValueSUPPORTUSEREMAILC96584B6F00A464EAD1953AFF4B05118Parameter",
         },
@@ -44,6 +51,7 @@ exports[`HourTrackerOrganizationManager should contain the correct Lambda proper
         },
       },
     },
+    "FunctionName": "HourTrackerAPI-OrgManager",
     "PackageType": "Image",
     "Role": {
       "Fn::GetAtt": [
@@ -51,7 +59,7 @@ exports[`HourTrackerOrganizationManager should contain the correct Lambda proper
         "Arn",
       ],
     },
-    "Timeout": 15,
+    "Timeout": 20,
   },
   "Type": "AWS::Lambda::Function",
   "UpdateReplacePolicy": "Delete",

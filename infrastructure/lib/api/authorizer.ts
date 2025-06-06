@@ -8,11 +8,14 @@ import {
 import { Duration, RemovalPolicy } from "aws-cdk-lib";
 import { DEFAULT_AUTHORIZER } from "../constants/constructs";
 import { HOUR_TRACKER_ECR_REPO_NAMES } from "../constants/ecr";
+import { LOGICAL_ID } from "../constants/logical-id";
 
 interface AuthorizerProps {
   hashOrVersion: string;
   dbConnectionString: string;
   jwtSecretString: string;
+  newRelicAccountId: string;
+  newRelicIngestLicense: string;
 }
 
 export class AuthorizerService extends Construct {
@@ -38,7 +41,13 @@ export class AuthorizerService extends Construct {
         environment: {
           DATABASE_URL: props.dbConnectionString,
           JWT_SECRET: props.jwtSecretString,
+          NEW_RELIC_LAMBDA_HANDLER: "apps/api/authorizer/index.handler",
+          NEW_RELIC_ACCOUNT_ID: props.newRelicAccountId,
+          NEW_RELIC_LICENSE_KEY: props.newRelicIngestLicense,
         },
+        memorySize: 256,
+        timeout: Duration.seconds(20),
+        functionName: LOGICAL_ID.HOUR_TRACKER_API_AUTHORIZER,
       }
     );
     authorizerService.applyRemovalPolicy(RemovalPolicy.DESTROY);

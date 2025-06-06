@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AuthenticatorLambda should contain the correct Lambda properties 1`] = `
+exports[`MembersServiceLambda should contain the correct Lambda properties 1`] = `
 {
   "DeletionPolicy": "Delete",
   "Properties": {
@@ -23,7 +23,7 @@ exports[`AuthenticatorLambda should contain the correct Lambda properties 1`] = 
             {
               "Ref": "AWS::URLSuffix",
             },
-            "/hour-tracker-api-authenticator:",
+            "/hour-tracker-members-service:",
             {
               "Ref": "hashOrVersion",
             },
@@ -36,24 +36,21 @@ exports[`AuthenticatorLambda should contain the correct Lambda properties 1`] = 
         "DATABASE_URL": {
           "Ref": "SsmParameterValueHOURTRACKERDATABASEURLC96584B6F00A464EAD1953AFF4B05118Parameter",
         },
-        "JWT_SECRET": {
-          "Ref": "SsmParameterValueHOURTRACKERJWTSECRETC96584B6F00A464EAD1953AFF4B05118Parameter",
-        },
         "NEW_RELIC_ACCOUNT_ID": {
           "Ref": "SsmParameterValueNEWRELICACCOUNTIDC96584B6F00A464EAD1953AFF4B05118Parameter",
         },
-        "NEW_RELIC_LAMBDA_HANDLER": "apps/api/authenticator/index.handler",
+        "NEW_RELIC_LAMBDA_HANDLER": "apps/api/members/index.handler",
         "NEW_RELIC_LICENSE_KEY": {
           "Ref": "SsmParameterValueNEWRELICLICENSEKEYC96584B6F00A464EAD1953AFF4B05118Parameter",
         },
       },
     },
-    "FunctionName": "HourTrackerAPI-Authenticator",
+    "FunctionName": "HourTrackerAPI-Members",
     "MemorySize": 256,
     "PackageType": "Image",
     "Role": {
       "Fn::GetAtt": [
-        "hourtrackerapiauthenticatorhourtrackerauthenticationserviceServiceRole32E99438",
+        "hourtrackerapimembershourtrackermembersserviceServiceRole72DF1FAF",
         "Arn",
       ],
     },

@@ -3,6 +3,7 @@ import {
   CorsHttpMethod,
   HttpApi,
   DomainName,
+  LogGroupLogDestination,
 } from "aws-cdk-lib/aws-apigatewayv2";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import { HttpLambdaAuthorizer } from "aws-cdk-lib/aws-apigatewayv2-authorizers";
@@ -10,6 +11,8 @@ import { RemovalPolicy } from "aws-cdk-lib";
 import { API_GATEWAY } from "../constants/constructs";
 import { StringParameter } from "aws-cdk-lib/aws-ssm";
 import { ENVIRONMENT_PARAMS } from "../constants/environments";
+import { LOGICAL_ID } from "../constants/logical-id";
+import { LogGroup, RetentionDays } from "aws-cdk-lib/aws-logs";
 
 interface ApiGatewayProps {
   authService: HttpLambdaAuthorizer;
@@ -54,7 +57,9 @@ export class HourTrackerApiGateway extends Construct {
       createDefaultStage: false,
       defaultAuthorizer: props.authService,
       disableExecuteApiEndpoint: true,
+      apiName: LOGICAL_ID.HOUR_TRACKER_API_GATEWAY,
     });
+
     gateway.applyRemovalPolicy(RemovalPolicy.DESTROY);
     gateway.addStage("live", {
       stageName: "live",
