@@ -23,3 +23,11 @@ jobs:
     with:
       desired_stack: HourTrackerOrganizationManager
       parameter_hash_or_version: "--parameters hashOrVersion=${{ github.sha }}"
+
+  deploy_api_stack:
+    needs: build_images
+    secrets: inherit
+    uses: ./.github/workflows/aws_deploy.yml
+    with:
+      desired_stack: HourTrackerApi
+      parameter_hash_or_version: "--parameters hashOrVersion=${{ github.sha }}"
