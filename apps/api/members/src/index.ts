@@ -2,14 +2,28 @@ import { handleError } from "@hour-tracker/lambda-api/errorHandler";
 import { NotFoundError } from "@hour-tracker/lambda-api/errors";
 import { getRouteHandler } from "./routes";
 import { APIRequest } from "./common/types/request.type";
+import { logger } from "@hour-tracker/logger";
 
 export const handler = async (event: APIRequest): Promise<unknown> => {
-  console.log(event);
+  logger.info(
+    {
+      event: event.requestContext,
+      queryStringParameters: event.queryStringParameters,
+    },
+    "Members API handler called"
+  );
 
   try {
-    const routeHandler = getRouteHandler(event.routeKey);
+    const routeHandler = getRouteHandler(
+      event.requestContext.http.method,
+      event.requestContext.routeKey
+    );
     if (!routeHandler) {
-      throw new NotFoundError();
+      logger.warn(
+        { event: event.requestContext.routeKey },
+        "Route handler not found"
+      );
+      throw new NotFoundError("RouteHandlerNotFound");
     }
     return await routeHandler(event);
   } catch (error) {

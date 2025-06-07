@@ -21,6 +21,9 @@
       "default": "./dist/http/status.constant.js"
     }
   },
+  "dependencies": {
+    "@hour-tracker/logger": "workspace:*"
+  },
   "devDependencies": {
     "@hour-tracker/typescript-config": "workspace:*",
     "typescript": "5.4.5"
