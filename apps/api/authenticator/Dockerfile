@@ -46,4 +46,4 @@ WORKDIR ${LAMBDA_TASK_ROOT}
 COPY --from=builder /usr/app/apps/api/authenticator/dist/ ./apps/api/authenticator/
 COPY --from=builder /tmp/node_modules/ ./node_modules/
 
-CMD ["/opt/nodejs/node_modules/newrelic-esm-lambda-wrapper/index.handler"]
+CMD ["newrelic-lambda-wrapper.handler"]

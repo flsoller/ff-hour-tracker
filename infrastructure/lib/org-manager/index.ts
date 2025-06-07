@@ -9,6 +9,7 @@ import { HOUR_TRACKER_ECR_REPO_NAMES } from "../constants/ecr";
 import { ORGANIZATION_MANAGER } from "../constants/constructs";
 import { ENVIRONMENT_PARAMS } from "../constants/environments";
 import { LOGICAL_ID } from "../constants/logical-id";
+import { DEFAULT_INSTRUMENTATION_CONFIG } from "../constants/instrumentation";
 
 export class HourTrackerOrganizationManager extends cdk.Stack {
   constructor(scope: Construct, id: string) {
@@ -63,6 +64,7 @@ export class HourTrackerOrganizationManager extends cdk.Stack {
           NEW_RELIC_LAMBDA_HANDLER: "apps/org-manager/index.handler",
           NEW_RELIC_ACCOUNT_ID: newRelicAccountId,
           NEW_RELIC_LICENSE_KEY: newRelicIngestLicense,
+          ...DEFAULT_INSTRUMENTATION_CONFIG,
         },
         timeout: Duration.seconds(20),
         functionName: LOGICAL_ID.HOUR_TRACKER_API_ORG_MANAGER,
