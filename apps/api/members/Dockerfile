@@ -41,8 +41,9 @@ FROM public.ecr.aws/lambda/nodejs:22.2025.05.04.04-arm64
 COPY --from=layer /opt/ /opt/
 
 WORKDIR ${LAMBDA_TASK_ROOT}
+
 # COPY RELEVANT FILES
 COPY --from=builder /usr/app/apps/api/members/dist/ ./apps/api/members/
 COPY --from=builder /tmp/node_modules/ ./node_modules/
 
-CMD ["/opt/nodejs/node_modules/newrelic-esm-lambda-wrapper/index.handler"]
+CMD ["newrelic-lambda-wrapper.handler"]

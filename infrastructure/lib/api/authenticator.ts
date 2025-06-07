@@ -11,6 +11,7 @@ import { Construct } from "constructs";
 import { AUTHENTICATOR_SERVICE } from "../constants/constructs";
 import { HOUR_TRACKER_ECR_REPO_NAMES } from "../constants/ecr";
 import { LOGICAL_ID } from "../constants/logical-id";
+import { DEFAULT_INSTRUMENTATION_CONFIG } from "../constants/instrumentation";
 
 interface AuthenticatorProps {
   hashOrVersion: string;
@@ -45,6 +46,7 @@ export class AuthenticationService extends Construct {
           NEW_RELIC_LAMBDA_HANDLER: "apps/api/authenticator/index.handler",
           NEW_RELIC_ACCOUNT_ID: props.newRelicAccountId,
           NEW_RELIC_LICENSE_KEY: props.newRelicIngestLicense,
+          ...DEFAULT_INSTRUMENTATION_CONFIG,
         },
         memorySize: 256,
         timeout: Duration.seconds(20),
