@@ -17,6 +17,7 @@ COPY ./apps/api/members/package.json apps/api/members/
 COPY ./packages/lambda-api/package.json packages/lambda-api/
 COPY ./packages/tsconfig/package.json packages/tsconfig/
 COPY ./packages/db/package.json packages/db/
+COPY ./packages/logger/package.json packages/logger/
 
 RUN yarn install
 
@@ -25,7 +26,7 @@ COPY ./apps/api/members apps/api/members/
 COPY ./packages/lambda-api packages/lambda-api/
 COPY ./packages/tsconfig packages/tsconfig/
 COPY ./packages/db packages/db/
-
+COPY ./packages/logger packages/logger/
 # BUILD
 RUN yarn turbo:build-ci
 
