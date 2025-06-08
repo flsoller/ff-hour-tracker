@@ -29,13 +29,12 @@ export const users = hourTrackerSchema.table(
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
-  (table) => {
-    return {
-      UserEmailAddressOrganizationIdUniqueConstraint: uniqueIndex(
-        "user_email_address_organization_id_unique_constraint"
-      ).on(table.emailAddress, table.organizationId),
-    };
-  }
+  (table) => [
+    uniqueIndex("user_email_address_organization_id_unique_constraint").on(
+      table.emailAddress,
+      table.organizationId
+    ),
+  ]
 );
 
 export const usersRelations = relations(users, ({ one }) => ({
