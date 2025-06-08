@@ -16,6 +16,7 @@ COPY turbo.json ./
 COPY ./apps/api/authorizer/package.json apps/api/authorizer/
 COPY ./packages/tsconfig/package.json packages/tsconfig/
 COPY ./packages/db/package.json packages/db/
+COPY ./packages/logger/package.json packages/logger/
 
 RUN yarn install
 
@@ -23,7 +24,7 @@ RUN yarn install
 COPY ./apps/api/authorizer apps/api/authorizer/
 COPY ./packages/tsconfig packages/tsconfig/
 COPY ./packages/db packages/db/
-
+COPY ./packages/logger packages/logger/
 # BUILD
 RUN yarn turbo:build-ci
 
@@ -44,4 +45,4 @@ WORKDIR ${LAMBDA_TASK_ROOT}
 COPY --from=builder /usr/app/apps/api/authorizer/dist/ ./apps/api/authorizer/
 COPY --from=builder /tmp/node_modules/ ./node_modules/
 
-CMD ["/opt/nodejs/node_modules/newrelic-esm-lambda-wrapper/index.handler"]
+CMD ["newrelic-lambda-wrapper.handler"]

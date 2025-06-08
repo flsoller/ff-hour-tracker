@@ -42,10 +42,15 @@ exports[`AuthenticatorLambda should contain the correct Lambda properties 1`] = 
         "NEW_RELIC_ACCOUNT_ID": {
           "Ref": "SsmParameterValueNEWRELICACCOUNTIDC96584B6F00A464EAD1953AFF4B05118Parameter",
         },
+        "NEW_RELIC_DATA_COLLECTION_TIMEOUT": "10s",
+        "NEW_RELIC_EXTENSION_SEND_FUNCTION_LOGS": "true",
+        "NEW_RELIC_IGNORE_EXTENSION_CHECKS": "all",
+        "NEW_RELIC_LAMBDA_EXTENSION_ENABLED": "true",
         "NEW_RELIC_LAMBDA_HANDLER": "apps/api/authenticator/index.handler",
         "NEW_RELIC_LICENSE_KEY": {
           "Ref": "SsmParameterValueNEWRELICLICENSEKEYC96584B6F00A464EAD1953AFF4B05118Parameter",
         },
+        "NEW_RELIC_NO_CONFIG_FILE": "true",
       },
     },
     "FunctionName": "HourTrackerAPI-Authenticator",

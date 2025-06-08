@@ -9,6 +9,7 @@ export const ROUTE_HANDLING_MAP = {
   [ROUTE_KEYS.V1_GET_PAGINATED_ROUTE_KEY]: getMembersPaginated,
 };
 
-export function getRouteHandler(routeKey: string) {
-  return ROUTE_HANDLING_MAP[routeKey] ?? null;
+export function getRouteHandler(httpMethod: string, routeKey: string) {
+  const mapKey = `${httpMethod} ${routeKey.split(" ")[1]}`;
+  return ROUTE_HANDLING_MAP[mapKey] ?? null;
 }
