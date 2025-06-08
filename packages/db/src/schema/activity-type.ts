@@ -19,13 +19,11 @@ export const activityTypes = hourTrackerSchema.table(
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
-  (table) => {
-    return {
-      ActivityTypeActivityNameOrganizationIdUniqueConstraint: uniqueIndex(
-        "activity_type_activity_name_organization_id_unique_constraint"
-      ).on(table.activityName, table.organizationId),
-    };
-  }
+  (table) => [
+    uniqueIndex(
+      "activity_type_activity_name_organization_id_unique_constraint"
+    ).on(table.activityName, table.organizationId),
+  ]
 );
 
 export const activityTypesRelations = relations(
