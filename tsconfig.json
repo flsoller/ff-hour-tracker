@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "lib": ["ES2022"],
     "sourceMap": true,
     "target": "ES2022",
-    "module": "CommonJS",
+    "module": "Node16",
     "allowJs": true,
     "strict": true,
     "esModuleInterop": true,

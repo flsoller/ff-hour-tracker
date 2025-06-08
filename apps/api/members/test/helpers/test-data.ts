@@ -1,6 +1,6 @@
 import { db, models } from "@hour-tracker/db";
 import { hash } from "bcryptjs";
-import { APIGatewayProxyEventV2 } from "aws-lambda";
+import { APIRequest } from "../../src/common/types/request.type";
 
 export async function createOrganizations() {
   const [organization] = await db
@@ -36,16 +36,43 @@ export async function createUserForOrganization(organizationId: string) {
     .returning();
 }
 
-export function createApiRequestEvent<T>(
+export async function createMembersForOrganization(organizationId: string) {
+  return db
+    .insert(models.members)
+    .values([
+      {
+        firstName: "John",
+        lastName: "Doe",
+        emailAddress: "john.doe@example.com",
+        organizationId,
+      },
+      {
+        firstName: "Jane",
+        lastName: "Smith",
+        emailAddress: "jane.smith@example.com",
+        organizationId,
+      },
+    ])
+    .returning();
+}
+
+export function createApiRequestEvent<T = unknown>(
   eventBody: T,
+  queryStringParameters: Record<string, string>,
   path: string,
-  method: string
-): APIGatewayProxyEventV2 {
+  method: string,
+  authorizerContext: {
+    organizationId: string;
+    userId: string;
+    role: string;
+  }
+): APIRequest {
   return {
     version: "2.0",
     routeKey: `${method} ${path}`,
     rawPath: path,
     rawQueryString: "",
+    queryStringParameters,
     headers: {
       accept: "*/*",
       "accept-encoding": "gzip, deflate, br",
@@ -57,6 +84,13 @@ export function createApiRequestEvent<T>(
       apiId: "1234",
       domainName: "abc",
       domainPrefix: "abc",
+      authorizer: {
+        lambda: {
+          userId: authorizerContext.userId,
+          organizationId: authorizerContext.organizationId,
+          role: authorizerContext.role,
+        },
+      },
       http: {
         method,
         path: path,

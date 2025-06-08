@@ -1,28 +1,25 @@
 {
-  "name": "@hour-tracker/db",
-  "description": "Database package for ff-hour-tracker app",
+  "name": "@hour-tracker/logger",
+  "version": "1.0.0",
+  "description": "Shared logging package for ff-hour-tracker app",
   "license": "UNLICENSED",
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch"
   },
   "exports": {
-    "./schemas/*": {
-      "types": "./src/schema/*.ts",
-      "default": "./dist/schema/*.js"
-    },
     ".": {
       "types": "./src/index.ts",
       "default": "./dist/index.js"
     }
   },
   "dependencies": {
-    "@neondatabase/serverless": "1.0.1",
-    "drizzle-orm": "0.44.2",
-    "postgres": "3.4.7"
+    "pino": "8.19.0",
+    "pino-pretty": "10.3.1"
   },
   "devDependencies": {
     "@hour-tracker/typescript-config": "workspace:*",
+    "@types/node": "20.11.30",
     "typescript": "5.4.5"
   }
 }

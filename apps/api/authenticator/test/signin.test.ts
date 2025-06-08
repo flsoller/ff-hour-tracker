@@ -9,6 +9,8 @@ import {
   createOrganizations,
   createUserForOrganization,
 } from "./helpers/test-data";
+import { logger } from "@hour-tracker/logger";
+import { db } from "@hour-tracker/db";
 
 describe("SignIn", () => {
   let orgId: string;
@@ -56,6 +58,35 @@ describe("SignIn", () => {
         "POST"
       );
       expect(await handler(event, {} as Context)).toMatchSnapshot();
+    });
+
+    it("should return a 500 error when there is an internal server error", async () => {
+      const loggerSpy = jest.spyOn(logger, "error");
+      jest.spyOn(db, "select").mockImplementationOnce(() => {
+        throw new Error("Database connection failed");
+      });
+      const event = createAuthenticatorEvent<SignInEventBody>(
+        {
+          emailAddress: "not-here@ghost.com",
+          password: "abc",
+        },
+        "/auth/signin",
+        "POST"
+      );
+      const response = await handler(event, {} as Context);
+      expect(response).toMatchObject({
+        statusCode: 500,
+        body: JSON.stringify({
+          message: "API error while processing request",
+          details: [],
+        }),
+      });
+      expect(loggerSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          error: expect.any(Error),
+        }),
+        "InternalServerError"
+      );
     });
   });
 });

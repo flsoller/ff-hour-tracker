@@ -7,6 +7,7 @@ import { HttpApi, HttpMethod } from "aws-cdk-lib/aws-apigatewayv2";
 import { HttpLambdaIntegration } from "aws-cdk-lib/aws-apigatewayv2-integrations";
 import { MEMBERS_SERVICE } from "../constants/constructs";
 import { LOGICAL_ID } from "../constants/logical-id";
+import { DEFAULT_INSTRUMENTATION_CONFIG } from "../constants/instrumentation";
 
 interface MembersProps {
   hashOrVersion: string;
@@ -39,6 +40,7 @@ export class MembersService extends Construct {
           NEW_RELIC_LAMBDA_HANDLER: "apps/api/members/index.handler",
           NEW_RELIC_ACCOUNT_ID: props.newRelicAccountId,
           NEW_RELIC_LICENSE_KEY: props.newRelicIngestLicense,
+          ...DEFAULT_INSTRUMENTATION_CONFIG,
         },
         memorySize: 256,
         timeout: Duration.seconds(20),

@@ -10,7 +10,8 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@hour-tracker/db": "workspace:*",
-    "@hour-tracker/lambda-api": "workspace:*"
+    "@hour-tracker/lambda-api": "workspace:*",
+    "@hour-tracker/logger": "workspace:*"
   },
   "devDependencies": {
     "@hour-tracker/typescript-config": "workspace:*",
