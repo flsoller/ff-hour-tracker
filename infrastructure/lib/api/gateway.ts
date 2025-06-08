@@ -3,7 +3,6 @@ import {
   CorsHttpMethod,
   HttpApi,
   DomainName,
-  LogGroupLogDestination,
 } from "aws-cdk-lib/aws-apigatewayv2";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import { HttpLambdaAuthorizer } from "aws-cdk-lib/aws-apigatewayv2-authorizers";
@@ -12,7 +11,6 @@ import { API_GATEWAY } from "../constants/constructs";
 import { StringParameter } from "aws-cdk-lib/aws-ssm";
 import { ENVIRONMENT_PARAMS } from "../constants/environments";
 import { LOGICAL_ID } from "../constants/logical-id";
-import { LogGroup, RetentionDays } from "aws-cdk-lib/aws-logs";
 
 interface ApiGatewayProps {
   authService: HttpLambdaAuthorizer;

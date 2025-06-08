@@ -1,11 +1,11 @@
-const util = require("util");
-const exec = util.promisify(require("child_process").exec);
+import util from "util";
+import { exec } from "child_process";
 
 /**
  * Run migrations to initialize db
  */
 export default async () => {
-  await exec(
+  await util.promisify(exec)(
     `yarn workspace @hour-tracker/db-migrator db:migration:test:migrate`
   );
 };

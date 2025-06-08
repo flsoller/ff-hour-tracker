@@ -1,6 +1,7 @@
 import { db } from "@hour-tracker/db";
 import { organizations } from "@hour-tracker/db/schemas/organization";
 import { users } from "@hour-tracker/db/schemas/user";
+import { logger } from "@hour-tracker/logger";
 
 async function seed() {
   const organization = await db
@@ -23,10 +24,10 @@ async function seed() {
 async function main() {
   try {
     await seed();
-    console.log("Seeding completed");
+    logger.info("Seeding completed");
     process.exit();
   } catch (error) {
-    console.error("Error during seeding:", error);
+    logger.info("Error during seeding:", error);
     process.exit(1);
   }
 }

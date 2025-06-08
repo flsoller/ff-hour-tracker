@@ -1,5 +1,5 @@
-import { Error } from '../types/ApiError';
-import { AppConstants } from './constants';
+import { Error } from "../types/ApiError";
+import { AppConstants } from "./constants";
 
 /**
  * Parses http response body or returns null for no-content responses
@@ -31,13 +31,13 @@ async function _apiRequest<T>(
     const body = await getResponseBody<T>(response);
 
     if (!response.ok) {
-      const { error = '', additionalInfo = {} } = body as Error;
+      const { error = "", additionalInfo = {} } = body as Error;
       return [null, { statusCode: response.status, error, additionalInfo }];
     }
 
     return [body as T, null];
   } catch (error) {
-    return [null, error as any];
+    return [null, error as unknown as Error];
   }
 }
 
@@ -51,7 +51,7 @@ const api = {
    * @param options - optional request options
    */
   get: <T>(endpoint: string, options?: RequestInit) =>
-    _apiRequest<T>(endpoint, { method: 'GET', ...options }),
+    _apiRequest<T>(endpoint, { method: "GET", ...options }),
 
   /**
    * POST method
@@ -61,11 +61,11 @@ const api = {
    */
   post: <TBody, TRes>(endpoint: string, body: TBody, options?: RequestInit) =>
     _apiRequest<TRes>(endpoint, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(body),
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
         ...options?.headers,
       },
     }),

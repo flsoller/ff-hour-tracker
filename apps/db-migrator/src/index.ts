@@ -2,11 +2,12 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
 import { CONNECTION_STRING } from "./config";
 import postgres from "postgres";
+import { logger } from "@hour-tracker/logger";
 
 const migrationClient = postgres(CONNECTION_STRING, { max: 1 });
 
 async function migrateDb() {
-  console.log("Initiating Migration");
+  logger.info("Initiating Migration");
   await migrate(drizzle(migrationClient), {
     migrationsFolder: __dirname + "/migrations",
     migrationsTable: "migrations",
@@ -16,10 +17,10 @@ async function migrateDb() {
 
 migrateDb()
   .then(() => {
-    console.log("Database Migration Completed");
+    logger.info("Database Migration Completed");
     process.exit();
   })
   .catch((e) => {
-    console.error("Error during migration", e);
+    logger.info("Error during migration", e);
     process.exit(1);
   });

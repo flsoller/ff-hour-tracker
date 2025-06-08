@@ -21,13 +21,19 @@
     "turbo:test:api-members": "turbo run test --filter @hour-tracker/api-members",
     "turbo:test:org-manager": "turbo run test --filter @hour-tracker/organization-manager",
     "migrator:db:migrate": "yarn workspace @hour-tracker/db-migrator db:migrate",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix"
   },
   "packageManager": "yarn@4.5.0",
   "devDependencies": {
     "@commitlint/cli": "19.8.1",
     "@commitlint/config-conventional": "19.8.1",
+    "@eslint/js": "^9.28.0",
+    "eslint": "^9.28.0",
     "husky": "9.1.7",
-    "turbo": "2.5.4"
+    "turbo": "2.5.4",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.33.1"
   }
 }

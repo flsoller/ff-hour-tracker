@@ -56,7 +56,6 @@ export const useMembersStore = defineStore("members", () => {
       `New member added: ${data?.firstName} ${data?.lastName}`
     );
     await getMembersPaginated();
-    console.log(members.value);
   }
 
   return {

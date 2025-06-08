@@ -26,6 +26,8 @@ describe("HourTrackerOrganizationManager", () => {
       "AWS::Lambda::Function",
       ORGANIZATION_MANAGER.NAME
     );
+    // Verify DependsOn is present but exclude it from snapshot
+    expect(DependsOn).toBeDefined();
     expect(attributesToCheck).toMatchSnapshot();
   });
 });

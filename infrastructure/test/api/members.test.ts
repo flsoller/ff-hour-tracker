@@ -23,6 +23,8 @@ describe("MembersServiceLambda", () => {
       "AWS::Lambda::Function",
       MEMBERS_SERVICE.NAME
     );
+    // Verify DependsOn is present but exclude it from snapshot
+    expect(DependsOn).toBeDefined();
     expect(attributesToCheck).toMatchSnapshot();
   });
 });

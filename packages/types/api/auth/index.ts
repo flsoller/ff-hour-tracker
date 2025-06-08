@@ -3,7 +3,7 @@ export interface IRegisterUser {
   name?: string;
   password: string;
   orgId: string;
-  role?: any;
+  role?: string;
 }
 
 export interface IUserCreated {
