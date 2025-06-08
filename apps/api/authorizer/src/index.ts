@@ -1,5 +1,4 @@
 import {
-  Context,
   APIGatewayProxyEventV2,
   APIGatewaySimpleAuthorizerWithContextResult,
 } from "aws-lambda";
@@ -10,7 +9,9 @@ import { logger } from "@hour-tracker/logger";
 
 export const handler = async (
   event: APIGatewayProxyEventV2
-): Promise<APIGatewaySimpleAuthorizerWithContextResult<UserContext | {}>> => {
+): Promise<
+  APIGatewaySimpleAuthorizerWithContextResult<UserContext | object>
+> => {
   const token = event.headers.authorization?.split("Bearer ")[1];
 
   // Deny access when no token

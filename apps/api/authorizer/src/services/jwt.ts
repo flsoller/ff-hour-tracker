@@ -7,7 +7,7 @@ export function verifyAccessToken(token: string) {
       userId: string;
       organizationId: string;
     };
-  } catch (error) {
+  } catch {
     return {
       userId: null,
       organizationId: null,

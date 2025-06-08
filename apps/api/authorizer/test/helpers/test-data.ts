@@ -40,7 +40,7 @@ export async function createUserForOrganization(
     .returning();
 }
 
-export function createAuthorizerEvent<T>(
+export function createAuthorizerEvent(
   authorization: string,
   path: string,
   method: string

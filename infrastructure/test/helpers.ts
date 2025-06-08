@@ -1,8 +1,8 @@
-import { Template } from 'aws-cdk-lib/assertions';
+import { Template } from "aws-cdk-lib/assertions";
 
-function findByKeyName(source: Object, target: string, regex: RegExp): string {
+function findByKeyName(source: object, target: string, regex: RegExp): string {
   const [resource] = Object.keys(source).filter((key) =>
-    key.includes(target.replace(regex, '').toLowerCase())
+    key.includes(target.replace(regex, "").toLowerCase())
   );
 
   if (!resource) {
