@@ -6,7 +6,7 @@ import {
   createUserForOrganization,
 } from "../helpers/test-data";
 
-describe("Name of the group", () => {
+describe("Get members paginated", () => {
   let orgId: string;
 
   beforeEach(async () => {

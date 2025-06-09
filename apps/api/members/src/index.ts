@@ -9,6 +9,7 @@ export const handler = async (event: APIRequest): Promise<unknown> => {
     {
       event: event.requestContext,
       queryStringParameters: event.queryStringParameters,
+      requestBody: event.body ?? "",
     },
     "Members API handler called",
   );

@@ -4,7 +4,7 @@
   "description": "Default API Gateway authorizer",
   "private": true,
   "scripts": {
-    "test": "dotenv -e .env.test jest -i --",
+    "test": "dotenv -e .env.test jest -- --runInBand",
     "build": "tsc"
   },
   "license": "UNLICENSED",
