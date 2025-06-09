@@ -1,4 +1,4 @@
-import { db, models, DrizzleORM } from "@hour-tracker/db";
+import { db, DrizzleORM, models } from "@hour-tracker/db";
 
 /**
  * Gets an organization from the DB by name
@@ -6,7 +6,7 @@ import { db, models, DrizzleORM } from "@hour-tracker/db";
  * @returns
  */
 export async function getOrganization(
-  name: string
+  name: string,
 ): Promise<{ id: string; name: string }[]> {
   const { organizations } = models;
 

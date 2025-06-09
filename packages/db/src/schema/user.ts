@@ -1,12 +1,6 @@
-import {
-  text,
-  uniqueIndex,
-  uuid,
-  timestamp,
-  boolean,
-} from "drizzle-orm/pg-core";
-import { organizations } from "./organization";
 import { relations } from "drizzle-orm";
+import { boolean, text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
+import { organizations } from "./organization";
 import { hourTrackerSchema } from "./shared/schema";
 
 export const Role = hourTrackerSchema.enum("Role", ["ADMIN", "USER"]);
@@ -32,9 +26,9 @@ export const users = hourTrackerSchema.table(
   (table) => [
     uniqueIndex("user_email_address_organization_id_unique_constraint").on(
       table.emailAddress,
-      table.organizationId
+      table.organizationId,
     ),
-  ]
+  ],
 );
 
 export const usersRelations = relations(users, ({ one }) => ({

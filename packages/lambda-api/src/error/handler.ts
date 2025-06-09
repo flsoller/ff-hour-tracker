@@ -1,13 +1,13 @@
-import { HttpStatusCode } from "@hour-tracker/lambda-api/httpStatus";
 import { APIError } from "@hour-tracker/lambda-api/errors";
+import { HttpStatusCode } from "@hour-tracker/lambda-api/httpStatus";
 import { logger } from "@hour-tracker/logger";
 
 export function handleError(error: unknown) {
   // Client error response
   if (
-    error instanceof APIError &&
-    error.statusCode >= HttpStatusCode.BAD_REQUEST &&
-    error.statusCode < HttpStatusCode.INTERNAL_SERVER_ERROR
+    error instanceof APIError
+    && error.statusCode >= HttpStatusCode.BAD_REQUEST
+    && error.statusCode < HttpStatusCode.INTERNAL_SERVER_ERROR
   ) {
     logger.warn({ error }, "ClientError");
     return {

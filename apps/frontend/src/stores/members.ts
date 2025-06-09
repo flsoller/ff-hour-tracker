@@ -1,13 +1,13 @@
 import { defineStore } from "pinia";
-import { ref, Ref } from "vue";
-import { useToastService } from "../services/toast";
-import { useUserStore } from "../stores/user";
-import { getMembers, addMember } from "../services/members";
+import { Ref, ref } from "vue";
 import {
   ICreateMemberReq,
   IGetMembersPaginatedReq,
   IGetMembersPaginatedRes,
 } from "../../../../packages/types/api/members";
+import { addMember, getMembers } from "../services/members";
+import { useToastService } from "../services/toast";
+import { useUserStore } from "../stores/user";
 
 export const useMembersStore = defineStore("members", () => {
   const defaultPageLimit = 5;
@@ -29,7 +29,7 @@ export const useMembersStore = defineStore("members", () => {
     loading.value = true;
     const [data, error] = await getMembers(
       requestParams,
-      userStore.accessToken
+      userStore.accessToken,
     );
 
     if (error) {
@@ -53,10 +53,9 @@ export const useMembersStore = defineStore("members", () => {
 
     toast.showToast(
       "success",
-      `New member added: ${data?.firstName} ${data?.lastName}`
+      `New member added: ${data?.firstName} ${data?.lastName}`,
     );
     await getMembersPaginated();
-    console.log(members.value);
   }
 
   return {

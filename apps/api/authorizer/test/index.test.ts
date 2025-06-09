@@ -1,10 +1,6 @@
-import { handler } from "../src";
-import {
-  createAuthorizerEvent,
-  createOrganizations,
-  createUserForOrganization,
-} from "./helpers/test-data";
 import { sign } from "jsonwebtoken";
+import { handler } from "../src";
+import { createAuthorizerEvent, createOrganizations, createUserForOrganization } from "./helpers/test-data";
 
 describe("Authorizer", () => {
   let orgId: string;
@@ -22,7 +18,7 @@ describe("Authorizer", () => {
           userId: user!.id,
           organizationId: user!.organizationId,
         },
-        process.env.JWT_SECRET!
+        process.env.JWT_SECRET!,
       );
 
       const event = createAuthorizerEvent(token, "/some/route", "POST");
@@ -42,7 +38,7 @@ describe("Authorizer", () => {
           userId: user!.id,
           organizationId: user!.organizationId,
         },
-        "some_wrong_secret"
+        "some_wrong_secret",
       );
 
       const event = createAuthorizerEvent(token, "/some/route", "POST");
@@ -58,7 +54,7 @@ describe("Authorizer", () => {
           userId: user!.id,
           organizationId: user!.organizationId,
         },
-        process.env.JWT_SECRET!
+        process.env.JWT_SECRET!,
       );
 
       const event = createAuthorizerEvent(token, "/some/route", "POST");

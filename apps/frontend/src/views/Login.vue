@@ -37,21 +37,21 @@
 </template>
 
 <script setup lang="ts">
-import Button from 'primevue/button';
-import Password from 'primevue/password';
-import InputText from 'primevue/inputtext';
-import Message from 'primevue/message';
-import { validateEmail, validateInputString } from '../utils/validate';
-import { ref, watch } from 'vue';
-import { useUserStore } from '../stores/user';
+import Button from "primevue/button";
+import InputText from "primevue/inputtext";
+import Message from "primevue/message";
+import Password from "primevue/password";
+import { ref, watch } from "vue";
+import { useUserStore } from "../stores/user";
+import { validateEmail, validateInputString } from "../utils/validate";
 
 const userStore = useUserStore();
-const email = ref('');
-const password = ref('');
+const email = ref("");
+const password = ref("");
 const validForm = ref(false);
 const showInfo = ref(false);
 const infoContent =
-  'The free resources enabling this project can take up to 30 seconds to initialize. Please wait...';
+  "The free resources enabling this project can take up to 30 seconds to initialize. Please wait...";
 
 async function onSubmit() {
   const infoTimer = setTimeout(() => {
@@ -62,8 +62,8 @@ async function onSubmit() {
 }
 
 watch([() => email.value, () => password.value], ([newEmail, newPassword]) => {
-  validForm.value =
-    validateEmail(newEmail).valid && validateInputString(newPassword).valid;
+  validForm.value = validateEmail(newEmail).valid
+    && validateInputString(newPassword).valid;
 });
 </script>
 

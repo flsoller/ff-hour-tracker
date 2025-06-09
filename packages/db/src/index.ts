@@ -1,14 +1,14 @@
-import { localDb } from './clients/pg';
-import { serverlessDb } from './clients/serverless-pg';
-import { USE_LOCAL_CLIENT } from './config';
-import * as drizzleOrm from 'drizzle-orm';
+import * as drizzleOrm from "drizzle-orm";
+import { localDb } from "./clients/pg";
+import { serverlessDb } from "./clients/serverless-pg";
+import { USE_LOCAL_CLIENT } from "./config";
 
 // Model imports for exposing them with the db package
-import { activityTypes } from './schema/activity-type';
-import { members } from './schema/member';
-import { organizations } from './schema/organization';
-import { timeLogs } from './schema/time-log';
-import { users } from './schema/user';
+import { activityTypes } from "./schema/activity-type";
+import { members } from "./schema/member";
+import { organizations } from "./schema/organization";
+import { timeLogs } from "./schema/time-log";
+import { users } from "./schema/user";
 
 /**
  * Gets the necessary database client depending on where this package is used.
@@ -27,4 +27,4 @@ export const models = {
   timeLogs,
   users,
 };
-export const DrizzleORM = drizzleOrm
+export const DrizzleORM = drizzleOrm;

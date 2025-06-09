@@ -5,6 +5,27 @@ on:
   workflow_call:
 
 jobs:
+  run_linter:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run linting
+        run: yarn lint
+
+      - name: Run stylelint
+        run: yarn stylelint
+
   run_integration_tests:
     runs-on: ubuntu-24.04-arm
     strategy:

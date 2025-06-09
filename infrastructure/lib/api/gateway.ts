@@ -1,18 +1,12 @@
-import { Construct } from "constructs";
-import {
-  CorsHttpMethod,
-  HttpApi,
-  DomainName,
-  LogGroupLogDestination,
-} from "aws-cdk-lib/aws-apigatewayv2";
-import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
-import { HttpLambdaAuthorizer } from "aws-cdk-lib/aws-apigatewayv2-authorizers";
 import { RemovalPolicy } from "aws-cdk-lib";
-import { API_GATEWAY } from "../constants/constructs";
+import { CorsHttpMethod, DomainName, HttpApi } from "aws-cdk-lib/aws-apigatewayv2";
+import { HttpLambdaAuthorizer } from "aws-cdk-lib/aws-apigatewayv2-authorizers";
+import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import { StringParameter } from "aws-cdk-lib/aws-ssm";
+import { Construct } from "constructs";
+import { API_GATEWAY } from "../constants/constructs";
 import { ENVIRONMENT_PARAMS } from "../constants/environments";
 import { LOGICAL_ID } from "../constants/logical-id";
-import { LogGroup, RetentionDays } from "aws-cdk-lib/aws-logs";
 
 interface ApiGatewayProps {
   authService: HttpLambdaAuthorizer;
@@ -27,15 +21,15 @@ export class HourTrackerApiGateway extends Construct {
     const customDomain = new DomainName(this, "DN", {
       domainName: StringParameter.valueForStringParameter(
         this,
-        ENVIRONMENT_PARAMS.API_DOMAIN_NAME
+        ENVIRONMENT_PARAMS.API_DOMAIN_NAME,
       ),
       certificate: Certificate.fromCertificateArn(
         this,
         "CERT",
         StringParameter.valueForStringParameter(
           this,
-          ENVIRONMENT_PARAMS.API_DOMAIN_CERT_ARN
-        )
+          ENVIRONMENT_PARAMS.API_DOMAIN_CERT_ARN,
+        ),
       ),
     });
 

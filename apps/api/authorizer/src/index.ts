@@ -1,16 +1,14 @@
-import {
-  Context,
-  APIGatewayProxyEventV2,
-  APIGatewaySimpleAuthorizerWithContextResult,
-} from "aws-lambda";
+import { logger } from "@hour-tracker/logger";
+import { APIGatewayProxyEventV2, APIGatewaySimpleAuthorizerWithContextResult } from "aws-lambda";
 import { verifyAccessToken } from "./services/jwt";
 import { getActiveUser } from "./services/user";
 import { UserContext } from "./types/context.type";
-import { logger } from "@hour-tracker/logger";
 
 export const handler = async (
-  event: APIGatewayProxyEventV2
-): Promise<APIGatewaySimpleAuthorizerWithContextResult<UserContext | {}>> => {
+  event: APIGatewayProxyEventV2,
+): Promise<
+  APIGatewaySimpleAuthorizerWithContextResult<UserContext | object>
+> => {
   const token = event.headers.authorization?.split("Bearer ")[1];
 
   // Deny access when no token
@@ -42,10 +40,10 @@ export const handler = async (
     isAuthorized,
     context: isAuthorized
       ? {
-          userId,
-          organizationId,
-          role: user?.role ?? "",
-        }
+        userId,
+        organizationId,
+        role: user?.role ?? "",
+      }
       : {},
   };
 };

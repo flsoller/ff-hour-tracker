@@ -3,7 +3,7 @@ services:
   postgres_migrator:
     image: flsoller/hour-tracker-migration-runner:${TAG}
     ports:
-      - '5420:5420'
+      - "5420:5420"
     environment:
       - DATABASE_URL=${DATABASE_URL}
     networks:
@@ -18,7 +18,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: app_integration_tests
     ports:
-      - '5433:5432'
+      - "5433:5432"
     networks:
       - appnetwork
 

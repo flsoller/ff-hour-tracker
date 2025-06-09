@@ -10,14 +10,14 @@
 </template>
 
 <script setup lang="ts">
-import Sidebar from '@/components/AppSidebar.vue';
-import Toast from 'primevue/toast';
-import DynamicDialog from 'primevue/dynamicdialog';
+import Sidebar from "@/components/AppSidebar.vue";
+import DynamicDialog from "primevue/dynamicdialog";
+import Toast from "primevue/toast";
 </script>
 
 <style lang="scss">
-@import '@/styles/base/normalize.scss';
-@import '@/styles/theme.scss';
+@import "@/styles/base/normalize.scss";
+@import "@/styles/theme.scss";
 
 .app-container {
   display: flex;

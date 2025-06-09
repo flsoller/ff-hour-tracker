@@ -1,4 +1,4 @@
-import { db, models, DrizzleORM } from "@hour-tracker/db";
+import { db, DrizzleORM, models } from "@hour-tracker/db";
 
 export async function getActiveUser(userId: string, organizationId: string) {
   const [user] = await db
@@ -12,8 +12,8 @@ export async function getActiveUser(userId: string, organizationId: string) {
     .where(
       DrizzleORM.and(
         DrizzleORM.eq(models.users.id, userId),
-        DrizzleORM.eq(models.users.organizationId, organizationId)
-      )
+        DrizzleORM.eq(models.users.organizationId, organizationId),
+      ),
     )
     .limit(1);
 

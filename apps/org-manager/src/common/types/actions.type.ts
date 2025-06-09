@@ -14,7 +14,7 @@ export interface ManageOrganizationPayload {
   }[];
 }
 
-export interface EventPayload<T = any> {
+export interface EventPayload<T = unknown> {
   action: keyof typeof LambdaActions;
   payload: T;
 }

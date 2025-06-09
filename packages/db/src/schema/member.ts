@@ -1,8 +1,8 @@
 import { relations } from "drizzle-orm";
-import { text, timestamp, uuid, uniqueIndex } from "drizzle-orm/pg-core";
+import { text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
 import { organizations } from "./organization";
-import { timeLogs } from "./time-log";
 import { hourTrackerSchema } from "./shared/schema";
+import { timeLogs } from "./time-log";
 
 export const members = hourTrackerSchema.table(
   "members",
@@ -23,9 +23,9 @@ export const members = hourTrackerSchema.table(
   (table) => [
     uniqueIndex("member_email_address_organization_id_unique_constraint").on(
       table.emailAddress,
-      table.organizationId
+      table.organizationId,
     ),
-  ]
+  ],
 );
 
 export const membersRelations = relations(members, ({ one, many }) => ({
