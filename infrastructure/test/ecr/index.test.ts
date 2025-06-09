@@ -1,7 +1,7 @@
-import { Template } from "aws-cdk-lib/assertions";
 import * as cdk from "aws-cdk-lib";
-import { HourTrackerImageRepositories } from "../../lib/ecr";
+import { Template } from "aws-cdk-lib/assertions";
 import { HOUR_TRACKER_ECR_REPO_NAMES } from "../../lib/constants/ecr";
+import { HourTrackerImageRepositories } from "../../lib/ecr";
 import { cdkResourceFinder } from "../helpers";
 
 let app: cdk.App;
@@ -14,7 +14,7 @@ beforeEach(() => {
   });
   ecrStack = new HourTrackerImageRepositories(
     app,
-    "HourTrackerImageRepository"
+    "HourTrackerImageRepository",
   );
   template = Template.fromStack(ecrStack);
 });
@@ -28,7 +28,7 @@ describe("HourTrackerImageRepositories", () => {
     it("should have the correct repository parameters", () => {
       const resource = cdkResourceFinder(
         template,
-        HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHORIZER
+        HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHORIZER,
       );
       expect(resource).toMatchSnapshot();
     });
@@ -38,7 +38,7 @@ describe("HourTrackerImageRepositories", () => {
     it("should have the correct repository parameters", () => {
       const resource = cdkResourceFinder(
         template,
-        HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHENTICATOR
+        HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHENTICATOR,
       );
       expect(resource).toMatchSnapshot();
     });
@@ -48,7 +48,7 @@ describe("HourTrackerImageRepositories", () => {
     it("should have the correct repository parameters", () => {
       const resource = cdkResourceFinder(
         template,
-        HOUR_TRACKER_ECR_REPO_NAMES.ORGANIZATION_MANAGER
+        HOUR_TRACKER_ECR_REPO_NAMES.ORGANIZATION_MANAGER,
       );
       expect(resource).toMatchSnapshot();
     });
@@ -58,7 +58,7 @@ describe("HourTrackerImageRepositories", () => {
     it("should have the correct repository parameters", () => {
       const resource = cdkResourceFinder(
         template,
-        HOUR_TRACKER_ECR_REPO_NAMES.API_MEMBERS
+        HOUR_TRACKER_ECR_REPO_NAMES.API_MEMBERS,
       );
       expect(resource).toMatchSnapshot();
     });

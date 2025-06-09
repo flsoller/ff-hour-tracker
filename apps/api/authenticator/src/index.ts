@@ -1,12 +1,12 @@
-import { Context, APIGatewayProxyEventV2 } from "aws-lambda";
 import { handleError } from "@hour-tracker/lambda-api/errorHandler";
 import { NotFoundError } from "@hour-tracker/lambda-api/errors";
-import { getRouteHandler } from "./routes";
 import { logger } from "@hour-tracker/logger";
+import { APIGatewayProxyEventV2, Context } from "aws-lambda";
+import { getRouteHandler } from "./routes";
 
 export const handler = async (
   event: APIGatewayProxyEventV2,
-  context: Context
+  context: Context,
 ): Promise<unknown> => {
   try {
     logger.info(
@@ -14,13 +14,13 @@ export const handler = async (
         context,
         requestContext: { ...event.requestContext },
       },
-      "Authenticator handler called"
+      "Authenticator handler called",
     );
     const routeHandler = getRouteHandler(event.requestContext.routeKey);
     if (!routeHandler) {
       logger.warn(
         { event: event.requestContext.routeKey },
-        "Route handler not found"
+        "Route handler not found",
       );
       throw new NotFoundError();
     }

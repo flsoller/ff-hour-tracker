@@ -28,8 +28,8 @@ jobs:
         uses: TriPSs/conventional-changelog-action@v3
         with:
           github-token: ${{ secrets.github_token }}
-          output-file: 'false'
-          skip-commit: 'true'
+          output-file: "false"
+          skip-commit: "true"
 
       - name: Create Release
         uses: actions/create-release@v1

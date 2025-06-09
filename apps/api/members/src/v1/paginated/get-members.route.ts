@@ -8,14 +8,13 @@ import { getPaginatedMembers, validateRequest } from "./get-members.service";
  */
 export async function getMembersPaginated(request: APIRequest) {
   const { limit, offset, order } = validateRequest(request);
-  const organizationId =
-    request.requestContext.authorizer.lambda.organizationId;
+  const organizationId = request.requestContext.authorizer.lambda.organizationId;
 
   const members = await getPaginatedMembers(
     organizationId,
     limit,
     offset,
-    order
+    order,
   );
 
   return {

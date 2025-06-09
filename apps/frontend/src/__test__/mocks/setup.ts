@@ -1,8 +1,8 @@
-import { afterAll, afterEach, beforeAll } from "vitest";
-import { config } from "@vue/test-utils";
 import { createTestingPinia } from "@pinia/testing";
+import { config } from "@vue/test-utils";
 import primeVue from "primevue/config";
 import DialogService from "primevue/dialogservice";
+import { afterAll, afterEach, beforeAll } from "vitest";
 import { server } from "./server";
 import "whatwg-fetch";
 
@@ -19,7 +19,7 @@ beforeAll(() => {
       console.error(
         "Found an unhandled %s request to %s",
         req.method,
-        req.url.href
+        req.url.href,
       );
     },
   });

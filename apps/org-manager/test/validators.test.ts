@@ -8,7 +8,7 @@ describe("Validators", () => {
       (action) => {
         const testAction = action as keyof typeof LambdaActions;
         expect(isValidLambdaEvent({ action: testAction, payload: {} }));
-      }
+      },
     );
   });
 });

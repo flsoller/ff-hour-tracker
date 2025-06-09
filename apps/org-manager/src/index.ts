@@ -1,8 +1,4 @@
-import {
-  EventPayload,
-  LambdaActions,
-  ManageOrganizationPayload,
-} from "./common/types/actions.type";
+import { EventPayload, LambdaActions, ManageOrganizationPayload } from "./common/types/actions.type";
 import { isValidLambdaEvent } from "./common/validators/event.validator";
 import { manageOrganization } from "./features/manage-organization";
 
@@ -21,6 +17,6 @@ export const handler = async (event: EventPayload): Promise<void> => {
     throw new Error(`Invalid Event Provided: ${event.action}`);
   }
   return EVENT_ACTION_MAP[event.action](
-    event.payload as ManageOrganizationPayload
+    event.payload as ManageOrganizationPayload,
   );
 };

@@ -1,11 +1,9 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { userLogin } from "../../helpers/userActions";
 
 test.describe("App navigation", () => {
   test.describe("path matching", () => {
-    test("should route to login for unauthenticated user on non matched routes", async ({
-      page,
-    }) => {
+    test("should route to login for unauthenticated user on non matched routes", async ({ page }) => {
       await page.goto("/somethingelse");
       await expect(page.getByTestId("sidebar")).not.toBeVisible();
       await expect(page).toHaveURL(/login/);
@@ -17,9 +15,7 @@ test.describe("App navigation", () => {
       await userLogin(page);
     });
 
-    test("should navigate to the correct paths via sidebar", async ({
-      page,
-    }) => {
+    test("should navigate to the correct paths via sidebar", async ({ page }) => {
       await expect(page.getByTestId("dashboardLink")).toBeVisible();
       page.getByTestId("dashboardLink").click();
       await expect(page).toHaveURL("/");

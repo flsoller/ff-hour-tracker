@@ -1,10 +1,7 @@
-import { db, models, DrizzleORM } from "@hour-tracker/db";
+import { db, DrizzleORM, models } from "@hour-tracker/db";
 import { BadRequestError } from "@hour-tracker/lambda-api/errors";
-import {
-  isTypeOfNumbers,
-  isValidOrderQuery,
-} from "../../common/utils/validators";
 import { APIRequest } from "../../common/types/request.type";
+import { isTypeOfNumbers, isValidOrderQuery } from "../../common/utils/validators";
 
 /**
  * Get paginated members for an organization
@@ -18,7 +15,7 @@ export async function getPaginatedMembers(
   organizationId: string,
   limit: number,
   offset: number,
-  order: "asc" | "desc"
+  order: "asc" | "desc",
 ) {
   const members = await db
     .select()
@@ -43,8 +40,7 @@ export function validateRequest(request: APIRequest): {
 } {
   const limit = Number(request.queryStringParameters?.limit ?? 10);
   const offset = Number(request.queryStringParameters?.offset ?? 0);
-  const order =
-    request.queryStringParameters?.order === "desc" ? "desc" : "asc";
+  const order = request.queryStringParameters?.order === "desc" ? "desc" : "asc";
 
   if (!isTypeOfNumbers([limit, offset]) || !isValidOrderQuery(order)) {
     throw new BadRequestError("InvalidQueryParams");

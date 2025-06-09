@@ -1,15 +1,12 @@
-import { Construct } from "constructs";
-import * as lambda from "aws-cdk-lib/aws-lambda";
-import * as ecr from "aws-cdk-lib/aws-ecr";
-import {
-  HttpLambdaAuthorizer,
-  HttpLambdaResponseType,
-} from "aws-cdk-lib/aws-apigatewayv2-authorizers";
 import { Duration, RemovalPolicy } from "aws-cdk-lib";
+import { HttpLambdaAuthorizer, HttpLambdaResponseType } from "aws-cdk-lib/aws-apigatewayv2-authorizers";
+import * as ecr from "aws-cdk-lib/aws-ecr";
+import * as lambda from "aws-cdk-lib/aws-lambda";
+import { Construct } from "constructs";
 import { DEFAULT_AUTHORIZER } from "../constants/constructs";
 import { HOUR_TRACKER_ECR_REPO_NAMES } from "../constants/ecr";
-import { LOGICAL_ID } from "../constants/logical-id";
 import { DEFAULT_INSTRUMENTATION_CONFIG } from "../constants/instrumentation";
+import { LOGICAL_ID } from "../constants/logical-id";
 
 interface AuthorizerProps {
   hashOrVersion: string;
@@ -28,7 +25,7 @@ export class AuthorizerService extends Construct {
     const ecrRepo = ecr.Repository.fromRepositoryName(
       this,
       `${id}-repo`,
-      HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHORIZER
+      HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHORIZER,
     );
 
     const authorizerService = new lambda.DockerImageFunction(
@@ -50,7 +47,7 @@ export class AuthorizerService extends Construct {
         memorySize: 256,
         timeout: Duration.seconds(20),
         functionName: LOGICAL_ID.HOUR_TRACKER_API_AUTHORIZER,
-      }
+      },
     );
     authorizerService.applyRemovalPolicy(RemovalPolicy.DESTROY);
 
@@ -60,7 +57,7 @@ export class AuthorizerService extends Construct {
       {
         resultsCacheTtl: Duration.seconds(0),
         responseTypes: [HttpLambdaResponseType.SIMPLE],
-      }
+      },
     );
   }
 }

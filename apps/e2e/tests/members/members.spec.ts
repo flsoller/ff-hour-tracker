@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { createMembersData, setupUser } from "../../helpers/apiActions";
 import { goToPage, userLogin } from "../../helpers/userActions";
 import { createMembers } from "../../helpers/utils";
@@ -14,24 +14,20 @@ test.describe("Members", () => {
   });
 
   test.describe("paginated members table", () => {
-    test("should display an info text in the table if no members", async ({
-      page,
-    }) => {
+    test("should display an info text in the table if no members", async ({ page }) => {
       await userLogin(page, userEmail, password);
       await goToPage(page, "members");
       await expect(
         page.getByText("No Members added yet, start adding to see data.", {
           exact: true,
-        })
+        }),
       ).toBeVisible();
       await expect(
-        page.getByRole("button", { name: /Add Member/ })
+        page.getByRole("button", { name: /Add Member/ }),
       ).toBeVisible();
     });
 
-    test("should display all members in the table with default pagination option of 5", async ({
-      page,
-    }) => {
+    test("should display all members in the table with default pagination option of 5", async ({ page }) => {
       const membersToCreate = createMembers(5);
       await createMembersData(userEmail, password, membersToCreate);
       await userLogin(page, userEmail, password);
@@ -41,24 +37,22 @@ test.describe("Members", () => {
         await expect(
           page.getByText(member.firstName, {
             exact: true,
-          })
+          }),
         ).toBeVisible();
         await expect(
           page.getByText(member.lastName, {
             exact: true,
-          })
+          }),
         ).toBeVisible();
         await expect(
           page.getByText(member.emailAddress, {
             exact: true,
-          })
+          }),
         ).toBeVisible();
       }
     });
 
-    test("should display all members split per each page of the paginated table", async ({
-      page,
-    }) => {
+    test("should display all members split per each page of the paginated table", async ({ page }) => {
       const membersToCreate = createMembers(10);
       await createMembersData(userEmail, password, membersToCreate);
       await userLogin(page, userEmail, password);
@@ -73,17 +67,17 @@ test.describe("Members", () => {
         await expect(
           page.getByText(member.firstName, {
             exact: true,
-          })
+          }),
         ).toBeVisible();
         await expect(
           page.getByText(member.lastName, {
             exact: true,
-          })
+          }),
         ).toBeVisible();
         await expect(
           page.getByText(member.emailAddress, {
             exact: true,
-          })
+          }),
         ).toBeVisible();
       }
 
@@ -94,24 +88,22 @@ test.describe("Members", () => {
         await expect(
           page.getByText(member.firstName, {
             exact: true,
-          })
+          }),
         ).toBeVisible();
         await expect(
           page.getByText(member.lastName, {
             exact: true,
-          })
+          }),
         ).toBeVisible();
         await expect(
           page.getByText(member.emailAddress, {
             exact: true,
-          })
+          }),
         ).toBeVisible();
       }
     });
 
-    test("should correctly use the sort function of lastName", async ({
-      page,
-    }) => {
+    test("should correctly use the sort function of lastName", async ({ page }) => {
       const membersToCreate = createMembers(10);
       await createMembersData(userEmail, password, membersToCreate);
       await userLogin(page, userEmail, password);
@@ -125,19 +117,15 @@ test.describe("Members", () => {
       await page.getByText("Last Name", { exact: true }).click();
       await page.getByText("Last Name", { exact: true }).click();
       const rows = page.getByRole("row");
-      const tableData = await rows.evaluateAll((list) =>
-        list.map((el) => el.textContent)
-      );
+      const tableData = await rows.evaluateAll((list) => list.map((el) => el.textContent));
       expect(tableData[1]).toBe(
-        `${sortedMembers[0].firstName}${sortedMembers[0].lastName}${sortedMembers[0].emailAddress}`
+        `${sortedMembers[0].firstName}${sortedMembers[0].lastName}${sortedMembers[0].emailAddress}`,
       );
     });
   });
 
   test.describe("add members", () => {
-    test("should create a new member via add member modal", async ({
-      page,
-    }) => {
+    test("should create a new member via add member modal", async ({ page }) => {
       await userLogin(page, userEmail, password);
       await goToPage(page, "members");
       await page.getByText("Add Member", { exact: true }).click();
@@ -147,19 +135,15 @@ test.describe("Members", () => {
       await page.getByTestId("email").fill("first.last@user.com");
       await page.getByTestId("addMember").click();
       await expect(
-        page.getByText("New member added: Firstname Lastname", { exact: true })
+        page.getByText("New member added: Firstname Lastname", { exact: true }),
       ).toBeVisible();
       await expect(page.getByRole("dialog")).not.toBeVisible();
       const rows = page.getByRole("row");
-      const tableData = await rows.evaluateAll((list) =>
-        list.map((el) => el.textContent)
-      );
+      const tableData = await rows.evaluateAll((list) => list.map((el) => el.textContent));
       expect(tableData[1]).toBe("FirstnameLastnamefirst.last@user.com");
     });
 
-    test("should show an error snackbar if adding member fails", async ({
-      page,
-    }) => {
+    test("should show an error snackbar if adding member fails", async ({ page }) => {
       await userLogin(page, userEmail, password);
       await goToPage(page, "members");
       await page.route("**/v0/members", async (route) => {
@@ -176,7 +160,7 @@ test.describe("Members", () => {
       await expect(
         page.getByText("Unexpected error while adding a member", {
           exact: true,
-        })
+        }),
       ).toBeVisible();
     });
   });

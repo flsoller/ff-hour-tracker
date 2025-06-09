@@ -1,16 +1,16 @@
-import { request } from '@playwright/test';
-import { createOrganization, createUser } from './utils';
+import { request } from "@playwright/test";
+import { createOrganization, createUser } from "./utils";
 
-const API_TEST_ADMIN_USER = 'admin@user.com';
-const API_TEST_ADMIN_PW = 'support-user-pw';
+const API_TEST_ADMIN_USER = "admin@user.com";
+const API_TEST_ADMIN_PW = "support-user-pw";
 
 /**
  * Login api user for api interaction and test data creation
  */
 async function loginApiUser(email?: string, password?: string) {
   const URL = process.env.CI
-    ? 'http://api:5000/api'
-    : 'http://localhost:5000/api';
+    ? "http://api:5000/api"
+    : "http://localhost:5000/api";
 
   const context = await request.newContext();
 
@@ -65,7 +65,7 @@ async function setupUser() {
 async function createMembersData(
   userEmail,
   userPassword,
-  membersToCreate = [{}]
+  membersToCreate = [{}],
 ) {
   const { URL, authContext } = await loginApiUser(userEmail, userPassword);
 
@@ -78,4 +78,4 @@ async function createMembersData(
   }
 }
 
-export { loginApiUser, setupUser, createMembersData };
+export { createMembersData, loginApiUser, setupUser };

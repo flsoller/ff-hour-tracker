@@ -1,7 +1,6 @@
 import { APIGatewayEventRequestContextV2 } from "aws-lambda";
 
-export interface HourTrackerRequestContext
-  extends APIGatewayEventRequestContextV2 {
+export interface HourTrackerRequestContext extends APIGatewayEventRequestContextV2 {
   authorizer: {
     lambda: {
       userId: string;

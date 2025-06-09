@@ -65,7 +65,7 @@ export function createApiRequestEvent<T = unknown>(
     organizationId: string;
     userId: string;
     role: string;
-  }
+  },
 ): APIRequest {
   return {
     version: "2.0",

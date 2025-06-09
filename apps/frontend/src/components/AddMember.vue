@@ -29,29 +29,28 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, inject } from 'vue';
-import { validateEmail, validateInputString } from '../utils/validate';
-import Button from 'primevue/button';
-import InputText from 'primevue/inputtext';
-import { useMembersStore } from '../stores/members';
+import Button from "primevue/button";
+import InputText from "primevue/inputtext";
+import { inject, ref, watch } from "vue";
+import { useMembersStore } from "../stores/members";
+import { validateEmail, validateInputString } from "../utils/validate";
 
-const firstName = ref('');
-const lastName = ref('');
-const email = ref('');
+const firstName = ref("");
+const lastName = ref("");
+const email = ref("");
 const validForm = ref(false);
 const membersStore = useMembersStore();
 const dialogRef = inject<{
   value: { close: Function };
-}>('dialogRef');
+}>("dialogRef");
 
 watch(
   [() => firstName.value, () => lastName.value, () => email.value],
   ([newFirstName, newLastName, newEmail]) => {
-    validForm.value =
-      validateInputString(newFirstName).valid &&
-      validateInputString(newLastName).valid &&
-      validateEmail(newEmail).valid;
-  }
+    validForm.value = validateInputString(newFirstName).valid
+      && validateInputString(newLastName).valid
+      && validateEmail(newEmail).valid;
+  },
 );
 
 async function onSubmit() {

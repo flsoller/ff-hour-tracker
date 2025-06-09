@@ -1,10 +1,10 @@
-import { defineStore } from 'pinia';
-import { signIn } from '../services/auth';
-import { ref } from 'vue';
-import { useToastService } from '../services/toast';
-import router from '../router';
+import { defineStore } from "pinia";
+import { ref } from "vue";
+import router from "../router";
+import { signIn } from "../services/auth";
+import { useToastService } from "../services/toast";
 
-export const useUserStore = defineStore('user', () => {
+export const useUserStore = defineStore("user", () => {
   const accessToken = ref<null | string>(null);
   const isLoggedIn = ref<boolean>(false);
   const toast = useToastService();
@@ -17,7 +17,7 @@ export const useUserStore = defineStore('user', () => {
     if (error) {
       accessToken.value = null;
       isLoggedIn.value = false;
-      toast.showToast('error', 'Invalid Credentials');
+      toast.showToast("error", "Invalid Credentials");
       loading.value = false;
       return;
     }
@@ -25,7 +25,7 @@ export const useUserStore = defineStore('user', () => {
     accessToken.value = data && data.accessToken;
     isLoggedIn.value = true;
     loading.value = false;
-    router.push('/');
+    router.push("/");
   }
 
   return { accessToken, isLoggedIn, loading, login };

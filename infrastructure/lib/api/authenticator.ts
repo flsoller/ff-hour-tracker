@@ -1,17 +1,13 @@
-import {
-  HttpApi,
-  HttpMethod,
-  HttpNoneAuthorizer,
-} from "aws-cdk-lib/aws-apigatewayv2";
 import { Duration, RemovalPolicy } from "aws-cdk-lib";
+import { HttpApi, HttpMethod, HttpNoneAuthorizer } from "aws-cdk-lib/aws-apigatewayv2";
+import { HttpLambdaIntegration } from "aws-cdk-lib/aws-apigatewayv2-integrations";
 import * as ecr from "aws-cdk-lib/aws-ecr";
 import * as lambda from "aws-cdk-lib/aws-lambda";
-import { HttpLambdaIntegration } from "aws-cdk-lib/aws-apigatewayv2-integrations";
 import { Construct } from "constructs";
 import { AUTHENTICATOR_SERVICE } from "../constants/constructs";
 import { HOUR_TRACKER_ECR_REPO_NAMES } from "../constants/ecr";
-import { LOGICAL_ID } from "../constants/logical-id";
 import { DEFAULT_INSTRUMENTATION_CONFIG } from "../constants/instrumentation";
+import { LOGICAL_ID } from "../constants/logical-id";
 
 interface AuthenticatorProps {
   hashOrVersion: string;
@@ -29,7 +25,7 @@ export class AuthenticationService extends Construct {
     const ecrRepo = ecr.Repository.fromRepositoryName(
       this,
       `${id}-repo`,
-      HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHENTICATOR
+      HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHENTICATOR,
     );
 
     const authenticatorService = new lambda.DockerImageFunction(
@@ -51,13 +47,13 @@ export class AuthenticationService extends Construct {
         memorySize: 256,
         timeout: Duration.seconds(20),
         functionName: LOGICAL_ID.HOUR_TRACKER_API_AUTHENTICATOR,
-      }
+      },
     );
     authenticatorService.applyRemovalPolicy(RemovalPolicy.DESTROY);
 
     const authenticatorServiceIntegration = new HttpLambdaIntegration(
       AUTHENTICATOR_SERVICE.LAMBDA_INTEGRATION,
-      authenticatorService
+      authenticatorService,
     );
 
     props.apiGateway.addRoutes({

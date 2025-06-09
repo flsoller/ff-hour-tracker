@@ -1,8 +1,8 @@
-import { Template } from "aws-cdk-lib/assertions";
 import * as cdk from "aws-cdk-lib";
+import { Template } from "aws-cdk-lib/assertions";
 import { HourTrackerApi } from "../../lib/api";
-import { cdkResourceFinderWithTypeFilter } from "../helpers";
 import { AUTHENTICATOR_SERVICE } from "../../lib/constants/constructs";
+import { cdkResourceFinderWithTypeFilter } from "../helpers";
 
 let app: cdk.App;
 let apiStack: HourTrackerApi;
@@ -21,7 +21,7 @@ describe("AuthenticatorLambda", () => {
     const { DependsOn, ...attributesToCheck } = cdkResourceFinderWithTypeFilter(
       template,
       "AWS::Lambda::Function",
-      AUTHENTICATOR_SERVICE.NAME
+      AUTHENTICATOR_SERVICE.NAME,
     );
     // Verify DependsOn is present but exclude it from snapshot
     expect(DependsOn).toBeDefined();

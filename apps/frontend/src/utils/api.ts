@@ -21,7 +21,7 @@ async function getResponseBody<T>(httpResponse: Response): Promise<T | null> {
  */
 async function _apiRequest<T>(
   endpoint: string,
-  options: RequestInit
+  options: RequestInit,
 ): Promise<[T | null, Error | null]> {
   try {
     const response = await fetch(`${AppConstants.apiUrl}/${endpoint}`, {
@@ -50,8 +50,7 @@ const api = {
    * @param endpoint - target URL endpoint
    * @param options - optional request options
    */
-  get: <T>(endpoint: string, options?: RequestInit) =>
-    _apiRequest<T>(endpoint, { method: "GET", ...options }),
+  get: <T>(endpoint: string, options?: RequestInit) => _apiRequest<T>(endpoint, { method: "GET", ...options }),
 
   /**
    * POST method

@@ -1,8 +1,8 @@
+import { logger } from "@hour-tracker/logger";
 import { drizzle } from "drizzle-orm/postgres-js";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
-import { CONNECTION_STRING } from "./config";
 import postgres from "postgres";
-import { logger } from "@hour-tracker/logger";
+import { CONNECTION_STRING } from "./config";
 
 const migrationClient = postgres(CONNECTION_STRING, { max: 1 });
 
