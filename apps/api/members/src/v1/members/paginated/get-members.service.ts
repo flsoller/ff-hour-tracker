@@ -1,7 +1,7 @@
 import { db, DrizzleORM, models } from "@hour-tracker/db";
 import { BadRequestError } from "@hour-tracker/lambda-api/errors";
-import { APIRequest } from "../../common/types/request.type";
-import { isTypeOfNumbers, isValidOrderQuery } from "../../common/utils/validators";
+import { APIRequest } from "../../../common/types/request.type";
+import { isTypeOfNumbers, isValidOrderQuery } from "../../../common/utils/validators";
 
 /**
  * Get paginated members for an organization

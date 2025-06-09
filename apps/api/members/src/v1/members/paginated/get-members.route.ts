@@ -1,4 +1,4 @@
-import { APIRequest } from "../../common/types/request.type";
+import { APIRequest } from "../../../common/types/request.type";
 import { getPaginatedMembers, validateRequest } from "./get-members.service";
 
 /**
