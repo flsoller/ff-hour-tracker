@@ -9,8 +9,8 @@ function validateInputString(input: string): {
   valid: boolean;
   message: string | null;
 } {
-  if ((input || '').trim().length === 0) {
-    return { valid: false, message: 'Input Required' };
+  if ((input || "").trim().length === 0) {
+    return { valid: false, message: "Input Required" };
   }
 
   return { valid: true, message: null };
@@ -25,7 +25,7 @@ function validateEmail(email: string): {
   message: string | null;
 } {
   if (!email.toLowerCase().match(emailRegex)) {
-    return { valid: false, message: 'Invalid Email' };
+    return { valid: false, message: "Invalid Email" };
   }
 
   return { valid: true, message: null };

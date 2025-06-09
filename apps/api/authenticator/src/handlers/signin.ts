@@ -1,12 +1,12 @@
-import { APIGatewayProxyEventV2 } from "aws-lambda";
+import { db, DrizzleORM, models } from "@hour-tracker/db";
 import { BadRequestError } from "@hour-tracker/lambda-api/errors";
+import { APIGatewayProxyEventV2 } from "aws-lambda";
 import { compare } from "bcryptjs";
-import { db, models, DrizzleORM } from "@hour-tracker/db";
-import { createAccessToken } from "../services/jwt";
 import { SignInResponse } from "../common/types/signin.types";
+import { createAccessToken } from "../services/jwt";
 
 export async function handleSignIn(
-  request: APIGatewayProxyEventV2
+  request: APIGatewayProxyEventV2,
 ): Promise<SignInResponse> {
   const { emailAddress = "", password = "" } = JSON.parse(request.body ?? "");
 

@@ -42,17 +42,17 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { useMembersStore } from '../stores/members';
-import { useDialog } from 'primevue/usedialog';
+import { storeToRefs } from "pinia";
+import Button from "primevue/button";
+import Column from "primevue/column";
 import DataTable, {
   DataTablePageEvent,
   DataTableSortEvent,
-} from 'primevue/datatable';
-import Column from 'primevue/column';
-import Button from 'primevue/button';
-import AddMember from '../components/AddMember.vue';
-import { storeToRefs } from 'pinia';
+} from "primevue/datatable";
+import { useDialog } from "primevue/usedialog";
+import { onMounted } from "vue";
+import AddMember from "../components/AddMember.vue";
+import { useMembersStore } from "../stores/members";
 
 const membersStore = useMembersStore();
 const { members } = storeToRefs(membersStore);
@@ -66,13 +66,13 @@ async function onPaginationChange($event: DataTablePageEvent) {
   await membersStore.getMembersPaginated({
     limit: `${$event.rows}`,
     offset: `${$event.first}`,
-    order: $event.sortOrder === -1 ? 'desc' : 'asc',
+    order: $event.sortOrder === -1 ? "desc" : "asc",
   });
 }
 
 async function onSortingChange($event: DataTableSortEvent) {
   await membersStore.getMembersPaginated({
-    order: $event.sortOrder === -1 ? 'desc' : 'asc',
+    order: $event.sortOrder === -1 ? "desc" : "asc",
   });
 }
 
@@ -80,7 +80,7 @@ function onAddMember() {
   dialog.open(AddMember, {
     props: {
       modal: true,
-      header: 'Add Member',
+      header: "Add Member",
     },
   });
 }

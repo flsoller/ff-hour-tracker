@@ -1,9 +1,6 @@
-import { hashPassword } from "../common/services/bcrypt";
-import {
-  createOrganization,
-  getOrganization,
-} from "../common/repository/organization";
+import { createOrganization, getOrganization } from "../common/repository/organization";
 import { createUser, deleteUser, getUser } from "../common/repository/user";
+import { hashPassword } from "../common/services/bcrypt";
 import { ManageOrganizationPayload } from "../common/types/actions.type";
 
 /**
@@ -14,11 +11,11 @@ import { ManageOrganizationPayload } from "../common/types/actions.type";
  */
 async function createOrRemoveSupportUser(
   enableSupportAdmin: boolean,
-  organizationId: string
+  organizationId: string,
 ): Promise<void> {
   const [existingSupportUser] = await getUser(
     process.env.SUPPORT_USER_EMAIL!,
-    organizationId
+    organizationId,
   );
 
   // If enableSupportAdmin is true and no support user exists, create it.
@@ -52,9 +49,9 @@ async function getOrCreateOrganization(name: string, description?: string) {
   return existingOrganization
     ? existingOrganization
     : await createOrganization({
-        name,
-        description,
-      });
+      name,
+      description,
+    });
 }
 
 /**
@@ -63,11 +60,11 @@ async function getOrCreateOrganization(name: string, description?: string) {
  * @returns
  */
 export async function manageOrganization(
-  payload: ManageOrganizationPayload
+  payload: ManageOrganizationPayload,
 ): Promise<void> {
   const organization = await getOrCreateOrganization(
     payload.organization.name,
-    payload.organization.description
+    payload.organization.description,
   );
 
   await createOrRemoveSupportUser(payload.enableSupportAdmin, organization.id);

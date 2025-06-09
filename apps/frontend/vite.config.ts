@@ -1,7 +1,7 @@
 /// <reference types="vitest" />
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import path from 'path';
+import vue from "@vitejs/plugin-vue";
+import path from "path";
+import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,12 +9,12 @@ export default defineConfig({
   resolve: {
     alias: {
       // Path alias to import components via @/...
-      '@': path.resolve(__dirname, './src'),
+      "@": path.resolve(__dirname, "./src"),
     },
   },
   server: {
     port: 3000,
-    host: '0.0.0.0',
+    host: "0.0.0.0",
   },
   css: {
     preprocessorOptions: {
@@ -26,10 +26,10 @@ export default defineConfig({
   },
   test: {
     globals: true,
-    environment: 'jsdom',
+    environment: "jsdom",
     coverage: {
-      provider: 'istanbul',
+      provider: "istanbul",
     },
-    setupFiles: ['./src/__test__/mocks/setup.ts'],
+    setupFiles: ["./src/__test__/mocks/setup.ts"],
   },
 });

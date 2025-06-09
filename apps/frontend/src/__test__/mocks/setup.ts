@@ -1,10 +1,10 @@
-import { afterAll, afterEach, beforeAll } from 'vitest';
-import { config } from '@vue/test-utils';
-import { createTestingPinia } from '@pinia/testing';
-import primeVue from 'primevue/config';
-import DialogService from 'primevue/dialogservice';
-import { server } from './server';
-import 'whatwg-fetch';
+import { createTestingPinia } from "@pinia/testing";
+import { config } from "@vue/test-utils";
+import primeVue from "primevue/config";
+import DialogService from "primevue/dialogservice";
+import { afterAll, afterEach, beforeAll } from "vitest";
+import { server } from "./server";
+import "whatwg-fetch";
 
 // Test setups
 beforeAll(() => {
@@ -15,10 +15,11 @@ beforeAll(() => {
   ];
   server.listen({
     onUnhandledRequest(req) {
+      // eslint-disable-next-line no-console
       console.error(
-        'Found an unhandled %s request to %s',
+        "Found an unhandled %s request to %s",
         req.method,
-        req.url.href
+        req.url.href,
       );
     },
   });

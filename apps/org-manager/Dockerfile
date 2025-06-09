@@ -15,6 +15,7 @@ COPY .yarn/releases .yarn/releases/
 COPY turbo.json ./
 COPY ./apps/org-manager/package.json apps/org-manager/
 COPY ./packages/tsconfig/package.json packages/tsconfig/
+COPY ./packages/logger/package.json packages/logger/
 COPY ./packages/db/package.json packages/db/
 
 RUN yarn install
@@ -23,6 +24,7 @@ RUN yarn install
 COPY ./apps/org-manager apps/org-manager/
 COPY ./packages/tsconfig packages/tsconfig/
 COPY ./packages/db packages/db/
+COPY ./packages/logger packages/logger/
 
 # BUILD
 RUN yarn turbo:build-ci
@@ -30,7 +32,6 @@ RUN yarn turbo:build-ci
 # INSTALL PRODUCTION DEPENDENCIES
 RUN yarn workspaces focus @hour-tracker/organization-manager --production
 RUN cp -RL node_modules /tmp/node_modules/
-
 
 #########################
 ###### PROD STAGE #######

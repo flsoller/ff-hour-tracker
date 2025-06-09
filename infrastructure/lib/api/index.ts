@@ -1,11 +1,11 @@
 import * as cdk from "aws-cdk-lib";
+import * as ssm from "aws-cdk-lib/aws-ssm";
 import { Construct } from "constructs";
+import { ENVIRONMENT_PARAMS } from "../constants/environments";
+import { HOUR_TRACKER } from "../constants/stacks";
+import { AuthenticationService } from "./authenticator";
 import { AuthorizerService } from "./authorizer";
 import { HourTrackerApiGateway } from "./gateway";
-import { HOUR_TRACKER } from "../constants/stacks";
-import * as ssm from "aws-cdk-lib/aws-ssm";
-import { ENVIRONMENT_PARAMS } from "../constants/environments";
-import { AuthenticationService } from "./authenticator";
 import { MembersService } from "./members";
 
 export class HourTrackerApi extends cdk.Stack {
@@ -19,22 +19,22 @@ export class HourTrackerApi extends cdk.Stack {
 
     const dbConnectionString = ssm.StringParameter.valueForStringParameter(
       this,
-      ENVIRONMENT_PARAMS.DATABASE_URL_KEY
+      ENVIRONMENT_PARAMS.DATABASE_URL_KEY,
     );
 
     const jwtSecretString = ssm.StringParameter.valueForStringParameter(
       this,
-      ENVIRONMENT_PARAMS.JWT_SECRET
+      ENVIRONMENT_PARAMS.JWT_SECRET,
     );
 
     const newRelicAccountId = ssm.StringParameter.valueForStringParameter(
       this,
-      ENVIRONMENT_PARAMS.NEW_RELIC_ACCOUNT_ID
+      ENVIRONMENT_PARAMS.NEW_RELIC_ACCOUNT_ID,
     );
 
     const newRelicIngestLicense = ssm.StringParameter.valueForStringParameter(
       this,
-      ENVIRONMENT_PARAMS.NEW_RELIC_LICENSE_KEY
+      ENVIRONMENT_PARAMS.NEW_RELIC_LICENSE_KEY,
     );
 
     const defaultAuthorizer = new AuthorizerService(
@@ -46,7 +46,7 @@ export class HourTrackerApi extends cdk.Stack {
         jwtSecretString,
         newRelicAccountId,
         newRelicIngestLicense,
-      }
+      },
     );
 
     const apiGateway = new HourTrackerApiGateway(
@@ -54,7 +54,7 @@ export class HourTrackerApi extends cdk.Stack {
       HOUR_TRACKER.API_GATEWAY,
       {
         authService: defaultAuthorizer.authorizer,
-      }
+      },
     );
 
     new AuthenticationService(this, HOUR_TRACKER.API_AUTHENTICATOR, {

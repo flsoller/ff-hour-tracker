@@ -1,11 +1,7 @@
+import { db, DrizzleORM, models } from "@hour-tracker/db";
 import { Context } from "aws-lambda";
 import { handler } from "../src";
-import {
-  EventPayload,
-  LambdaActions,
-  ManageOrganizationPayload,
-} from "../src/common/types/actions.type";
-import { db, DrizzleORM, models } from "@hour-tracker/db";
+import { EventPayload, LambdaActions, ManageOrganizationPayload } from "../src/common/types/actions.type";
 
 describe("manageOrganization", () => {
   it("should create a new organization with support user", async () => {
@@ -145,7 +141,7 @@ describe("manageOrganization", () => {
       },
     };
     await expect(
-      handler(secondSampleEvent, {} as Context)
+      handler(secondSampleEvent, {} as Context),
     ).resolves.not.toThrow();
     const noUsers = await db.select().from(models.users);
     expect(noUsers.length).toBe(0);

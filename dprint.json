@@ -1,0 +1,32 @@
+{
+  "typescript": {},
+  "json": {
+    "lineWidth": 80,
+    "indentWidth": 2
+  },
+  "markdown": {},
+  "toml": {},
+  "dockerfile": {},
+  "malva": {},
+  "markup": {},
+  "yaml": {},
+  "excludes": [
+    "**/node_modules",
+    "**/dist",
+    "**/build",
+    "**/coverage",
+    "**/jest.config.js",
+    "**/*-lock.json",
+    ".yarn/*"
+  ],
+  "plugins": [
+    "https://plugins.dprint.dev/typescript-0.95.5.wasm",
+    "https://plugins.dprint.dev/json-0.20.0.wasm",
+    "https://plugins.dprint.dev/markdown-0.18.0.wasm",
+    "https://plugins.dprint.dev/toml-0.7.0.wasm",
+    "https://plugins.dprint.dev/dockerfile-0.3.3.wasm",
+    "https://plugins.dprint.dev/g-plane/malva-v0.12.1.wasm",
+    "https://plugins.dprint.dev/g-plane/markup_fmt-v0.20.0.wasm",
+    "https://plugins.dprint.dev/g-plane/pretty_yaml-v0.5.1.wasm"
+  ]
+}

@@ -1,6 +1,6 @@
 import { db, models } from "@hour-tracker/db";
-import { hash } from "bcryptjs";
 import { APIGatewayProxyEventV2 } from "aws-lambda";
+import { hash } from "bcryptjs";
 
 export async function createOrganizations() {
   const [organization] = await db
@@ -24,7 +24,7 @@ export async function createOrganizations() {
 
 export async function createUserForOrganization(
   organizationId: string,
-  overrides = {}
+  overrides = {},
 ) {
   const pwHash = await hash("12345", 12);
   return db
@@ -40,10 +40,10 @@ export async function createUserForOrganization(
     .returning();
 }
 
-export function createAuthorizerEvent<T>(
+export function createAuthorizerEvent(
   authorization: string,
   path: string,
-  method: string
+  method: string,
 ): APIGatewayProxyEventV2 {
   return {
     version: "2.0",

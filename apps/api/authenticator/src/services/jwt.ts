@@ -8,6 +8,6 @@ export function createAccessToken(userId: string, organizationId: string) {
       organizationId,
     },
     process.env.JWT_SECRET as string,
-    { expiresIn: "15m" }
+    { expiresIn: "15m" },
   );
 }

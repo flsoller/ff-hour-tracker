@@ -1,10 +1,10 @@
+import { handler } from "../../src/index";
 import {
   createApiRequestEvent,
+  createMembersForOrganization,
   createOrganizations,
   createUserForOrganization,
-  createMembersForOrganization,
 } from "../helpers/test-data";
-import { handler } from "../../src/index";
 
 describe("Name of the group", () => {
   let orgId: string;
@@ -17,7 +17,7 @@ describe("Name of the group", () => {
   describe("getMembersPaginated", () => {
     it("should return empty array when no members exist", async () => {
       const [user] = await createUserForOrganization(orgId);
-      const event = createApiRequestEvent<any>({}, {}, "/v1/members", "GET", {
+      const event = createApiRequestEvent({}, {}, "/v1/members", "GET", {
         organizationId: orgId,
         userId: user!.id,
         role: user!.role,
@@ -35,7 +35,7 @@ describe("Name of the group", () => {
     it("should return paginated members", async () => {
       const [user] = await createUserForOrganization(orgId);
       const members = await createMembersForOrganization(orgId);
-      const event = createApiRequestEvent<any>({}, {}, "/v1/members", "GET", {
+      const event = createApiRequestEvent({}, {}, "/v1/members", "GET", {
         organizationId: orgId,
         userId: user!.id,
         role: user!.role,
@@ -54,7 +54,7 @@ describe("Name of the group", () => {
     it("should return paginated members with limit and offset", async () => {
       const [user] = await createUserForOrganization(orgId);
       const members = await createMembersForOrganization(orgId);
-      const event = createApiRequestEvent<any>(
+      const event = createApiRequestEvent(
         {},
         {
           limit: "1",
@@ -66,10 +66,10 @@ describe("Name of the group", () => {
           organizationId: orgId,
           userId: user!.id,
           role: user!.role,
-        }
+        },
       );
 
-      const result = (await handler(event)) as any;
+      const result = (await handler(event)) as { body: string };
       expect(result).toEqual({
         statusCode: 200,
         body: JSON.stringify({
@@ -84,7 +84,7 @@ describe("Name of the group", () => {
     it("should return ordered members as specified in the query params", async () => {
       const [user] = await createUserForOrganization(orgId);
       await createMembersForOrganization(orgId);
-      const event = createApiRequestEvent<any>(
+      const event = createApiRequestEvent(
         {},
         { limit: "1", offset: "0", order: "desc" },
         "/v1/members",
@@ -93,17 +93,17 @@ describe("Name of the group", () => {
           organizationId: orgId,
           userId: user!.id,
           role: user!.role,
-        }
+        },
       );
 
-      const result = (await handler(event)) as any;
+      const result = (await handler(event)) as { body: string };
       const responseBody = JSON.parse(result.body);
       expect(responseBody.data[0].firstName).toEqual("Jane");
     });
 
     it("should throw bad request error when limit is not a number", async () => {
       const [user] = await createUserForOrganization(orgId);
-      const event = createApiRequestEvent<any>(
+      const event = createApiRequestEvent(
         {},
         { limit: "not-a-number", offset: "0", order: "asc" },
         "/v1/members",
@@ -112,7 +112,7 @@ describe("Name of the group", () => {
           organizationId: orgId,
           userId: user!.id,
           role: user!.role,
-        }
+        },
       );
 
       const result = await handler(event);
@@ -127,7 +127,7 @@ describe("Name of the group", () => {
 
     it("should throw bad request error when offset is not a number", async () => {
       const [user] = await createUserForOrganization(orgId);
-      const event = createApiRequestEvent<any>(
+      const event = createApiRequestEvent(
         {},
         { limit: "1", offset: "not-a-number", order: "asc" },
         "/v1/members",
@@ -136,7 +136,7 @@ describe("Name of the group", () => {
           organizationId: orgId,
           userId: user!.id,
           role: user!.role,
-        }
+        },
       );
 
       const result = await handler(event);

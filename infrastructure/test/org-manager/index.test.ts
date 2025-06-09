@@ -1,8 +1,8 @@
-import { Template } from "aws-cdk-lib/assertions";
 import * as cdk from "aws-cdk-lib";
-import { cdkResourceFinderWithTypeFilter } from "../helpers";
-import { HourTrackerOrganizationManager } from "../../lib/org-manager";
+import { Template } from "aws-cdk-lib/assertions";
 import { ORGANIZATION_MANAGER } from "../../lib/constants/constructs";
+import { HourTrackerOrganizationManager } from "../../lib/org-manager";
+import { cdkResourceFinderWithTypeFilter } from "../helpers";
 
 let app: cdk.App;
 let orgManagerStack: HourTrackerOrganizationManager;
@@ -14,7 +14,7 @@ beforeEach(() => {
   });
   orgManagerStack = new HourTrackerOrganizationManager(
     app,
-    "HourTrackerOrganizationManager"
+    "HourTrackerOrganizationManager",
   );
   template = Template.fromStack(orgManagerStack);
 });
@@ -24,8 +24,10 @@ describe("HourTrackerOrganizationManager", () => {
     const { DependsOn, ...attributesToCheck } = cdkResourceFinderWithTypeFilter(
       template,
       "AWS::Lambda::Function",
-      ORGANIZATION_MANAGER.NAME
+      ORGANIZATION_MANAGER.NAME,
     );
+    // Verify DependsOn is present but exclude it from snapshot
+    expect(DependsOn).toBeDefined();
     expect(attributesToCheck).toMatchSnapshot();
   });
 });

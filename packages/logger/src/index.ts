@@ -15,15 +15,15 @@ export function createLogger(options: LoggerOptions = {}) {
 
   const transport = prettyPrint
     ? {
-        transport: {
-          target: "pino-pretty",
-          options: {
-            colorize: true,
-            translateTime: "SYS:standard",
-            ignore: "pid,hostname",
-          },
+      transport: {
+        target: "pino-pretty",
+        options: {
+          colorize: true,
+          translateTime: "SYS:standard",
+          ignore: "pid,hostname",
         },
-      }
+      },
+    }
     : undefined;
 
   return pino({

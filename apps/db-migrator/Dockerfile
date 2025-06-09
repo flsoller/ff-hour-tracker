@@ -11,6 +11,7 @@ COPY .yarn/releases .yarn/releases/
 COPY turbo.json ./
 COPY apps/db-migrator/package.json ./apps/db-migrator/package.json
 COPY packages/db/package.json ./packages/db/package.json
+COPY packages/logger/package.json ./packages/logger/package.json
 COPY packages/tsconfig/package.json ./packages/tsconfig/package.json
 
 RUN yarn install
@@ -18,6 +19,7 @@ RUN yarn install
 # COPY RELEVANT PACKAGES CODE
 COPY apps/db-migrator ./apps/db-migrator
 COPY packages/db ./packages/db
+COPY packages/logger ./packages/logger
 COPY packages/tsconfig ./packages/tsconfig
 
 # BUILD

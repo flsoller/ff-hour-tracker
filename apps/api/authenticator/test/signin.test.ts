@@ -1,16 +1,9 @@
-import { Context } from "aws-lambda";
-import {
-  SignInEventBody,
-  SignInResponse,
-} from "../src/common/types/signin.types";
-import { handler } from "../src";
-import {
-  createAuthenticatorEvent,
-  createOrganizations,
-  createUserForOrganization,
-} from "./helpers/test-data";
-import { logger } from "@hour-tracker/logger";
 import { db } from "@hour-tracker/db";
+import { logger } from "@hour-tracker/logger";
+import { Context } from "aws-lambda";
+import { handler } from "../src";
+import { SignInEventBody, SignInResponse } from "../src/common/types/signin.types";
+import { createAuthenticatorEvent, createOrganizations, createUserForOrganization } from "./helpers/test-data";
 
 describe("SignIn", () => {
   let orgId: string;
@@ -29,7 +22,7 @@ describe("SignIn", () => {
           password: "12345",
         },
         "/auth/signin",
-        "POST"
+        "POST",
       );
       const res = (await handler(event, {} as Context)) as SignInResponse;
       expect(res.accessToken).toEqual(expect.any(String));
@@ -42,7 +35,7 @@ describe("SignIn", () => {
           password: "abc",
         },
         "/auth/signin",
-        "POST"
+        "POST",
       );
       expect(await handler(event, {} as Context)).toMatchSnapshot();
     });
@@ -55,7 +48,7 @@ describe("SignIn", () => {
           password: "abc",
         },
         "/auth/signin",
-        "POST"
+        "POST",
       );
       expect(await handler(event, {} as Context)).toMatchSnapshot();
     });
@@ -71,7 +64,7 @@ describe("SignIn", () => {
           password: "abc",
         },
         "/auth/signin",
-        "POST"
+        "POST",
       );
       const response = await handler(event, {} as Context);
       expect(response).toMatchObject({
@@ -85,7 +78,7 @@ describe("SignIn", () => {
         expect.objectContaining({
           error: expect.any(Error),
         }),
-        "InternalServerError"
+        "InternalServerError",
       );
     });
   });
