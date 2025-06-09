@@ -12,7 +12,7 @@
     "db:migration:dev:migrate": "dotenv -e .env.dev drizzle-kit migrate",
     "db:migration:test:migrate": "dotenv -e .env.test drizzle-kit migrate",
     "db:migrate": "node ./dist/index.js",
-    "test": "dotenv -e .env.test jest -i --"
+    "test": "dotenv -e .env.test jest -- --runInBand"
   },
   "license": "UNLICENSED",
   "dependencies": {

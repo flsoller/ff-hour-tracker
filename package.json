@@ -14,6 +14,7 @@
   "private": true,
   "scripts": {
     "turbo:build": "turbo run build --filter=!infrastructure",
+    "turbo:test:integration": "turbo run test --filter=!infrastructure --filter=!hour-tracker-frontend --filter=!hour-tracker-e2e",
     "turbo:build-ci": "turbo run build",
     "turbo:test:db-migrator": "turbo run test --filter @hour-tracker/db-migrator",
     "turbo:test:api-authenticator": "turbo run test --filter @hour-tracker/api-authenticator",
@@ -27,7 +28,7 @@
     "stylelint": "dprint check"
   },
   "lint-staged": {
-    "*": "yarn dprint fmt"
+    "*": ["yarn dprint fmt --allow-no-files", "yarn lint"]
   },
   "packageManager": "yarn@4.5.0",
   "devDependencies": {
@@ -36,6 +37,7 @@
     "@eslint/js": "9.28.0",
     "dprint": "0.50.0",
     "eslint": "9.28.0",
+    "eslint-plugin-jest": "^28.13.0",
     "husky": "9.1.7",
     "lint-staged": "^16.1.0",
     "turbo": "2.5.4",
