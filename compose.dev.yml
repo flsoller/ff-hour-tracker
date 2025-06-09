@@ -8,7 +8,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: app_db_dev
     ports:
-      - '5432:5432'
+      - "5432:5432"
     networks:
       - appnetwork
     volumes:
@@ -23,7 +23,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: app_integration_tests
     ports:
-      - '5433:5432'
+      - "5433:5432"
 
   # db migration container
   postgres_migrator:
@@ -34,7 +34,7 @@ services:
       - DATABASE_URL=postgres://postgres:postgres@postgres:5432/app_db_dev
       - DEV_OR_INTEGRATION_USE=true
     ports:
-      - '5420:5420'
+      - "5420:5420"
     networks:
       - appnetwork
 

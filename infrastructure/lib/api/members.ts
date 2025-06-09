@@ -1,13 +1,13 @@
-import * as ecr from "aws-cdk-lib/aws-ecr";
-import * as lambda from "aws-cdk-lib/aws-lambda";
 import { Duration, RemovalPolicy } from "aws-cdk-lib";
-import { Construct } from "constructs";
-import { HOUR_TRACKER_ECR_REPO_NAMES } from "../constants/ecr";
 import { HttpApi, HttpMethod } from "aws-cdk-lib/aws-apigatewayv2";
 import { HttpLambdaIntegration } from "aws-cdk-lib/aws-apigatewayv2-integrations";
+import * as ecr from "aws-cdk-lib/aws-ecr";
+import * as lambda from "aws-cdk-lib/aws-lambda";
+import { Construct } from "constructs";
 import { MEMBERS_SERVICE } from "../constants/constructs";
-import { LOGICAL_ID } from "../constants/logical-id";
+import { HOUR_TRACKER_ECR_REPO_NAMES } from "../constants/ecr";
 import { DEFAULT_INSTRUMENTATION_CONFIG } from "../constants/instrumentation";
+import { LOGICAL_ID } from "../constants/logical-id";
 
 interface MembersProps {
   hashOrVersion: string;
@@ -24,7 +24,7 @@ export class MembersService extends Construct {
     const ecrRepo = ecr.Repository.fromRepositoryName(
       this,
       `${id}-repo`,
-      HOUR_TRACKER_ECR_REPO_NAMES.API_MEMBERS
+      HOUR_TRACKER_ECR_REPO_NAMES.API_MEMBERS,
     );
 
     const membersService = new lambda.DockerImageFunction(
@@ -45,13 +45,13 @@ export class MembersService extends Construct {
         memorySize: 256,
         timeout: Duration.seconds(20),
         functionName: LOGICAL_ID.HOUR_TRACKER_API_MEMBERS,
-      }
+      },
     );
     membersService.applyRemovalPolicy(RemovalPolicy.DESTROY);
 
     const membersServiceIntegration = new HttpLambdaIntegration(
       MEMBERS_SERVICE.LAMBDA_INTEGRATION,
-      membersService
+      membersService,
     );
 
     props.apiGateway.addRoutes({

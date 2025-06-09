@@ -1,10 +1,10 @@
+import { handler } from "../../src/index";
 import {
   createApiRequestEvent,
+  createMembersForOrganization,
   createOrganizations,
   createUserForOrganization,
-  createMembersForOrganization,
 } from "../helpers/test-data";
-import { handler } from "../../src/index";
 
 describe("Name of the group", () => {
   let orgId: string;
@@ -66,7 +66,7 @@ describe("Name of the group", () => {
           organizationId: orgId,
           userId: user!.id,
           role: user!.role,
-        }
+        },
       );
 
       const result = (await handler(event)) as { body: string };
@@ -93,7 +93,7 @@ describe("Name of the group", () => {
           organizationId: orgId,
           userId: user!.id,
           role: user!.role,
-        }
+        },
       );
 
       const result = (await handler(event)) as { body: string };
@@ -112,7 +112,7 @@ describe("Name of the group", () => {
           organizationId: orgId,
           userId: user!.id,
           role: user!.role,
-        }
+        },
       );
 
       const result = await handler(event);
@@ -136,7 +136,7 @@ describe("Name of the group", () => {
           organizationId: orgId,
           userId: user!.id,
           role: user!.role,
-        }
+        },
       );
 
       const result = await handler(event);

@@ -1,4 +1,4 @@
-import { db, models, DrizzleORM } from "@hour-tracker/db";
+import { db, DrizzleORM, models } from "@hour-tracker/db";
 import { users } from "@hour-tracker/db/schemas/user";
 
 /**
@@ -9,7 +9,7 @@ import { users } from "@hour-tracker/db/schemas/user";
  */
 export async function getUser(
   emailAddress: string,
-  organizationId: string
+  organizationId: string,
 ): Promise<{ id: string; emailAddress: string }[]> {
   const { users } = models;
 
@@ -19,8 +19,8 @@ export async function getUser(
     .where(
       DrizzleORM.and(
         DrizzleORM.ilike(users.emailAddress, `%${emailAddress}%`),
-        DrizzleORM.eq(users.organizationId, organizationId)
-      )
+        DrizzleORM.eq(users.organizationId, organizationId),
+      ),
     )
     .limit(1);
 }
@@ -62,7 +62,7 @@ export async function deleteUser(userId: string, organizationId: string) {
     .where(
       DrizzleORM.and(
         DrizzleORM.eq(users.id, userId),
-        DrizzleORM.eq(users.organizationId, organizationId)
-      )
+        DrizzleORM.eq(users.organizationId, organizationId),
+      ),
     );
 }

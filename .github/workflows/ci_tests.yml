@@ -23,6 +23,9 @@ jobs:
       - name: Run linting
         run: yarn lint
 
+      - name: Run stylelint
+        run: yarn stylelint
+
   run_integration_tests:
     runs-on: ubuntu-24.04-arm
     strategy:

@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
 
 function createOrganization() {
   return {
@@ -38,4 +38,4 @@ function createMembers(amountToCreate = 0) {
   return members;
 }
 
-export { createOrganization, createUser, createMembers };
+export { createMembers, createOrganization, createUser };

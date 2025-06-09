@@ -23,7 +23,7 @@ export interface IMember {
 export interface IGetMembersPaginatedReq {
   limit?: string;
   offset?: string;
-  order?: 'asc' | 'desc';
+  order?: "asc" | "desc";
 }
 
 interface IGetMembersPaginatedData {

@@ -35,7 +35,6 @@ RUN yarn turbo:build-ci
 RUN yarn workspaces focus @hour-tracker/api-authenticator --production
 RUN cp -RL node_modules /tmp/node_modules/
 
-
 #########################
 ###### PROD STAGE #######
 #########################

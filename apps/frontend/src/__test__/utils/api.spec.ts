@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import api from "../../utils/api";
 
 describe("api module", () => {
@@ -60,7 +60,7 @@ describe("api module", () => {
             Accept: "application/json",
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       expect(res).toStrictEqual([null, null]);
     });

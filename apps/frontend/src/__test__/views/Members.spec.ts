@@ -1,11 +1,11 @@
-import { expect, vi } from "vitest";
 import { mount, VueWrapper } from "@vue/test-utils";
+import { rest } from "msw";
+import { expect, vi } from "vitest";
+import { useMembersStore } from "../../stores/members";
+import { AppConstants } from "../../utils/constants";
 import Members from "../../views/Members.vue";
 import { flushPromises } from "../mocks/helpers";
 import { server } from "../mocks/server";
-import { rest } from "msw";
-import { AppConstants } from "../../utils/constants";
-import { useMembersStore } from "../../stores/members";
 
 describe("Members View", () => {
   let wrapper: VueWrapper;
@@ -22,10 +22,10 @@ describe("Members View", () => {
   it("should create", async () => {
     expect(wrapper.isVisible()).toBe(true);
     expect(
-      await wrapper.find(".members-table__header > span").text()
+      await wrapper.find(".members-table__header > span").text(),
     ).toContain("Members");
     expect(
-      await wrapper.find(".members-table__header > Button").text()
+      await wrapper.find(".members-table__header > Button").text(),
     ).toContain("Add Member");
   });
 
@@ -40,7 +40,7 @@ describe("Members View", () => {
   it("should display correct number of table rows", async () => {
     expect(await wrapper.findAll("thead > tr").length).toBe(1);
     expect(await wrapper.findAll("tbody > tr").length).toBe(1);
-    expect(wrapper.html()).not.toContain('class="members-table__footer"');
+    expect(wrapper.html()).not.toContain("class=\"members-table__footer\"");
   });
 
   it("should display correct information in table rows", async () => {
@@ -70,13 +70,13 @@ describe("Members View", () => {
     server.use(
       rest.get(`${AppConstants.apiUrl}/v0/members`, (req, res, ctx) => {
         return res(ctx.status(200), ctx.json({ data: [], totalCount: 0 }));
-      })
+      }),
     );
     const noDataWrapper = mount(Members);
     await flushPromises();
-    expect(noDataWrapper.html()).toContain('class="members-table__footer"');
+    expect(noDataWrapper.html()).toContain("class=\"members-table__footer\"");
     expect(
-      await noDataWrapper.find(".members-table__footer > span").text()
+      await noDataWrapper.find(".members-table__footer > span").text(),
     ).toContain("No Members added yet, start adding to see data.");
   });
 
@@ -93,15 +93,15 @@ describe("Members View", () => {
       rest.get(`${AppConstants.apiUrl}/v0/members`, (req, res, ctx) => {
         return res(
           ctx.status(200),
-          ctx.json({ data, totalCount: data.length })
+          ctx.json({ data, totalCount: data.length }),
         );
-      })
+      }),
     );
     const moreDataWrapper = mount(Members);
     const store = useMembersStore();
     await flushPromises();
 
-    await moreDataWrapper.find('[aria-label="Next Page"]').trigger("click");
+    await moreDataWrapper.find("[aria-label=\"Next Page\"]").trigger("click");
     expect(store.getMembersPaginated).toHaveBeenLastCalledWith({
       limit: "5",
       offset: "5",
@@ -122,9 +122,9 @@ describe("Members View", () => {
       rest.get(`${AppConstants.apiUrl}/v0/members`, (req, res, ctx) => {
         return res(
           ctx.status(200),
-          ctx.json({ data, totalCount: data.length })
+          ctx.json({ data, totalCount: data.length }),
         );
-      })
+      }),
     );
     const moreDataWrapper = mount(Members, {
       global: {
@@ -137,7 +137,7 @@ describe("Members View", () => {
     await flushPromises();
 
     await moreDataWrapper.find(".p-dropdown").trigger("click");
-    await moreDataWrapper.find('[aria-label="20"]').trigger("click");
+    await moreDataWrapper.find("[aria-label=\"20\"]").trigger("click");
     expect(store.getMembersPaginated).toHaveBeenLastCalledWith({
       limit: "20",
       offset: "0",

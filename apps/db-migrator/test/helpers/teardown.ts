@@ -1,6 +1,6 @@
-import { sql } from "drizzle-orm";
 import { db } from "@hour-tracker/db";
 import { logger } from "@hour-tracker/logger";
+import { sql } from "drizzle-orm";
 
 export default async () => {
   try {

@@ -17,4 +17,4 @@ COPY ./core core/
 
 EXPOSE 3000
 
-CMD [ "yarn", "run", "frontend:run-dev" ]
+CMD ["yarn", "run", "frontend:run-dev"]

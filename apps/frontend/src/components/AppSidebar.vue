@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 
 interface SidebarContent {
   routerLink: string;
@@ -26,34 +26,34 @@ interface SidebarContent {
 
 const sidebarContent = ref<SidebarContent[]>([
   {
-    routerLink: '/',
-    icon: 'pi-home',
-    label: 'Dashboard',
-    testId: 'dashboardLink',
+    routerLink: "/",
+    icon: "pi-home",
+    label: "Dashboard",
+    testId: "dashboardLink",
   },
   {
-    routerLink: '/timelog',
-    icon: 'pi-clock',
-    label: 'Timesheet',
-    testId: 'timesheetLink',
+    routerLink: "/timelog",
+    icon: "pi-clock",
+    label: "Timesheet",
+    testId: "timesheetLink",
   },
   {
-    routerLink: '/config',
-    icon: 'pi-cog',
-    label: 'Configuration',
-    testId: 'configLink',
+    routerLink: "/config",
+    icon: "pi-cog",
+    label: "Configuration",
+    testId: "configLink",
   },
   {
-    routerLink: '/members',
-    icon: 'pi-users',
-    label: 'Members',
-    testId: 'membersLink',
+    routerLink: "/members",
+    icon: "pi-users",
+    label: "Members",
+    testId: "membersLink",
   },
   {
-    routerLink: '/reports',
-    icon: 'pi-file-o',
-    label: 'Reports',
-    testId: 'reportsLink',
+    routerLink: "/reports",
+    icon: "pi-file-o",
+    label: "Reports",
+    testId: "reportsLink",
   },
 ]);
 </script>
