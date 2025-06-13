@@ -7,7 +7,7 @@ async function signIn(
 ): Promise<[ISignInSuccess | null, Error | null]> {
   const { emailAddress, password } = credentials;
   const [data, error] = await api.post<ISignIn, ISignInSuccess>(
-    "v0/auth/signin",
+    "auth/signin",
     {
       emailAddress,
       password,

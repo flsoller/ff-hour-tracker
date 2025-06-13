@@ -57,12 +57,7 @@ export class MembersService extends Construct {
     props.apiGateway.addRoutes({
       integration: membersServiceIntegration,
       path: "/v1/members",
-      methods: [HttpMethod.ANY],
-    });
-    props.apiGateway.addRoutes({
-      integration: membersServiceIntegration,
-      path: "/v1/members/{proxy+}",
-      methods: [HttpMethod.ANY],
+      methods: [HttpMethod.GET],
     });
   }
 }

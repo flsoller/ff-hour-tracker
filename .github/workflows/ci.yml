@@ -22,12 +22,12 @@ jobs:
           api_key: ${{ secrets.NEON_API_KEY }}
 
   build_migrator_and_apply_pending_migrations:
-    needs: reset_neon_testing_branch
+    needs: run_tests
     secrets: inherit
     uses: ./.github/workflows/db_migrator.yml
 
   run_aws_api_pipeline:
-    needs: build_migrator_and_apply_pending_migrations
+    needs: run_tests
     secrets: inherit
     uses: ./.github/workflows/aws_pipeline_api.yml
 

@@ -63,7 +63,7 @@ describe("Login View", () => {
 
     it("should correctly handle api error response", async () => {
       server.use(
-        rest.post(`${AppConstants.apiUrl}/v0/auth/signin`, (req, res, ctx) => {
+        rest.post(`${AppConstants.apiUrl}/auth/signin`, (req, res, ctx) => {
           return res(
             ctx.status(400),
             ctx.json({ error: "InvalidInformation" }),

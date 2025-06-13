@@ -7,7 +7,7 @@ import {
 import { Error } from "../types/ApiError";
 import api from "../utils/api";
 
-const MEMBERS_API = "v0/members";
+const MEMBERS_API = "v1/members";
 
 async function getMembers(
   queryOptions: IGetMembersPaginatedReq,
@@ -17,7 +17,7 @@ async function getMembers(
   const queryParams = new URLSearchParams({ limit, offset, order }).toString();
   const [data, error] = await api.get<IGetMembersPaginatedRes>(
     `${MEMBERS_API}?${queryParams}`,
-    { headers: { authorization: `Bearer ${accessToken}` } },
+    { headers: { Authorization: `Bearer ${accessToken}` } },
   );
 
   return [data, error];
@@ -30,7 +30,7 @@ async function addMember(
   const [data, error] = await api.post<ICreateMemberReq, IMemberCreatedRes>(
     `${MEMBERS_API}`,
     params,
-    { headers: { authorization: `Bearer ${accessToken}` } },
+    { headers: { Authorization: `Bearer ${accessToken}` } },
   );
 
   return [data, error];
