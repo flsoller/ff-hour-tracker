@@ -56,6 +56,11 @@ jobs:
             testCommand: yarn turbo:test:org-manager
             with_db: true
             requires_migration: true
+          - module: "hour-tracker-frontend"
+            dependencyCommand: yarn install
+            testCommand: yarn turbo:test:frontend
+            with_db: false
+            requires_migration: false
           - module: "infrastructure"
             dependencyCommand: yarn workspaces focus infrastructure
             testCommand: yarn workspace infrastructure test

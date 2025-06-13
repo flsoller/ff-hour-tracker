@@ -22,12 +22,12 @@ export const handlers = [
   }),
 
   // Auth routes
-  rest.post(`${MOCKED_ENDPOINT}/v0/auth/signin`, (req, res, ctx) => {
+  rest.post(`${MOCKED_ENDPOINT}/auth/signin`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json({ accessToken: "token" }));
   }),
 
   // Members routes
-  rest.get(`${MOCKED_ENDPOINT}/v0/members`, (req, res, ctx) => {
+  rest.get(`${MOCKED_ENDPOINT}/v1/members`, (req, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({

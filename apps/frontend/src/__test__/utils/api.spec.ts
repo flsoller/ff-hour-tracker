@@ -2,6 +2,9 @@ import { describe, expect, it, vi } from "vitest";
 import api from "../../utils/api";
 
 describe("api module", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
   describe("api.get", () => {
     it("should correctly return the message body", async () => {
       const testEndpoint = "apioktest";

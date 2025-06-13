@@ -68,7 +68,7 @@ describe("Members View", () => {
 
   it("should show an info text when there are no members", async () => {
     server.use(
-      rest.get(`${AppConstants.apiUrl}/v0/members`, (req, res, ctx) => {
+      rest.get(`${AppConstants.apiUrl}/v1/members`, (req, res, ctx) => {
         return res(ctx.status(200), ctx.json({ data: [], totalCount: 0 }));
       }),
     );
@@ -90,7 +90,7 @@ describe("Members View", () => {
       });
     }
     server.use(
-      rest.get(`${AppConstants.apiUrl}/v0/members`, (req, res, ctx) => {
+      rest.get(`${AppConstants.apiUrl}/v1/members`, (req, res, ctx) => {
         return res(
           ctx.status(200),
           ctx.json({ data, totalCount: data.length }),
@@ -119,7 +119,7 @@ describe("Members View", () => {
       });
     }
     server.use(
-      rest.get(`${AppConstants.apiUrl}/v0/members`, (req, res, ctx) => {
+      rest.get(`${AppConstants.apiUrl}/v1/members`, (req, res, ctx) => {
         return res(
           ctx.status(200),
           ctx.json({ data, totalCount: data.length }),

@@ -21,6 +21,7 @@
     "turbo:test:api-authorizer": "turbo run test --filter @hour-tracker/api-authorizer",
     "turbo:test:api-members": "turbo run test --filter @hour-tracker/api-members",
     "turbo:test:org-manager": "turbo run test --filter @hour-tracker/organization-manager",
+    "turbo:test:frontend": "turbo run test --filter hour-tracker-frontend",
     "migrator:db:migrate": "yarn workspace @hour-tracker/db-migrator db:migrate",
     "postinstall": "husky install",
     "lint": "eslint . --ext .ts,.tsx",
@@ -28,7 +29,10 @@
     "stylelint": "dprint check"
   },
   "lint-staged": {
-    "*": ["yarn dprint fmt --allow-no-files", "yarn lint"]
+    "*": [
+      "yarn dprint fmt --allow-no-files",
+      "yarn lint"
+    ]
   },
   "packageManager": "yarn@4.5.0",
   "devDependencies": {
