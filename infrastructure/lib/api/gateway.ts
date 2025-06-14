@@ -33,10 +33,15 @@ export class HourTrackerApiGateway extends Construct {
       ),
     });
 
+    const corsOriginConfig = StringParameter.valueForStringParameter(
+      this,
+      ENVIRONMENT_PARAMS.HOUR_TRACKER_API_CORS_ORIGIN,
+    );
+
     const gateway = new HttpApi(this, API_GATEWAY.NAME, {
       description: "REST API for hour tracker app",
       corsPreflight: {
-        allowHeaders: ["Content-Type", "Authorization"],
+        allowHeaders: ["*"],
         allowMethods: [
           CorsHttpMethod.OPTIONS,
           CorsHttpMethod.GET,
@@ -45,8 +50,7 @@ export class HourTrackerApiGateway extends Construct {
           CorsHttpMethod.PATCH,
           CorsHttpMethod.DELETE,
         ],
-        allowCredentials: true,
-        allowOrigins: ["http://localhost:3000"],
+        allowOrigins: corsOriginConfig.split(","),
       },
       createDefaultStage: false,
       defaultAuthorizer: props.authService,
