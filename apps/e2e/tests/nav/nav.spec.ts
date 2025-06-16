@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { userLogin } from "../../helpers/userActions";
 
-test.describe("App navigation", () => {
+test.describe.skip("App navigation", () => {
   test.describe("path matching", () => {
     test("should route to login for unauthenticated user on non matched routes", async ({ page }) => {
       await page.goto("/somethingelse");

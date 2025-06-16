@@ -2,11 +2,36 @@ name: CI_E2E_Pipeline
 
 on:
   workflow_dispatch:
-  workflow_call:
+    inputs:
+      target_env_url:
+        description: "Target deployment URL"
+        required: true
+        type: string
 
 jobs:
   test:
-    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies
+        run: yarn workspaces focus hour-tracker-e2e
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: yarn workspace hour-tracker-e2e test
+        env:
+          PLAYWRIGHT_TEST_BASE_URL: ${{ inputs.target_env_url }}
+          CI: true
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 1
