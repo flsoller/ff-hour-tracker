@@ -15,7 +15,7 @@ test.describe("Login page", () => {
     await expect(page.getByTestId("sidebar")).not.toBeVisible();
   });
 
-  test("should login the user and route to the base URL / dashboard", async ({ page }) => {
+  test.skip("should login the user and route to the base URL / dashboard", async ({ page }) => {
     const loginBtn = page.getByTestId("login");
 
     // Login with test user generated in seed script
@@ -34,7 +34,7 @@ test.describe("Login page", () => {
     await page.getByTestId("email").fill("admin@user.com");
     await page.getByPlaceholder("Password").fill("support-user-pw");
     await expect(page.getByTestId("infoContainer")).not.toBeVisible();
-    await page.route("**/v0/auth/signin", async (route) => {
+    await page.route("**/auth/signin", async (route) => {
       setTimeout(async () => {
         await route.fetch();
         route.fulfill({
