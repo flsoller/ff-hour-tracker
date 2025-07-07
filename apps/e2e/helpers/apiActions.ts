@@ -8,9 +8,9 @@ const API_TEST_ADMIN_PW = "support-user-pw";
  * Login api user for api interaction and test data creation
  */
 async function loginApiUser(email?: string, password?: string) {
-  const URL = process.env.CI
-    ? "http://api:5000/api"
-    : "http://localhost:5000/api";
+  const URL = process.env.PLAYWRIGHT_TEST_BASE_URL
+    ? process.env.PLAYWRIGHT_TEST_BASE_URL
+    : "http://localhost:3000";
 
   const context = await request.newContext();
 
@@ -63,8 +63,8 @@ async function setupUser() {
 }
 
 async function createMembersData(
-  userEmail,
-  userPassword,
+  userEmail: string,
+  userPassword: string,
   membersToCreate = [{}],
 ) {
   const { URL, authContext } = await loginApiUser(userEmail, userPassword);
