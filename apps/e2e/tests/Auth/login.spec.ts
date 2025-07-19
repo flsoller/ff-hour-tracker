@@ -15,12 +15,12 @@ test.describe("Login page", () => {
     await expect(page.getByTestId("sidebar")).not.toBeVisible();
   });
 
-  test.skip("should login the user and route to the base URL / dashboard", async ({ page }) => {
+  test("should login the user and route to the base URL / dashboard", async ({ page }) => {
     const loginBtn = page.getByTestId("login");
 
     // Login with test user generated in seed script
-    await page.getByTestId("email").fill("admin@user.com");
-    await page.getByPlaceholder("Password").fill("support-user-pw");
+    await page.getByTestId("email").fill(process.env.ADMIN_E2E_EMAIL!);
+    await page.getByPlaceholder("Password").fill(process.env.ADMIN_E2E_PW!);
 
     await expect(loginBtn).toBeEnabled();
     await loginBtn.click();
@@ -31,8 +31,8 @@ test.describe("Login page", () => {
   });
 
   test("should show user feedback on api response delay and error", async ({ page }) => {
-    await page.getByTestId("email").fill("admin@user.com");
-    await page.getByPlaceholder("Password").fill("support-user-pw");
+    await page.getByTestId("email").fill(process.env.ADMIN_E2E_EMAIL!);
+    await page.getByPlaceholder("Password").fill(process.env.ADMIN_E2E_PW!);
     await expect(page.getByTestId("infoContainer")).not.toBeVisible();
     await page.route("**/auth/signin", async (route) => {
       setTimeout(async () => {
