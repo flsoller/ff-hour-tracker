@@ -60,11 +60,11 @@ const sidebarContent = ref<SidebarContent[]>([
 
 <style lang="scss" scoped>
 .sidebar {
-  background: var(--surface-card);
+  background: var(--p-zinc-900);
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  color: var(--text-color);
+  color: var(--p-zinc-300);
 
   &__item {
     display: flex;
@@ -76,7 +76,7 @@ const sidebarContent = ref<SidebarContent[]>([
     }
 
     &:hover {
-      background-color: var(--surface-hover);
+      background-color: var(--p-zinc-700);
     }
 
     &__icon {
@@ -110,8 +110,8 @@ const sidebarContent = ref<SidebarContent[]>([
   }
 
   .router-link-active {
-    background-color: var(--highlight-bg);
-    color: var(--highlight-text-color);
+    background-color: var(--p-zinc-800);
+    color: var(--p-slate-50);
   }
 }
 </style>
