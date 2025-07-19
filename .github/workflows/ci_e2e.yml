@@ -22,13 +22,16 @@ jobs:
         run: yarn workspaces focus hour-tracker-e2e
 
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps chromium
 
       - name: Run Playwright tests
         run: yarn workspace hour-tracker-e2e test
         env:
           PLAYWRIGHT_TEST_BASE_URL: ${{ inputs.target_env_url }}
           CI: true
+          ADMIN_E2E_EMAIL: ${{ secrets.ADMIN_E2E_EMAIL }}
+          ADMIN_E2E_PW: ${{ secrets.ADMIN_E2E_PW }}
+          PLAYWRIGHT_TEST_API_URL: ${{ secrets.PLAYWRIGHT_TEST_API_URL }}
 
       - uses: actions/upload-artifact@v4
         with:

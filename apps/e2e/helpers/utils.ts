@@ -3,7 +3,7 @@ import { faker } from "@faker-js/faker";
 function createOrganization() {
   return {
     name: faker.company.name(),
-    description: faker.company.bs(),
+    description: faker.company.buzzPhrase(),
   };
 }
 
@@ -11,15 +11,15 @@ function createUser(orgId: string) {
   return {
     emailAddress: faker.internet.email(),
     password: faker.internet.password(),
-    name: faker.name.fullName(),
+    name: faker.person.fullName(),
     orgId,
   };
 }
 
 function createMember() {
   return {
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
     emailAddress: faker.internet.email(),
   };
 }

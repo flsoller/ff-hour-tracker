@@ -14,6 +14,10 @@ export default tseslint.config(
       "**/build/*",
       "**/coverage/*",
       "**/jest.config.js",
+      "**/.gitignore",
+      ".github/workflows/*",
+      "apps/e2e/playwright-report/*",
+      "apps/e2e/test-results/*",
     ],
   },
   {
