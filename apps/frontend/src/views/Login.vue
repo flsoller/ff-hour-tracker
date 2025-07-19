@@ -1,23 +1,23 @@
 <template>
   <form class="container" @submit.prevent="onSubmit" id="loginForm">
     <div class="container__login">
-      <div class="p-inputgroup container__login__item">
-        <span class="p-inputgroup-addon">
+      <InputGroup class="container__login__item">
+        <InputGroupAddon>
           <i class="pi pi-user"></i>
-        </span>
+        </InputGroupAddon>
         <InputText
           placeholder="Email"
           v-model="email"
           type="email"
           data-testid="email"
         />
-      </div>
-      <div class="p-inputgroup container__login__item">
-        <span class="p-inputgroup-addon">
+      </InputGroup>
+      <InputGroup class="container__login__item">
+        <InputGroupAddon>
           <i class="pi pi-unlock"></i>
-        </span>
+        </InputGroupAddon>
         <Password placeholder="Password" :feedback="false" v-model="password" />
-      </div>
+      </InputGroup>
       <Button
         data-testid="login"
         label="Login"
@@ -38,6 +38,8 @@
 
 <script setup lang="ts">
 import Button from "primevue/button";
+import InputGroup from "primevue/inputgroup";
+import InputGroupAddon from "primevue/inputgroupaddon";
 import InputText from "primevue/inputtext";
 import Message from "primevue/message";
 import Password from "primevue/password";
@@ -69,21 +71,6 @@ watch([() => email.value, () => password.value], ([newEmail, newPassword]) => {
 
 <style lang="scss" scoped>
 .container {
-  background-image: linear-gradient(
-    to right top,
-    #232e3c,
-    #202c38,
-    #1e2934,
-    #1c2730,
-    #1a242c,
-    #1b242b,
-    #1c242b,
-    #1d242a,
-    #21272c,
-    #25292f,
-    #282c31,
-    #2c2f33
-  );
   display: flex;
   flex-direction: column;
   height: 100%;
