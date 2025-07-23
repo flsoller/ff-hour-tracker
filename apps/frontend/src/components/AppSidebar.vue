@@ -59,6 +59,7 @@ const sidebarContent = ref<SidebarContent[]>([
 </script>
 
 <style lang="scss" scoped>
+@use "@/styles/base/sizes" as *;
 .sidebar {
   background: var(--p-zinc-900);
   min-height: 100%;

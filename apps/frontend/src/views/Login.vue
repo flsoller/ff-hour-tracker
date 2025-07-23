@@ -70,6 +70,7 @@ watch([() => email.value, () => password.value], ([newEmail, newPassword]) => {
 </script>
 
 <style lang="scss" scoped>
+@use "@/styles/base/sizes" as *;
 .container {
   display: flex;
   flex-direction: column;
