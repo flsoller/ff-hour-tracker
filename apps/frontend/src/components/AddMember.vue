@@ -68,6 +68,7 @@ function closeDialog(): void {
 </script>
 
 <style lang="scss" scoped>
+// No @use needed as no shared variables or mixins are used here
 .container {
   display: flex;
   flex-direction: column;

@@ -87,8 +87,9 @@ function onAddMember() {
 </script>
 
 <style lang="scss" scoped>
+@use "@/styles/base/sizes" as *;
 .members-table__container {
-  font-size: small;
+  font-size: medium;
   display: flex;
   justify-content: center;
   padding: 1rem;
@@ -99,14 +100,12 @@ function onAddMember() {
 
   @media (max-width: $small) {
     padding: 0rem;
-    border: 1px var(--surface-border) solid;
   }
 }
 
 .members-table__outline {
   padding: 1rem;
   width: 90%;
-  background-color: var(--surface-card);
   border-radius: 0.75rem;
 
   @media (max-width: $medium) {
@@ -120,6 +119,7 @@ function onAddMember() {
 }
 
 .members-table__header {
+  font-size: 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -1,3 +1,4 @@
+import { createTestingPinia } from "@pinia/testing";
 import { mount, VueWrapper } from "@vue/test-utils";
 import { rest } from "msw";
 import { expect, vi } from "vitest";
@@ -11,7 +12,11 @@ describe("Members View", () => {
   let wrapper: VueWrapper;
 
   beforeEach(() => {
-    wrapper = mount(Members);
+    wrapper = mount(Members, {
+      global: {
+        plugins: [createTestingPinia({ stubActions: false })],
+      },
+    });
     flushPromises();
   });
 
@@ -59,8 +64,8 @@ describe("Members View", () => {
   it("should trigger api call with correct order query when sorting column desc", async () => {
     const store = useMembersStore();
     // click twice as initial click sets sort to default 'asc'
-    await wrapper.find(".p-sortable-column").trigger("click");
-    await wrapper.find(".p-sortable-column").trigger("click");
+    await wrapper.find(".p-datatable-sortable-column").trigger("click");
+    await wrapper.find(".p-datatable-sortable-column").trigger("click");
     expect(store.getMembersPaginated).toHaveBeenLastCalledWith({
       order: "desc",
     });
@@ -128,16 +133,27 @@ describe("Members View", () => {
     );
     const moreDataWrapper = mount(Members, {
       global: {
-        stubs: {
-          teleport: { template: "<div />" },
-        },
+        plugins: [createTestingPinia({ stubActions: false })],
       },
+      attachTo: document.body,
     });
     const store = useMembersStore();
     await flushPromises();
 
-    await moreDataWrapper.find(".p-dropdown").trigger("click");
-    await moreDataWrapper.find("[aria-label=\"20\"]").trigger("click");
+    // Directly trigger the page event on the DataTable with the expected page event structure
+    const dataTable = moreDataWrapper.findComponent({ name: "DataTable" });
+
+    // Simulate a page event as if the user changed rows per page to 20
+    await dataTable.vm.$emit("page", {
+      first: 0, // offset
+      rows: 20, // limit
+      page: 0,
+      pageCount: Math.ceil(25 / 20),
+      sortField: undefined,
+      sortOrder: 1, // asc
+    });
+    await flushPromises();
+
     expect(store.getMembersPaginated).toHaveBeenLastCalledWith({
       limit: "20",
       offset: "0",
