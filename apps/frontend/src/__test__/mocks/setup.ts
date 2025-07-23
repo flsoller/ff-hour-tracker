@@ -20,6 +20,35 @@ Object.defineProperty(window, "matchMedia", {
   })),
 });
 
+// Mock canvas and 2D context for ParticleBackground component
+const mockContext = {
+  clearRect: vi.fn(),
+  createLinearGradient: vi.fn(() => ({
+    addColorStop: vi.fn(),
+  })),
+  fillRect: vi.fn(),
+  beginPath: vi.fn(),
+  arc: vi.fn(),
+  fill: vi.fn(),
+  moveTo: vi.fn(),
+  lineTo: vi.fn(),
+  stroke: vi.fn(),
+  fillStyle: "",
+  strokeStyle: "",
+  lineWidth: 1,
+};
+
+Object.defineProperty(HTMLCanvasElement.prototype, "getContext", {
+  value: vi.fn(() => mockContext),
+});
+
+// Mock requestAnimationFrame to prevent infinite loop
+let animationFrameId = 1;
+global.requestAnimationFrame = vi.fn(() => {
+  return animationFrameId++;
+});
+global.cancelAnimationFrame = vi.fn();
+
 // Test setups
 beforeAll(() => {
   config.global.plugins = [
