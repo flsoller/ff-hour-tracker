@@ -1,7 +1,10 @@
 /// <reference types="vitest" />
 import vue from "@vitejs/plugin-vue";
-import path from "path";
+import path, { dirname, join } from "path";
+import { fileURLToPath } from "url";
 import { defineConfig } from "vite";
+
+const currentDir = dirname(fileURLToPath(import.meta.url));
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -20,16 +23,13 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         // Only import variables/mixins here
-        additionalData: ` @import "src/styles/base/imports.scss"; `,
+        additionalData: ` @use "${join(currentDir, "src/styles/base/imports.scss")}" as *; `,
       },
     },
   },
   test: {
     globals: true,
     environment: "jsdom",
-    coverage: {
-      provider: "istanbul",
-    },
     setupFiles: ["./src/__test__/mocks/setup.ts"],
   },
 });

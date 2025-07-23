@@ -16,8 +16,8 @@ import Toast from "primevue/toast";
 </script>
 
 <style lang="scss">
-@import "@/styles/base/normalize.scss";
-@import "@/styles/theme.scss";
+@use "@/styles/base/normalize.scss" as *;
+@use "@/styles/theme.scss" as *;
 
 .app-container {
   display: flex;
