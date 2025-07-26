@@ -1,10 +1,10 @@
-import {
+import type {
   ICreateMemberReq,
   IGetMembersPaginatedReq,
   IGetMembersPaginatedRes,
   IMemberCreatedRes,
 } from "../../../../packages/types/api/members";
-import { Error } from "../types/ApiError";
+import type { Error } from "../types/ApiError";
 import api from "../utils/api";
 
 const MEMBERS_API = "v1/members";

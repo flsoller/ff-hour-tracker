@@ -1,82 +1,110 @@
 <template>
-  <form class="container" @submit.prevent="onSubmit">
-    <InputText
-      placeholder="First Name"
-      v-model="firstName"
-      type="text"
-      data-testid="firstName"
-    />
-    <InputText
-      placeholder="Last Name"
-      v-model="lastName"
-      type="text"
-      data-testid="lastName"
-    />
-    <InputText
-      placeholder="Email Address"
-      v-model="email"
-      type="email"
-      data-testid="email"
-    />
-    <Button
-      data-testid="addMember"
-      label="Add Member"
-      type="submit"
-      :disabled="!validForm"
-      class="container__submit"
-    />
-  </form>
+  <Dialog v-model:open="isOpen">
+    <DialogContent class="sm:max-w-md">
+      <DialogHeader>
+        <DialogTitle>Add Member</DialogTitle>
+      </DialogHeader>
+      <form @submit.prevent="onSubmit" class="space-y-4">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <Label for="firstName">First Name</Label>
+            <Input
+              id="firstName"
+              data-testid="firstName"
+              v-model="form.firstName"
+              placeholder="Enter first name"
+              required
+            />
+          </div>
+          <div class="space-y-2">
+            <Label for="lastName">Last Name</Label>
+            <Input
+              id="lastName"
+              data-testid="lastName"
+              v-model="form.lastName"
+              placeholder="Enter last name"
+              required
+            />
+          </div>
+        </div>
+        <div class="space-y-2">
+          <Label for="emailAddress">Email Address</Label>
+          <Input
+            id="emailAddress"
+            data-testid="email"
+            v-model="form.emailAddress"
+            type="email"
+            placeholder="Enter email address"
+            required
+          />
+        </div>
+        <DialogFooter>
+          <Button type="button" variant="outline" @click="onCancel">
+            Cancel
+          </Button>
+          <Button type="submit" data-testid="addMember">
+            Add Member
+          </Button>
+        </DialogFooter>
+      </form>
+    </DialogContent>
+  </Dialog>
 </template>
 
-<script lang="ts" setup>
-import Button from "primevue/button";
-import InputText from "primevue/inputtext";
-import { inject, ref, watch } from "vue";
-import { useMembersStore } from "../stores/members";
-import { validateEmail, validateInputString } from "../utils/validate";
+<script setup lang="ts">
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { reactive, ref, watch } from "vue";
 
-const firstName = ref("");
-const lastName = ref("");
-const email = ref("");
-const validForm = ref(false);
-const membersStore = useMembersStore();
-const dialogRef = inject<{
-  value: { close: Function };
-}>("dialogRef");
+const props = defineProps<{
+  open?: boolean;
+}>();
 
-watch(
-  [() => firstName.value, () => lastName.value, () => email.value],
-  ([newFirstName, newLastName, newEmail]) => {
-    validForm.value = validateInputString(newFirstName).valid
-      && validateInputString(newLastName).valid
-      && validateEmail(newEmail).valid;
-  },
-);
+const emit = defineEmits<{
+  "update:open": [value: boolean];
+  "submit": [
+    member: { firstName: string; lastName: string; emailAddress: string },
+  ];
+}>();
 
-async function onSubmit() {
-  await membersStore.addNewMember({
-    firstName: firstName.value,
-    lastName: lastName.value,
-    emailAddress: email.value,
-  });
-  closeDialog();
+const isOpen = ref(props.open ?? false);
+
+const form = reactive({
+  firstName: "",
+  lastName: "",
+  emailAddress: "",
+});
+
+function onSubmit() {
+  emit("submit", { ...form });
+  resetForm();
+  emit("update:open", false);
 }
 
-function closeDialog(): void {
-  dialogRef?.value.close();
+function onCancel() {
+  resetForm();
+  emit("update:open", false);
 }
+
+function resetForm() {
+  form.firstName = "";
+  form.lastName = "";
+  form.emailAddress = "";
+}
+
+watch(() => props.open, (newValue) => {
+  isOpen.value = newValue ?? false;
+}, { immediate: true });
+
+watch(isOpen, (newValue) => {
+  emit("update:open", newValue);
+});
 </script>
-
-<style lang="scss" scoped>
-// No @use needed as no shared variables or mixins are used here
-.container {
-  display: flex;
-  flex-direction: column;
-  row-gap: 0.5rem;
-  min-width: 20rem;
-
-  &__submit {
-    margin-top: 1.5rem;
-  }
-}
-</style>

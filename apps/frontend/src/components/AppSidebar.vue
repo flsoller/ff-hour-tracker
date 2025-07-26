@@ -1,118 +1,111 @@
 <template>
-  <nav class="sidebar" data-testid="sidebar">
-    <router-link
-      :to="sidebarItem.routerLink"
-      v-for="sidebarItem in sidebarContent"
-      class="sidebar__item"
-      :data-testid="sidebarItem.testId"
-    >
-      <i class="sidebar__item__icon pi" :class="sidebarItem.icon"></i>
-      <div class="sidebar__item__label">
-        <span>{{ sidebarItem.label }}</span>
-      </div>
-    </router-link>
-  </nav>
+  <Sidebar v-bind="props" collapsible="icon" data-testid="sidebar">
+    <SidebarHeader>
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <SidebarMenuButton size="lg" as-child>
+            <router-link to="/">
+              <div class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                <Clock class="size-4" />
+              </div>
+              <div class="grid flex-1 text-left text-sm leading-tight">
+                <span class="truncate font-medium">Hour Tracker</span>
+                <span class="truncate text-xs">Time Management</span>
+              </div>
+            </router-link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      </SidebarMenu>
+    </SidebarHeader>
+    <SidebarContent>
+      <NavMain :items="data.navMain" />
+      <NavSecondary :items="data.navSecondary" class="mt-auto" />
+    </SidebarContent>
+    <SidebarFooter>
+      <NavUser :user="data.user" />
+    </SidebarFooter>
+  </Sidebar>
 </template>
 
-<script lang="ts" setup>
-import { ref } from "vue";
+<script setup lang="ts">
+import {
+  Clock,
+  Home,
+  Inbox,
+  LifeBuoy,
+  Send,
+  Settings,
+  User,
+} from "lucide-vue-next";
 
-interface SidebarContent {
-  routerLink: string;
-  icon: string;
-  label: string;
-  testId: string;
-}
+import NavMain from "@/components/NavMain.vue";
+import NavSecondary from "@/components/NavSecondary.vue";
+import NavUser from "@/components/NavUser.vue";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  type SidebarProps,
+} from "@/components/ui/sidebar";
 
-const sidebarContent = ref<SidebarContent[]>([
-  {
-    routerLink: "/",
-    icon: "pi-home",
-    label: "Dashboard",
-    testId: "dashboardLink",
+const props = withDefaults(defineProps<SidebarProps>(), {
+  variant: "inset",
+});
+
+const data = {
+  user: {
+    name: "User",
+    email: "user@example.com",
+    avatar: "/avatars/user.jpg",
   },
-  {
-    routerLink: "/timelog",
-    icon: "pi-clock",
-    label: "Timesheet",
-    testId: "timesheetLink",
-  },
-  {
-    routerLink: "/config",
-    icon: "pi-cog",
-    label: "Configuration",
-    testId: "configLink",
-  },
-  {
-    routerLink: "/members",
-    icon: "pi-users",
-    label: "Members",
-    testId: "membersLink",
-  },
-  {
-    routerLink: "/reports",
-    icon: "pi-file-o",
-    label: "Reports",
-    testId: "reportsLink",
-  },
-]);
+  navMain: [
+    {
+      title: "Dashboard",
+      url: "/",
+      icon: Home,
+      isActive: true,
+      testId: "dashboardLink",
+    },
+    {
+      title: "Timesheet",
+      url: "/timelog",
+      icon: Clock,
+      testId: "timesheetLink",
+    },
+    {
+      title: "Members",
+      url: "/members",
+      icon: User,
+      testId: "membersLink",
+    },
+    {
+      title: "Configuration",
+      url: "/config",
+      icon: Settings,
+      testId: "configLink",
+    },
+    {
+      title: "Reports",
+      url: "/reports",
+      icon: Inbox,
+      testId: "reportsLink",
+    },
+  ],
+  navSecondary: [
+    {
+      title: "Support",
+      url: "#",
+      icon: LifeBuoy,
+    },
+    {
+      title: "Feedback",
+      url: "#",
+      icon: Send,
+    },
+  ],
+};
 </script>
-
-<style lang="scss" scoped>
-@use "@/styles/base/sizes" as *;
-.sidebar {
-  background: var(--p-zinc-900);
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--p-zinc-300);
-
-  &__item {
-    display: flex;
-    text-decoration: none;
-    padding: 1.5rem;
-
-    &:visited {
-      color: inherit;
-    }
-
-    &:hover {
-      background-color: var(--p-zinc-700);
-    }
-
-    &__icon {
-      min-width: 1.5rem;
-      font-size: 1.5rem;
-
-      @media (max-width: $medium) {
-        min-width: 0;
-        font-size: 1.25rem;
-      }
-    }
-
-    @media (max-width: $medium) {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    &__label {
-      align-self: center;
-      padding-left: 1rem;
-
-      @media (max-width: $small) {
-        display: none;
-      }
-
-      @media (max-width: $medium) {
-        padding-left: 0;
-        padding-top: 0.5rem;
-      }
-    }
-  }
-
-  .router-link-active {
-    background-color: var(--p-zinc-800);
-    color: var(--p-slate-50);
-  }
-}
-</style>
