@@ -1,59 +1,79 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { mount, VueWrapper } from "@vue/test-utils";
 import { expect, vi } from "vitest";
 import AddMember from "../../components/AddMember.vue";
-import { useMembersStore } from "../../stores/members";
 import { flushPromises } from "../mocks/helpers";
 
 describe("Add Member", () => {
   let wrapper: VueWrapper;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     wrapper = mount(AddMember, {
-      global: {
-        provide: {
-          dialogRef: { value: { close: vi.fn() } },
-        },
+      props: {
+        open: true,
       },
+      attachTo: document.body,
     });
-    flushPromises();
+    await flushPromises();
   });
 
   afterEach(() => {
     vi.clearAllMocks();
+    wrapper?.unmount();
   });
 
   it("should create", async () => {
-    expect(wrapper.isVisible()).toBe(true);
+    expect(wrapper.exists()).toBe(true);
   });
 
-  it("should have add member button disabled with invalid form", async () => {
-    const button = wrapper.find("button");
-    await wrapper.find("[placeholder=\"First Name\"]").setValue("First");
-    await wrapper.find("[placeholder=\"Last Name\"]").setValue("Last");
-    expect(button.element.disabled).toBe(true);
+  it("should emit submit event with correct form data", async () => {
+    const componentInstance = wrapper.vm as any;
+    componentInstance.form.firstName = "John";
+    componentInstance.form.lastName = "Doe";
+    componentInstance.form.emailAddress = "john@example.com";
+
+    componentInstance.onSubmit();
+
+    expect(wrapper.emitted("submit")).toBeTruthy();
+    expect(wrapper.emitted("submit")![0]).toEqual([{
+      firstName: "John",
+      lastName: "Doe",
+      emailAddress: "john@example.com",
+    }]);
   });
 
-  it("should have add member button enabled with valid inputs", async () => {
-    const button = wrapper.find("button");
-    await wrapper.find("[placeholder=\"First Name\"]").setValue("First");
-    await wrapper.find("[placeholder=\"Last Name\"]").setValue("Last");
-    await wrapper.find("input[type=email]").setValue("user@email.com");
-    expect(button.element.disabled).toBe(false);
+  it("should emit update:open event when cancel is called", async () => {
+    const componentInstance = wrapper.vm as any;
+    componentInstance.onCancel();
+
+    expect(wrapper.emitted("update:open")).toBeTruthy();
+    expect(wrapper.emitted("update:open")![0]).toEqual([false]);
   });
 
-  it("should call members store with correct input values", async () => {
-    const store = useMembersStore();
-    const button = wrapper.find("button");
-    await wrapper.find("[placeholder=\"First Name\"]").setValue("First");
-    await wrapper.find("[placeholder=\"Last Name\"]").setValue("Last");
-    await wrapper.find("input[type=email]").setValue("user@email.com");
-    expect(button.element.disabled).toBe(false);
-    await wrapper.find("form").trigger("submit");
-    expect(store.addNewMember).toHaveBeenCalledTimes(1);
-    expect(store.addNewMember).toHaveBeenCalledWith({
-      firstName: "First",
-      lastName: "Last",
-      emailAddress: "user@email.com",
-    });
+  it("should reset form when submitted", async () => {
+    const componentInstance = wrapper.vm as any;
+    componentInstance.form.firstName = "John";
+    componentInstance.form.lastName = "Doe";
+    componentInstance.form.emailAddress = "john@example.com";
+
+    componentInstance.onSubmit();
+
+    // Check that form fields are cleared
+    expect(componentInstance.form.firstName).toBe("");
+    expect(componentInstance.form.lastName).toBe("");
+    expect(componentInstance.form.emailAddress).toBe("");
+  });
+
+  it("should watch prop changes for open state", async () => {
+    await wrapper.setProps({ open: false });
+    await wrapper.vm.$nextTick();
+
+    const componentInstance = wrapper.vm as any;
+    expect(componentInstance.isOpen).toBe(false);
+
+    await wrapper.setProps({ open: true });
+    await wrapper.vm.$nextTick();
+
+    expect(componentInstance.isOpen).toBe(true);
   });
 });

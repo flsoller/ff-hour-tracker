@@ -1,5 +1,5 @@
 import { mount, VueWrapper } from "@vue/test-utils";
-import { rest } from "msw";
+import { http, HttpResponse } from "msw";
 import { expect, vi } from "vitest";
 import { useUserStore } from "../../stores/user";
 import { AppConstants } from "../../utils/constants";
@@ -63,10 +63,10 @@ describe("Login View", () => {
 
     it("should correctly handle api error response", async () => {
       server.use(
-        rest.post(`${AppConstants.apiUrl}/auth/signin`, (req, res, ctx) => {
-          return res(
-            ctx.status(400),
-            ctx.json({ error: "InvalidInformation" }),
+        http.post(`${AppConstants.apiUrl}/auth/signin`, () => {
+          return HttpResponse.json(
+            { error: "InvalidInformation" },
+            { status: 400 },
           );
         }),
       );

@@ -1,61 +1,88 @@
 <template>
-  <ParticleBackground />
-  <form class="container" @submit.prevent="onSubmit" id="loginForm">
-    <div class="container__login">
-      <InputGroup class="container__login__item">
-        <InputGroupAddon>
-          <i class="pi pi-user"></i>
-        </InputGroupAddon>
-        <InputText
-          placeholder="Email"
-          v-model="email"
-          type="email"
-          data-testid="email"
-        />
-      </InputGroup>
-      <InputGroup class="container__login__item">
-        <InputGroupAddon>
-          <i class="pi pi-unlock"></i>
-        </InputGroupAddon>
-        <Password placeholder="Password" :feedback="false" v-model="password" />
-      </InputGroup>
-      <Button
-        data-testid="login"
-        label="Login"
-        type="submit"
-        :disabled="!validForm || userStore.loading"
-        :loading="userStore.loading"
-      />
+  <div class="flex w-full h-screen items-center justify-center px-4">
+    <div class="container">
+      <form @submit.prevent="onSubmit" id="loginForm">
+        <Card class="mx-auto max-w-sm">
+          <CardHeader>
+            <CardTitle class="text-2xl">
+              Login
+            </CardTitle>
+            <CardDescription>
+              Enter your email below to login to your account.
+            </CardDescription>
+          </CardHeader>
+          <CardContent class="grid gap-4">
+            <div class="grid gap-2">
+              <Label for="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Email"
+                required
+                v-model="email"
+                data-testid="email"
+              />
+            </div>
+            <div class="grid gap-2">
+              <Label for="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="Password"
+                v-model="password"
+                required
+              />
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button
+              class="w-full cursor-pointer"
+              data-testid="login"
+              label="Login"
+              type="submit"
+              :disabled="!validForm || userStore.loading"
+              :loading="userStore.loading"
+            >
+              <div
+                v-if="userStore.loading"
+                class="flex justify-center items-center"
+              >
+                <Loader2 class="w-4 h-4 mr-2 animate-spin" />
+                Signing you in...
+              </div>
+              <div v-else class="">
+                Sign In
+              </div>
+            </Button>
+          </CardFooter>
+        </Card>
+      </form>
     </div>
-    <div
-      class="container__login__info"
-      v-if="showInfo"
-      data-testid="infoContainer"
-    >
-      <Message severity="info" sticky>{{ infoContent }}</Message>
-    </div>
-  </form>
+  </div>
 </template>
 
 <script setup lang="ts">
-import Button from "primevue/button";
-import InputGroup from "primevue/inputgroup";
-import InputGroupAddon from "primevue/inputgroupaddon";
-import InputText from "primevue/inputtext";
-import Message from "primevue/message";
-import Password from "primevue/password";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { validateEmail, validateInputString } from "@/utils/validate";
+import { Loader2 } from "lucide-vue-next";
 import { ref, watch } from "vue";
-import ParticleBackground from "../components/ParticleBackground.vue";
 import { useUserStore } from "../stores/user";
-import { validateEmail, validateInputString } from "../utils/validate";
 
 const userStore = useUserStore();
 const email = ref("");
 const password = ref("");
 const validForm = ref(false);
 const showInfo = ref(false);
-const infoContent =
-  "The free resources enabling this project can take up to 30 seconds to initialize. Please wait...";
 
 async function onSubmit() {
   const infoTimer = setTimeout(() => {
@@ -70,51 +97,3 @@ watch([() => email.value, () => password.value], ([newEmail, newPassword]) => {
     && validateInputString(newPassword).valid;
 });
 </script>
-
-<style lang="scss" scoped>
-@use "@/styles/base/sizes" as *;
-.container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  z-index: 1;
-
-  &__login {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-width: 20rem;
-    background: rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-
-    @media (min-width: $small) {
-      min-width: 23rem;
-    }
-
-    @media (min-width: $medium) {
-      min-width: 28rem;
-    }
-
-    &__item {
-      padding-bottom: 0.2rem;
-    }
-
-    &__info {
-      position: absolute;
-      bottom: 0;
-      max-width: 90%;
-
-      @media (min-width: $medium) {
-        bottom: 1rem;
-      }
-    }
-  }
-}
-</style>
