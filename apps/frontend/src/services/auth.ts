@@ -1,5 +1,5 @@
-import { ISignIn, ISignInSuccess } from "../../../../packages/types/api/auth";
-import { Error } from "../types/ApiError";
+import type { ISignIn, ISignInSuccess } from "../../../../packages/types/api/auth";
+import type { Error } from "../types/ApiError";
 import api from "../utils/api";
 
 async function signIn(

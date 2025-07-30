@@ -1,6 +1,6 @@
 import { createTestingPinia } from "@pinia/testing";
 import { mount, VueWrapper } from "@vue/test-utils";
-import { rest } from "msw";
+import { http, HttpResponse } from "msw";
 import { expect, vi } from "vitest";
 import { useMembersStore } from "../../stores/members";
 import { AppConstants } from "../../utils/constants";
@@ -26,12 +26,8 @@ describe("Members View", () => {
 
   it("should create", async () => {
     expect(wrapper.isVisible()).toBe(true);
-    expect(
-      await wrapper.find(".members-table__header > span").text(),
-    ).toContain("Members");
-    expect(
-      await wrapper.find(".members-table__header > Button").text(),
-    ).toContain("Add Member");
+    expect(wrapper.find("h1").text()).toContain("Members");
+    expect(wrapper.find("button").text()).toContain("Add Member");
   });
 
   it("should call members store getMembersPaginated method on mount", async () => {
@@ -42,122 +38,76 @@ describe("Members View", () => {
     expect(store.loading).toBe(false);
   });
 
-  it("should display correct number of table rows", async () => {
-    expect(await wrapper.findAll("thead > tr").length).toBe(1);
-    expect(await wrapper.findAll("tbody > tr").length).toBe(1);
-    expect(wrapper.html()).not.toContain("class=\"members-table__footer\"");
-  });
-
-  it("should display correct information in table rows", async () => {
-    await flushPromises();
+  it("should display correct table headers", async () => {
     const headers = await wrapper.findAll("th");
-    const tableData = await wrapper.findAll("tbody > tr > td");
+    const expectedHeaders = ["", "Member", "Email Address", "Status", ""];
 
-    ["First Name", "Last Name", "Email Address"].forEach((header, i) => {
+    expectedHeaders.forEach((header, i) => {
       expect(headers[i].text()).toContain(header);
     });
-    ["Paige", "Turner", "pt@mail.com"].forEach((text, i) => {
-      expect(tableData[i].text()).toContain(text);
-    });
   });
 
-  it("should trigger api call with correct order query when sorting column desc", async () => {
+  it("should display member data in table rows", async () => {
+    await flushPromises();
+    const tableData = await wrapper.findAll("tbody > tr > td");
+
+    // First cell contains avatar with initials
+    expect(tableData[0].text()).toContain("PT");
+    // Second cell contains full name
+    expect(tableData[1].text()).toContain("Paige Turner");
+    // Third cell contains email
+    expect(tableData[2].text()).toContain("pt@mail.com");
+  });
+
+  it("should trigger api call with correct order query when sorting column", async () => {
     const store = useMembersStore();
-    // click twice as initial click sets sort to default 'asc'
-    await wrapper.find(".p-datatable-sortable-column").trigger("click");
-    await wrapper.find(".p-datatable-sortable-column").trigger("click");
-    expect(store.getMembersPaginated).toHaveBeenLastCalledWith({
-      order: "desc",
-    });
+    // Find the sort button that contains "Last Name" text
+    const sortButtons = await wrapper.findAll("button");
+    const sortButton = sortButtons.find(button => button.text().includes("Last Name"));
+    expect(sortButton).toBeDefined();
+    await sortButton?.trigger("click");
+    expect(store.changeSortOrder).toHaveBeenCalledWith("desc");
   });
 
   it("should show an info text when there are no members", async () => {
     server.use(
-      rest.get(`${AppConstants.apiUrl}/v1/members`, (req, res, ctx) => {
-        return res(ctx.status(200), ctx.json({ data: [], totalCount: 0 }));
+      http.get(`${AppConstants.apiUrl}/v1/members`, () => {
+        return HttpResponse.json({ data: [], totalCount: 0 });
       }),
     );
-    const noDataWrapper = mount(Members);
-    await flushPromises();
-    expect(noDataWrapper.html()).toContain("class=\"members-table__footer\"");
-    expect(
-      await noDataWrapper.find(".members-table__footer > span").text(),
-    ).toContain("No Members added yet, start adding to see data.");
-  });
-
-  it("should trigger api call with correct offset query when changing table page", async () => {
-    const data: Record<string, string>[] = [];
-    for (let i = 0; i < 25; i++) {
-      data.push({
-        firstName: `first${i}`,
-        lastName: `last${i}`,
-        emailAddress: `first${i}@last${i}.com`,
-      });
-    }
-    server.use(
-      rest.get(`${AppConstants.apiUrl}/v1/members`, (req, res, ctx) => {
-        return res(
-          ctx.status(200),
-          ctx.json({ data, totalCount: data.length }),
-        );
-      }),
-    );
-    const moreDataWrapper = mount(Members);
-    const store = useMembersStore();
-    await flushPromises();
-
-    await moreDataWrapper.find("[aria-label=\"Next Page\"]").trigger("click");
-    expect(store.getMembersPaginated).toHaveBeenLastCalledWith({
-      limit: "5",
-      offset: "5",
-      order: "asc",
-    });
-  });
-
-  it("should trigger api call with correct limit query when changing table row limit", async () => {
-    const data: Record<string, string>[] = [];
-    for (let i = 0; i < 25; i++) {
-      data.push({
-        firstName: `first${i}`,
-        lastName: `last${i}`,
-        emailAddress: `first${i}@last${i}.com`,
-      });
-    }
-    server.use(
-      rest.get(`${AppConstants.apiUrl}/v1/members`, (req, res, ctx) => {
-        return res(
-          ctx.status(200),
-          ctx.json({ data, totalCount: data.length }),
-        );
-      }),
-    );
-    const moreDataWrapper = mount(Members, {
+    const noDataWrapper = mount(Members, {
       global: {
         plugins: [createTestingPinia({ stubActions: false })],
       },
-      attachTo: document.body,
     });
+    await flushPromises();
+    expect(noDataWrapper.text()).toContain("No members yet");
+  });
+
+  it("should open AddMember dialog when Add Member button is clicked", async () => {
+    const addButton = wrapper.find("button");
+    await addButton.trigger("click");
+
+    // Check that AddMember component is rendered (dialog is open)
+    expect(wrapper.findComponent({ name: "AddMember" }).exists()).toBe(true);
+  });
+
+  it("should call addNewMember when AddMember emits submit", async () => {
     const store = useMembersStore();
-    await flushPromises();
+    const addButton = wrapper.find("button");
+    await addButton.trigger("click");
 
-    // Directly trigger the page event on the DataTable with the expected page event structure
-    const dataTable = moreDataWrapper.findComponent({ name: "DataTable" });
-
-    // Simulate a page event as if the user changed rows per page to 20
-    await dataTable.vm.$emit("page", {
-      first: 0, // offset
-      rows: 20, // limit
-      page: 0,
-      pageCount: Math.ceil(25 / 20),
-      sortField: undefined,
-      sortOrder: 1, // asc
+    const addMemberComponent = wrapper.findComponent({ name: "AddMember" });
+    await addMemberComponent.vm.$emit("submit", {
+      firstName: "John",
+      lastName: "Doe",
+      emailAddress: "john@example.com",
     });
-    await flushPromises();
 
-    expect(store.getMembersPaginated).toHaveBeenLastCalledWith({
-      limit: "20",
-      offset: "0",
-      order: "asc",
+    expect(store.addNewMember).toHaveBeenCalledWith({
+      firstName: "John",
+      lastName: "Doe",
+      emailAddress: "john@example.com",
     });
   });
 });

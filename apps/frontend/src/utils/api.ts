@@ -1,4 +1,4 @@
-import { Error } from "../types/ApiError";
+import type { Error } from "../types/ApiError";
 import { AppConstants } from "./constants";
 
 /**
