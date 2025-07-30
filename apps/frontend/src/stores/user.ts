@@ -1,13 +1,12 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import { toast } from "vue-sonner";
 import router from "../router";
 import { signIn } from "../services/auth";
-import { useToastService } from "../services/toast";
 
 export const useUserStore = defineStore("user", () => {
   const accessToken = ref<null | string>(null);
   const isLoggedIn = ref<boolean>(false);
-  const toast = useToastService();
   const loading = ref<boolean>(false);
 
   async function login(emailAddress: string, password: string) {
@@ -17,7 +16,7 @@ export const useUserStore = defineStore("user", () => {
     if (error) {
       accessToken.value = null;
       isLoggedIn.value = false;
-      toast.showToast("error", "Invalid Credentials");
+      toast.error("Invalid Credentials");
       loading.value = false;
       return;
     }

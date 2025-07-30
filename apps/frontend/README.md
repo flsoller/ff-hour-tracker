@@ -2,7 +2,7 @@
 
 ### Description
 
-This is the projects frontend web package.
+This is the projects frontend web package. The ui components leverage https://www.shadcn-vue.com/.
 
 ### Tests
 
@@ -12,7 +12,7 @@ To run frontend tests, make sure the containers are up and running and run the c
 yarn frontend:test
 ```
 
-To run frontend tests outside of the docker containers, ensure you've installed the required dependencies and run the command from the `frontend` folder:
+or run the command from the `frontend` folder:
 
 ```
 yarn test
