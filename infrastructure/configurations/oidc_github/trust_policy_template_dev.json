@@ -4,12 +4,15 @@
     {
       "Effect": "Allow",
       "Principal": {
-        "Federated": "arn:aws:iam::{{--ACCOUNT_ID_HERE--}}:oidc-provider/token.actions.githubusercontent.com"
+        "Federated": "arn:aws:iam::737225654862:oidc-provider/token.actions.githubusercontent.com"
       },
       "Action": "sts:AssumeRoleWithWebIdentity",
       "Condition": {
         "StringEquals": {
           "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
+        },
+        "StringNotLike": {
+          "token.actions.githubusercontent.com:sub": "repo:flsoller/ff-hour-tracker:ref:refs/tags/*"
         },
         "StringLike": {
           "token.actions.githubusercontent.com:sub": "repo:flsoller/ff-hour-tracker:*"

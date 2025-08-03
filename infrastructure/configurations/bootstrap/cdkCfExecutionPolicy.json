@@ -30,7 +30,7 @@
       ],
       "NotResource": [
         "arn:aws:iam::*:role/cdk-*",
-        "arn:aws:iam::*:policy/cdkCfEexecutionPolicy"
+        "arn:aws:iam::*:policy/cdkCfExecutionPolicy"
       ]
     }
   ]
