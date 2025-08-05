@@ -3,6 +3,18 @@ name: Database_Migrator
 on:
   workflow_dispatch:
   workflow_call:
+    secrets:
+      DB_BRANCH:
+        required: true
+      DOCKER_HUB_USERNAME:
+        required: true
+      DOCKER_HUB_ACCESS_TOKEN:
+        required: true
+    inputs:
+      hash_or_version:
+        description: "The hash or version to use for the image"
+        required: true
+        type: string
 
 jobs:
   build_image:
@@ -23,7 +35,7 @@ jobs:
           context: .
           file: apps/db-migrator/Dockerfile
           push: true
-          tags: flsoller/hour-tracker-migration-runner:${{ github.sha }}
+          tags: flsoller/hour-tracker-migration-runner:${{ inputs.hash_or_version }}
           cache-from: type=gha,scope=build-flsoller/hour-tracker-migration-runner
           cache-to: type=gha,mode=max,scope=build-flsoller/hour-tracker-migration-runner
 
@@ -41,8 +53,8 @@ jobs:
       - name: Start migration container
         run: |
           touch .env
-          echo TAG=${{ github.sha }} >> .env
-          echo DATABASE_URL=${{ secrets.NEON_DB_BRANCH_TESTING }} >> .env
+          echo TAG=${{ inputs.hash_or_version }} >> .env
+          echo DATABASE_URL=${{ secrets.DB_BRANCH }} >> .env
           docker compose -f compose.ci.yml --env-file .env up -d postgres_migrator
           echo ---migration container is running---
       - name: Run migration
