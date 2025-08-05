@@ -12,6 +12,9 @@ on:
           - HourTrackerApi
           - HourTrackerImageRepositories
   workflow_call:
+    secrets:
+      AWS_ROLE_TO_ASSUME:
+        required: true
     inputs:
       desired_stack:
         description: "The name of the stack that should be destroyed"
@@ -37,7 +40,6 @@ jobs:
       - name: Configure AWS Credentials For GitHub Actions
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          # In the future, role will be scoped per account (dev, test, prod)
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: ${{ secrets.AWS_REGION }}
           mask-aws-account-id: true
