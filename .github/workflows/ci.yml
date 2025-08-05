@@ -23,17 +23,29 @@ jobs:
 
   build_migrator_and_apply_pending_migrations:
     needs: run_tests
-    secrets: inherit
+    secrets:
+      DB_BRANCH: ${{ secrets.NEON_DB_BRANCH_TESTING }}
+      DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+      DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
     uses: ./.github/workflows/db_migrator.yml
+    with:
+      hash_or_version: ${{ github.sha }}
 
   run_aws_api_pipeline:
     needs: run_tests
-    secrets: inherit
+    secrets:
+      AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_DEV_TESTING_ROLE_TO_ASSUME }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
     uses: ./.github/workflows/aws_pipeline_api.yml
+    with:
+      hash_or_version: ${{ github.sha }}
 
   deploy_dev_organization:
     needs: run_aws_api_pipeline
-    secrets: inherit
+    secrets:
+      AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_DEV_TESTING_ROLE_TO_ASSUME }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      AWS_DEV_ORG_MANAGER_FN: ${{ secrets.AWS_DEV_ORG_MANAGER_FN }}
     uses: ./.github/workflows/organization_manager.yml
     with:
       organization_name: "Dev Organization"
