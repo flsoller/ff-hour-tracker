@@ -3,40 +3,46 @@ on:
   workflow_dispatch:
 
 jobs:
-  # Deploy api and server
-  deploy-services:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Trigger API deployment
-        uses: joelwmale/webhook-action@ee20d8c79e728c2d339b114fd27772ee0226aa41
-        with:
-          url: ${{ secrets.API_DEPLOY_HOOK }}
-      - name: Trigger Frontend deployment
-        uses: joelwmale/webhook-action@ee20d8c79e728c2d339b114fd27772ee0226aa41
-        with:
-          url: ${{ secrets.FRONTEND_DEPLOY_HOOK }}
-
-  # Create changelog and release tag
+  # Create changelog and tag a release
   create-release:
-    needs: deploy-services
     runs-on: ubuntu-latest
+    outputs:
+      release_version: ${{ steps.changelog.outputs.tag }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Conventional Changelog Action
         id: changelog
-        uses: TriPSs/conventional-changelog-action@v3
+        uses: TriPSs/conventional-changelog-action@v5
         with:
           github-token: ${{ secrets.github_token }}
           output-file: "false"
           skip-commit: "true"
 
       - name: Create Release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v2
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.github_token }}
         with:
           tag_name: ${{ steps.changelog.outputs.tag }}
-          release_name: ${{ steps.changelog.outputs.tag }}
+          name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
+
+  build_migrator_and_apply_pending_migrations:
+    needs: create-release
+    secrets:
+      DB_BRANCH: ${{ secrets.NEON_DB_PRODUCTION }}
+      DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+      DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+    uses: ./.github/workflows/db_migrator.yml
+    with:
+      hash_or_version: ${{ needs.create-release.outputs.release_version }}
+
+  run_aws_api_pipeline:
+    needs:
+      - create-release
+    secrets:
+      AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_PRODUCTION_ROLE_TO_ASSUME }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+    uses: ./.github/workflows/aws_pipeline_api.yml
+    with:
+      hash_or_version: ${{ needs.create-release.outputs.release_version }}
