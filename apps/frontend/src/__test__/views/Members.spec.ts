@@ -66,7 +66,7 @@ describe("Members View", () => {
     const sortButton = sortButtons.find(button => button.text().includes("Last Name"));
     expect(sortButton).toBeDefined();
     await sortButton?.trigger("click");
-    expect(store.changeSortOrder).toHaveBeenCalledWith("desc");
+    expect(store.changeSortOrder).toHaveBeenCalledWith("desc", 5, 0);
   });
 
   it("should show an info text when there are no members", async () => {
@@ -108,6 +108,10 @@ describe("Members View", () => {
       firstName: "John",
       lastName: "Doe",
       emailAddress: "john@example.com",
+    }, {
+      limit: "5",
+      offset: "0",
+      order: "asc",
     });
   });
 });
