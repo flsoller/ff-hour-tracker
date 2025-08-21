@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
+import { boolean, text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
 import { organizations } from "./organization";
 import { hourTrackerSchema } from "./shared/schema";
 import { timeLogs } from "./time-log";
@@ -17,6 +17,7 @@ export const members = hourTrackerSchema.table(
         onDelete: "restrict",
         onUpdate: "cascade",
       }),
+    active: boolean("active").notNull().default(true),
     createdAt: timestamp("created_at").notNull().defaultNow(),
     updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
