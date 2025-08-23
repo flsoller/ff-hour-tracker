@@ -32,9 +32,9 @@ describe("Get members paginated", () => {
       });
     });
 
-    it("should return paginated members", async () => {
+    it("should return paginated members with default limit", async () => {
       const [user] = await createUserForOrganization(orgId);
-      const members = await createMembersForOrganization(orgId);
+      const members = await createMembersForOrganization(orgId, 5);
       const event = createApiRequestEvent({}, {}, "/v1/members", "GET", {
         organizationId: orgId,
         userId: user!.id,
@@ -53,7 +53,7 @@ describe("Get members paginated", () => {
 
     it("should return paginated members with limit and offset", async () => {
       const [user] = await createUserForOrganization(orgId);
-      const members = await createMembersForOrganization(orgId);
+      const members = await createMembersForOrganization(orgId, 5);
       const event = createApiRequestEvent(
         {},
         {
@@ -74,11 +74,11 @@ describe("Get members paginated", () => {
         statusCode: 200,
         body: JSON.stringify({
           data: members.slice(0, 1),
-          totalCount: 1,
+          totalCount: 5,
         }),
       });
       const responseBody = JSON.parse(result.body);
-      expect(responseBody.data[0].firstName).toEqual("John");
+      expect(responseBody.data[0].firstName).toEqual("A-0Jane");
     });
 
     it("should return ordered members as specified in the query params", async () => {
@@ -98,7 +98,7 @@ describe("Get members paginated", () => {
 
       const result = (await handler(event)) as { body: string };
       const responseBody = JSON.parse(result.body);
-      expect(responseBody.data[0].firstName).toEqual("Jane");
+      expect(responseBody.data[0].firstName).toEqual("A-0Jane");
     });
 
     it("should throw bad request error when limit is not a number", async () => {

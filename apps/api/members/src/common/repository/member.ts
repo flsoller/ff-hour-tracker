@@ -44,3 +44,17 @@ export async function create(
     emailAddress,
   }).returning();
 }
+
+/**
+ * Counts all members for an organization
+ * @param organizationId
+ * @returns
+ */
+export async function countAll(organizationId: string): Promise<number> {
+  return (
+    await db.select()
+      .from(models.members)
+      .where(DrizzleORM.eq(models.members.organizationId, organizationId))
+  )
+    .length;
+}

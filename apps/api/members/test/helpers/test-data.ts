@@ -1,4 +1,4 @@
-import { db, models } from "@hour-tracker/db";
+import { db, DrizzleORM, models } from "@hour-tracker/db";
 import { hash } from "bcryptjs";
 import { APIRequest } from "../../src/common/types/request.type";
 
@@ -36,24 +36,24 @@ export async function createUserForOrganization(organizationId: string) {
     .returning();
 }
 
-export async function createMembersForOrganization(organizationId: string) {
+export async function createMembersForOrganization(organizationId: string, count: number = 25) {
+  for (let i = 0; i < count; i++) {
+    await db
+      .insert(models.members)
+      .values([
+        {
+          firstName: `A-${i}Jane`,
+          lastName: "Smith",
+          emailAddress: `jane${i}.smith@example.com`,
+          organizationId,
+        },
+      ]);
+  }
   return db
-    .insert(models.members)
-    .values([
-      {
-        firstName: "John",
-        lastName: "Doe",
-        emailAddress: "john.doe@example.com",
-        organizationId,
-      },
-      {
-        firstName: "Jane",
-        lastName: "Smith",
-        emailAddress: "jane.smith@example.com",
-        organizationId,
-      },
-    ])
-    .returning();
+    .select()
+    .from(models.members)
+    .where(DrizzleORM.eq(models.members.organizationId, organizationId))
+    .orderBy(DrizzleORM.asc(models.members.firstName));
 }
 
 export function createApiRequestEvent<T = unknown>(
