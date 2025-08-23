@@ -21,3 +21,8 @@ export const MEMBERS_SERVICE = {
   NAME: "hour-tracker-members-service",
   LAMBDA_INTEGRATION: "hour-tracker-members-service-lambda-integration",
 };
+
+export const ACTIVITY_TYPES_SERVICE = {
+  NAME: "hour-tracker-activity-types-service",
+  LAMBDA_INTEGRATION: "hour-tracker-activity-types-service-lambda-integration",
+};

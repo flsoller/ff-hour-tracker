@@ -35,6 +35,9 @@ jobs:
           - repository: hour-tracker-members-service
             dockerfile: apps/api/members/Dockerfile
             platform: linux/arm64
+          - repository: hour-tracker-activity-types-service
+            dockerfile: apps/api/activity-types/Dockerfile
+            platform: linux/arm64
 
     steps:
       - name: Checkout

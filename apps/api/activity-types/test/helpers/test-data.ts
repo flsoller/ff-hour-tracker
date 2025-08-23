@@ -1,4 +1,4 @@
-import { db, DrizzleORM, models } from "@hour-tracker/db";
+import { db, models } from "@hour-tracker/db";
 import { hash } from "bcryptjs";
 import { APIRequest } from "../../src/common/types/request.type";
 
@@ -36,24 +36,22 @@ export async function createUserForOrganization(organizationId: string) {
     .returning();
 }
 
-export async function createMembersForOrganization(organizationId: string, count: number = 25) {
+export async function createActivityTypesForOrganization(organizationId: string, count = 3) {
+  const activityTypes = [];
   for (let i = 0; i < count; i++) {
-    await db
-      .insert(models.members)
-      .values([
-        {
-          firstName: `A-${i}Jane`,
-          lastName: "Smith",
-          emailAddress: `jane${i}.smith@example.com`,
-          organizationId,
-        },
-      ]);
+    const [activityType] = await db
+      .insert(models.activityTypes)
+      .values({
+        activityName: `A-${i}Activity`,
+        activityDescription: `Description for activity ${i}`,
+        organizationId,
+        active: true,
+        colorCode: `${i}${i}${i}${i}${i}${i}`,
+      })
+      .returning();
+    activityTypes.push(activityType);
   }
-  return db
-    .select()
-    .from(models.members)
-    .where(DrizzleORM.eq(models.members.organizationId, organizationId))
-    .orderBy(DrizzleORM.asc(models.members.firstName));
+  return activityTypes;
 }
 
 export function createApiRequestEvent<T = unknown>(

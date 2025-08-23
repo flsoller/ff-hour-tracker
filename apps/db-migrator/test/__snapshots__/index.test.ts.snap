@@ -15,3 +15,11 @@ exports[`Migrations should apply all migrations to provided DB 2`] = `
   "id": 2,
 }
 `;
+
+exports[`Migrations should apply all migrations to provided DB 3`] = `
+{
+  "created_at": Any<String>,
+  "hash": "9a7067e57e70a237e0e2083876eeef4cc51a79505356a2ad45699a6ab140b877",
+  "id": 3,
+}
+`;

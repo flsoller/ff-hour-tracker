@@ -5,5 +5,6 @@ export const LOGICAL_ID = {
   HOUR_TRACKER_API_AUTHENTICATOR: `${AppName}-Authenticator`,
   HOUR_TRACKER_API_AUTHORIZER: `${AppName}-Authorizer`,
   HOUR_TRACKER_API_MEMBERS: `${AppName}-Members`,
+  HOUR_TRACKER_API_ACTIVITY_TYPES: `${AppName}-ActivityTypes`,
   HOUR_TRACKER_API_ORG_MANAGER: `${AppName}-OrgManager`,
 };

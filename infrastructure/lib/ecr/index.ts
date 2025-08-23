@@ -55,5 +55,14 @@ export class HourTrackerImageRepositories extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       lifecycleRules: [defaultVersionLifecycle, defaultLifecycle],
     });
+
+    // Activity Type Service ECR image repo
+    new ecr.Repository(this, HOUR_TRACKER_ECR_REPO_NAMES.API_ACTIVITY_TYPES, {
+      repositoryName: HOUR_TRACKER_ECR_REPO_NAMES.API_ACTIVITY_TYPES,
+      emptyOnDelete: true,
+      imageScanOnPush: false,
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      lifecycleRules: [defaultVersionLifecycle, defaultLifecycle],
+    });
   }
 }
