@@ -51,6 +51,11 @@ jobs:
             testCommand: yarn turbo:test:api-members
             with_db: true
             requires_migration: true
+          - module: "@hour-tracker/api-activity-types"
+            dependencyCommand: yarn install
+            testCommand: yarn turbo:test:activity-types
+            with_db: true
+            requires_migration: true
           - module: "@hour-tracker/organization-manager"
             dependencyCommand: yarn install
             testCommand: yarn turbo:test:org-manager
