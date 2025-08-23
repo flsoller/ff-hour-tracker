@@ -15,7 +15,27 @@ on:
         type: string
 
 jobs:
+  changes:
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      src: ${{ steps.filter.outputs.src }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            src:
+              - 'apps/api/**'
+              - 'apps/org-manager/**'
+              - 'infrastructure/**'
   deploy_ecr_stack:
+    needs: changes
+    if: ${{ needs.changes.outputs.src == 'true' }}
     secrets:
       AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME }}
       AWS_REGION: ${{ secrets.AWS_REGION }}
@@ -24,7 +44,10 @@ jobs:
       desired_stack: HourTrackerImageRepositories
 
   build_images:
-    needs: deploy_ecr_stack
+    needs:
+      - deploy_ecr_stack
+      - changes
+    if: ${{ needs.changes.outputs.src == 'true' }}
     secrets:
       AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME }}
       AWS_REGION: ${{ secrets.AWS_REGION }}
@@ -33,7 +56,10 @@ jobs:
       hash_or_version: ${{ inputs.hash_or_version }}
 
   deploy_organization_manager_stack:
-    needs: build_images
+    needs:
+      - build_images
+      - changes
+    if: ${{ needs.changes.outputs.src == 'true' }}
     secrets:
       AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME }}
       AWS_REGION: ${{ secrets.AWS_REGION }}
@@ -43,7 +69,10 @@ jobs:
       parameter_hash_or_version: "--parameters hashOrVersion=${{ inputs.hash_or_version }}"
 
   deploy_api_stack:
-    needs: build_images
+    needs:
+      - build_images
+      - changes
+    if: ${{ needs.changes.outputs.src == 'true' }}
     secrets:
       AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME }}
       AWS_REGION: ${{ secrets.AWS_REGION }}

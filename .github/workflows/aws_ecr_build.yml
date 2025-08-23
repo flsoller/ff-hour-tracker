@@ -15,7 +15,28 @@ on:
         type: string
 
 jobs:
+  changes:
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      src: ${{ steps.filter.outputs.src }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            src:
+              - 'apps/api/**'
+              - 'apps/org-manager/**'
+              - 'infrastructure/**'
+
   build-images:
+    needs: changes
+    if: ${{ needs.changes.outputs.src == 'true' }}
     runs-on: ubuntu-24.04-arm
     permissions:
       id-token: write
