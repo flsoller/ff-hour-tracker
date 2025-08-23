@@ -25,6 +25,7 @@
         "arn:aws:ecr:eu-central-1:*:repository/hour-tracker-api-authorizer",
         "arn:aws:ecr:eu-central-1:*:repository/hour-tracker-api-authenticator",
         "arn:aws:ecr:eu-central-1:*:repository/hour-tracker-members-service",
+        "arn:aws:ecr:eu-central-1:*:repository/hour-tracker-activity-types-service",
         "arn:aws:ecr:eu-central-1:*:repository/hour-tracker-org-manager"
       ]
     }

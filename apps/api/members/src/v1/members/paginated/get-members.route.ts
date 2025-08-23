@@ -1,3 +1,4 @@
+import { countAll } from "../../../common/repository/member";
 import { APIRequest } from "../../../common/types/request.type";
 import { getPaginatedMembers, validateRequest } from "./get-members.service";
 
@@ -19,6 +20,6 @@ export async function getMembersPaginated(request: APIRequest) {
 
   return {
     statusCode: 200,
-    body: JSON.stringify({ data: members, totalCount: members.length }),
+    body: JSON.stringify({ data: members, totalCount: await countAll(organizationId) }),
   };
 }

@@ -3,6 +3,7 @@ import * as ssm from "aws-cdk-lib/aws-ssm";
 import { Construct } from "constructs";
 import { ENVIRONMENT_PARAMS } from "../constants/environments";
 import { HOUR_TRACKER } from "../constants/stacks";
+import { ActivityTypesService } from "./activity-types";
 import { AuthenticationService } from "./authenticator";
 import { AuthorizerService } from "./authorizer";
 import { HourTrackerApiGateway } from "./gateway";
@@ -67,6 +68,14 @@ export class HourTrackerApi extends cdk.Stack {
     });
 
     new MembersService(this, HOUR_TRACKER.API_MEMBERS, {
+      apiGateway: apiGateway.httpApiGateway,
+      dbConnectionString,
+      hashOrVersion,
+      newRelicAccountId,
+      newRelicIngestLicense,
+    });
+
+    new ActivityTypesService(this, HOUR_TRACKER.API_ACTIVITY_TYPES, {
       apiGateway: apiGateway.httpApiGateway,
       dbConnectionString,
       hashOrVersion,
