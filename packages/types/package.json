@@ -1,7 +1,15 @@
 {
   "name": "@hour-tracker/core-types",
   "version": "1.0.0",
+  "private": "true",
   "description": "Typescript interfaces for ff-hour-tracker app",
-  "author": "Florian Soller <flsoller@gmail.com>",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "type": "module",
+  "exports": {
+    "./activities": "./api/activities/index.ts",
+    "./auth": "./api/auth/index.ts",
+    "./members": "./api/members/index.ts",
+    "./organization": "./api/organization/index.ts",
+    "./timelogs": "./api/timelogs/index.ts"
+  }
 }

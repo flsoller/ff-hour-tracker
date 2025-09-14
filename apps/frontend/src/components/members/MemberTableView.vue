@@ -183,6 +183,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import type { IGetMembersPaginatedRes } from "@hour-tracker/core-types/members";
 import {
   Copy,
   Edit,
@@ -193,7 +194,6 @@ import {
   Trash2,
   Users,
 } from "lucide-vue-next";
-import type { IGetMembersPaginatedRes } from "../../../../../packages/types/api/members";
 import { useMemberActions } from "../../composables/useMemberActions";
 
 // Type for individual member data from paginated response
