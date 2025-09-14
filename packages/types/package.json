@@ -1,7 +1,6 @@
 {
   "name": "@hour-tracker/core-types",
   "version": "1.0.0",
-  "private": "true",
   "description": "Typescript interfaces for ff-hour-tracker app",
   "license": "UNLICENSED",
   "type": "module",
