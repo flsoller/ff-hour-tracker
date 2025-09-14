@@ -3,7 +3,7 @@ import type {
   IGetMembersPaginatedReq,
   IGetMembersPaginatedRes,
   IMemberCreatedRes,
-} from "../../../../packages/types/api/members";
+} from "@hour-tracker/core-types/members";
 import type { Error } from "../types/ApiError";
 import api from "../utils/api";
 

@@ -1,5 +1,5 @@
+import type { IGetMembersPaginatedRes } from "@hour-tracker/core-types/members";
 import { toast } from "vue-sonner";
-import type { IGetMembersPaginatedRes } from "../../../../packages/types/api/members";
 
 // Type for individual member data from paginated response
 type MemberData = IGetMembersPaginatedRes["data"][0];

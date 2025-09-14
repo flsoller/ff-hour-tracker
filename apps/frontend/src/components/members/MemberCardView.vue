@@ -144,6 +144,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import type { IGetMembersPaginatedRes } from "@hour-tracker/core-types/members";
 import {
   Copy,
   Edit,
@@ -154,7 +155,6 @@ import {
   Trash2,
   Users,
 } from "lucide-vue-next";
-import type { IGetMembersPaginatedRes } from "../../../../../packages/types/api/members";
 import { useMemberActions } from "../../composables/useMemberActions";
 
 // Type for individual member data from paginated response

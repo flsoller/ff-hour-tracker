@@ -2234,7 +2234,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hour-tracker/core-types@workspace:packages/types":
+"@hour-tracker/core-types@workspace:*, @hour-tracker/core-types@workspace:packages/types":
   version: 0.0.0-use.local
   resolution: "@hour-tracker/core-types@workspace:packages/types"
   languageName: unknown
@@ -7415,6 +7415,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "hour-tracker-frontend@workspace:apps/frontend"
   dependencies:
+    "@hour-tracker/core-types": "workspace:*"
     "@iconify-json/radix-icons": "npm:1.2.2"
     "@iconify/vue": "npm:5.0.0"
     "@pinia/testing": "npm:1.0.2"

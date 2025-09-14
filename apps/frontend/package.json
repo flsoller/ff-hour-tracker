@@ -33,6 +33,7 @@
     "vue-sonner": "2.0.2"
   },
   "devDependencies": {
+    "@hour-tracker/core-types": "workspace:*",
     "@iconify-json/radix-icons": "1.2.2",
     "@iconify/vue": "5.0.0",
     "@pinia/testing": "1.0.2",
