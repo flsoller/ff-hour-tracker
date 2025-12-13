@@ -99,6 +99,7 @@
 <script setup lang="ts">
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import type { ICreateMemberReq } from "@hour-tracker/core-types/members";
 import {
   ArrowUpDown,
   ChevronDown,
@@ -108,7 +109,6 @@ import {
 } from "lucide-vue-next";
 import { storeToRefs } from "pinia";
 import { computed, onMounted, ref, watch } from "vue";
-import type { ICreateMemberReq } from "../../../../packages/types/api/members";
 import AddMember from "../components/AddMember.vue";
 import MemberCardView from "../components/members/MemberCardView.vue";
 import MemberTableView from "../components/members/MemberTableView.vue";
