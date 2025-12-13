@@ -1,12 +1,12 @@
-import { defineStore } from "pinia";
-import { computed, ref } from "vue";
-import type { Ref } from "vue";
-import { toast } from "vue-sonner";
 import type {
   ICreateMemberReq,
   IGetMembersPaginatedReq,
   IGetMembersPaginatedRes,
-} from "../../../../packages/types/api/members";
+} from "@hour-tracker/core-types/members";
+import { defineStore } from "pinia";
+import { computed, ref } from "vue";
+import type { Ref } from "vue";
+import { toast } from "vue-sonner";
 import { addMember, getMembers } from "../services/members";
 import { useUserStore } from "../stores/user";
 

@@ -16,8 +16,10 @@ export interface IMember {
   firstName: string;
   lastName: string;
   emailAddress: string;
-  isAdmin: boolean;
-  orgId: string;
+  organizationId: string;
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface IGetMembersPaginatedReq {
@@ -26,14 +28,7 @@ export interface IGetMembersPaginatedReq {
   order?: "asc" | "desc";
 }
 
-interface IGetMembersPaginatedData {
-  id: string;
-  firstName: string;
-  lastName: string;
-  emailAddress: string;
-}
-
 export interface IGetMembersPaginatedRes {
-  data: IGetMembersPaginatedData[];
+  data: IMember[];
   totalCount: number;
 }

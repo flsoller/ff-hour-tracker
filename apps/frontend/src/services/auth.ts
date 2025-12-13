@@ -1,4 +1,4 @@
-import type { ISignIn, ISignInSuccess } from "../../../../packages/types/api/auth";
+import type { ISignIn, ISignInSuccess } from "@hour-tracker/core-types/auth";
 import type { Error } from "../types/ApiError";
 import api from "../utils/api";
 

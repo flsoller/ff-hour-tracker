@@ -16,21 +16,21 @@
 
       <!-- Empty State -->
       <Card
-        v-else-if="members.length === 0 && !isSearching"
+        v-else-if="activityTypes.length === 0 && !isSearching"
         class="p-8"
       >
         <div class="text-center space-y-4">
           <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-muted">
-            <Users class="h-8 w-8 text-muted-foreground" />
+            <Palette class="h-8 w-8 text-muted-foreground" />
           </div>
           <div>
-            <h3 class="text-lg font-semibold">No members yet</h3>
+            <h3 class="text-lg font-semibold">No activity types yet</h3>
             <p class="text-sm text-muted-foreground mb-4">
-              Get started by adding your first team member
+              Get started by adding your first activity type
             </p>
-            <Button @click="$emit('add-member')" size="sm">
+            <Button @click="$emit('add-activity-type')" size="sm">
               <Plus class="mr-2 h-4 w-4" />
-              Add First Member
+              Add First Activity Type
             </Button>
           </div>
         </div>
@@ -38,7 +38,7 @@
 
       <!-- No Search Results -->
       <Card
-        v-else-if="members.length === 0 && isSearching"
+        v-else-if="activityTypes.length === 0 && isSearching"
         class="p-8"
       >
         <div class="text-center space-y-4">
@@ -54,75 +54,87 @@
         </div>
       </Card>
 
-      <!-- Member Cards -->
+      <!-- Activity Type Cards -->
       <Card
         v-else
-        v-for="member in members"
-        :key="member.id"
+        v-for="activityType in activityTypes"
+        :key="activityType.id"
         class="p-4"
       >
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-4">
-            <Avatar class="h-12 w-12">
-              <AvatarFallback class="text-sm font-medium">
-                {{
-                  getInitials(
-                    member.firstName,
-                    member.lastName,
-                  )
-                }}
-              </AvatarFallback>
-            </Avatar>
-            <div class="flex-1">
-              <h4 class="font-semibold">
-                {{ member.firstName }} {{ member.lastName }}
+            <ColorIndicator
+              :color-code="activityType.colorCode"
+              size="lg"
+            />
+            <div class="flex-1 min-w-0">
+              <h4 class="font-semibold truncate">
+                {{ activityType.activityName }}
               </h4>
-              <div class="flex items-center space-x-2 mt-1">
-                <span class="text-sm text-muted-foreground">{{
-                  member.emailAddress
-                }}</span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  @click="$emit('copy-email', member.emailAddress)"
-                  class="h-6 w-6 p-0"
-                >
-                  <Copy class="h-3 w-3" />
-                </Button>
+              <div class="mt-1">
+                <p class="text-sm text-muted-foreground line-clamp-2">
+                  {{ activityType.activityDescription }}
+                </p>
               </div>
               <div class="flex items-center space-x-2 mt-2">
-                <Badge variant="secondary" class="text-xs">
-                  Active
+                <Badge
+                  :variant="
+                    activityType.active
+                    ? 'secondary'
+                    : 'outline'
+                  "
+                  class="text-xs"
+                >
+                  {{
+                    activityType.active
+                    ? "Active"
+                    : "Inactive"
+                  }}
                 </Badge>
-                <span class="text-xs text-muted-foreground">Member since {{
-                    formatJoinDate()
+                <span class="text-xs text-muted-foreground">Created {{
+                    formatDate(activityType.createdAt)
                   }}</span>
               </div>
             </div>
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" class="h-8 w-8 p-0">
+              <Button variant="ghost" size="sm" class="h-8 w-8 p-0 shrink-0">
                 <MoreHorizontal class="h-4 w-4" />
                 <span class="sr-only">Open menu</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" class="w-48">
-              <DropdownMenuItem @click="$emit('edit-member', member)">
+              <DropdownMenuItem
+                @click="$emit('edit-activity-type', activityType)"
+              >
                 <Edit class="mr-2 h-4 w-4" />
-                Edit Member
+                Edit Activity Type
               </DropdownMenuItem>
-              <DropdownMenuItem @click="$emit('view-member', member)">
+              <DropdownMenuItem
+                @click="$emit('view-activity-type', activityType)"
+              >
                 <Eye class="mr-2 h-4 w-4" />
                 View Details
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
-                @click="$emit('delete-member', member)"
+                @click="$emit('toggle-status', activityType)"
+                class="text-amber-600 focus:text-amber-600"
+              >
+                <Power class="mr-2 h-4 w-4" />
+                {{
+                  activityType.active
+                  ? "Deactivate"
+                  : "Activate"
+                }}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                @click="$emit('delete-activity-type', activityType)"
                 class="text-destructive focus:text-destructive"
               >
                 <Trash2 class="mr-2 h-4 w-4" />
-                Delete Member
+                Delete Activity Type
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -133,10 +145,10 @@
 </template>
 
 <script setup lang="ts">
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import ColorIndicator from "@/components/ui/ColorIndicator.vue";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -144,41 +156,47 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { IGetMembersPaginatedRes } from "@hour-tracker/core-types/members";
+import type { IGetActivitiesRes } from "@hour-tracker/core-types/activities";
 import {
-  Copy,
   Edit,
   Eye,
   MoreHorizontal,
+  Palette,
   Plus,
+  Power,
   Search,
   Trash2,
-  Users,
 } from "lucide-vue-next";
-import { useMemberActions } from "../../composables/useMemberActions";
 
-// Type for individual member data from paginated response
-type MemberData = IGetMembersPaginatedRes["data"][0];
+// Type for individual activity type data from paginated response
+type ActivityTypeData = IGetActivitiesRes["data"][0];
 
 // Props
 interface Props {
-  members: MemberData[];
+  activityTypes: ActivityTypeData[];
   loading: boolean;
   isSearching: boolean;
 }
 
 // Emits
 interface Emits {
-  (e: "add-member"): void;
-  (e: "copy-email", email: string): void;
-  (e: "edit-member", member: MemberData): void;
-  (e: "view-member", member: MemberData): void;
-  (e: "delete-member", member: MemberData): void;
+  (e: "add-activity-type"): void;
+  (e: "edit-activity-type", activityType: ActivityTypeData): void;
+  (e: "view-activity-type", activityType: ActivityTypeData): void;
+  (e: "delete-activity-type", activityType: ActivityTypeData): void;
+  (e: "toggle-status", activityType: ActivityTypeData): void;
 }
 
 defineProps<Props>();
 defineEmits<Emits>();
 
-// Use member actions composable for utilities
-const { getInitials, formatJoinDate } = useMemberActions();
+// Utility function to format dates
+function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
 </script>
