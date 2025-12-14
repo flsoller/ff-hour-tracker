@@ -9,9 +9,10 @@ export const users = hourTrackerSchema.table(
   "users",
   {
     id: uuid("id").primaryKey().notNull().defaultRandom(),
+    authProviderId: text("auth_provider_id").unique(),
     emailAddress: text("email_address").notNull(),
     name: text("name"),
-    password: text("password").notNull(),
+    password: text("password"),
     role: Role("role").default("USER").notNull(),
     active: boolean("active").notNull().default(true),
     organizationId: uuid("organization_id")

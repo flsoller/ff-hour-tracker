@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Migrations should apply all migrations to provided DB 1`] = `
 {
@@ -21,5 +21,13 @@ exports[`Migrations should apply all migrations to provided DB 3`] = `
   "created_at": Any<String>,
   "hash": "9a7067e57e70a237e0e2083876eeef4cc51a79505356a2ad45699a6ab140b877",
   "id": 3,
+}
+`;
+
+exports[`Migrations should apply all migrations to provided DB 4`] = `
+{
+  "created_at": Any<String>,
+  "hash": "b06ab080438212d8fcaa4f954f57a658824ec2b2b83e34ace0926a483a77b038",
+  "id": 4,
 }
 `;
