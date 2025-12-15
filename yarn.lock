@@ -1240,6 +1240,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@clerk/vue@npm:1.17.3":
+  version: 1.17.3
+  resolution: "@clerk/vue@npm:1.17.3"
+  dependencies:
+    "@clerk/shared": "npm:^3.39.0"
+    "@clerk/types": "npm:^4.101.6"
+  peerDependencies:
+    vue: ^3.2.0
+  checksum: 10/019e88d66dcb15199f349f82f4fd64aa882d3b01592b705ed62bdc5a84cccaa23d511fc34bfae3e0c10a243b6c95c9ded40eab69dd65c1fa294ce031722e2c38
+  languageName: node
+  linkType: hard
+
 "@commitlint/cli@npm:19.8.1":
   version: 19.8.1
   resolution: "@commitlint/cli@npm:19.8.1"
@@ -8709,6 +8721,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "hour-tracker-frontend@workspace:apps/frontend"
   dependencies:
+    "@clerk/vue": "npm:1.17.3"
     "@hour-tracker/core-types": "workspace:*"
     "@iconify-json/radix-icons": "npm:1.2.2"
     "@iconify/vue": "npm:5.0.0"

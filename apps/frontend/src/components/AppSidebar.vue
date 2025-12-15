@@ -22,12 +22,38 @@
       <NavSecondary :items="data.navSecondary" class="mt-auto" />
     </SidebarContent>
     <SidebarFooter>
-      <NavUser :user="data.user" />
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <div class="flex items-center gap-2 px-2 py-2">
+            <UserButton
+              :appearance="
+                {
+                  elements: {
+                    avatarBox: 'h-8 w-8',
+                  },
+                }
+              "
+            />
+            <div
+              v-if="user"
+              class="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden"
+            >
+              <span class="truncate font-medium">{{
+                user.fullName || user.firstName || "User"
+              }}</span>
+              <span class="truncate text-xs text-muted-foreground">{{
+                user.primaryEmailAddress?.emailAddress
+              }}</span>
+            </div>
+          </div>
+        </SidebarMenuItem>
+      </SidebarMenu>
     </SidebarFooter>
   </Sidebar>
 </template>
 
 <script setup lang="ts">
+import { UserButton, useUser } from "@clerk/vue";
 import {
   Clock,
   Home,
@@ -40,7 +66,6 @@ import {
 
 import NavMain from "@/components/NavMain.vue";
 import NavSecondary from "@/components/NavSecondary.vue";
-import NavUser from "@/components/NavUser.vue";
 import {
   Sidebar,
   SidebarContent,
@@ -56,12 +81,9 @@ const props = withDefaults(defineProps<SidebarProps>(), {
   variant: "inset",
 });
 
+const { user } = useUser();
+
 const data = {
-  user: {
-    name: "User",
-    email: "user@example.com",
-    avatar: "/avatars/user.jpg",
-  },
   navMain: [
     {
       title: "Dashboard",

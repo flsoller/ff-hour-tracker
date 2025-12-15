@@ -6,12 +6,12 @@ import type {
 } from "@hour-tracker/core-types/activities";
 import type { Error } from "../types/ApiError";
 import api from "../utils/api";
+import { getAccessToken } from "./auth";
 
 const ACTIVITIES_API = "v1/activity-types";
 
 async function getActivities(
   queryOptions: IGetActivitiesReq,
-  accessToken: string | null,
 ): Promise<[IGetActivitiesRes | null, Error | null]> {
   const { limit = "10", offset = "0", order = "asc" } = queryOptions;
   const queryParams = new URLSearchParams({
@@ -19,6 +19,7 @@ async function getActivities(
     offset: offset.toString(),
     order,
   }).toString();
+  const accessToken = await getAccessToken();
   const [data, error] = await api.get<IGetActivitiesRes>(
     `${ACTIVITIES_API}?${queryParams}`,
     { headers: { Authorization: `Bearer ${accessToken}` } },
@@ -29,8 +30,8 @@ async function getActivities(
 
 async function addActivity(
   params: ICreateActivityReq,
-  accessToken: string | null,
 ): Promise<[IActivityCreatedRes | null, Error | null]> {
+  const accessToken = await getAccessToken();
   const [data, error] = await api.post<ICreateActivityReq, IActivityCreatedRes>(
     `${ACTIVITIES_API}`,
     params,

@@ -1,14 +1,12 @@
-import { createRouter, createWebHistory } from "vue-router";
-import type { RouteRecordRaw } from "vue-router";
-import { useUserStore } from "../stores/user";
-
-// View imports
 import Configuration from "@/views/Configuration.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import Login from "@/views/Login.vue";
 import Members from "@/views/Members.vue";
 import Reports from "@/views/Reports.vue";
+import SignUp from "@/views/SignUp.vue";
 import TimeLogging from "@/views/TimeLogging.vue";
+import { createRouter, createWebHistory } from "vue-router";
+import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
   /**
@@ -77,18 +75,23 @@ const routes: Array<RouteRecordRaw> = [
       hideSidebar: true,
     },
   },
+  /**
+   * Sign up page
+   */
+  {
+    path: "/signup",
+    name: "SignUp",
+    component: SignUp,
+    meta: {
+      hideSidebar: true,
+    },
+  },
   { path: "/:pathMatch(.*)", redirect: "/" },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
-});
-
-router.beforeEach((to, _from, next) => {
-  const userStore = useUserStore();
-  if (to.meta.protected && !userStore.isLoggedIn) next("/login");
-  else next();
 });
 
 export default router;
