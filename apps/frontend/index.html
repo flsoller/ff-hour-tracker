@@ -2,9 +2,26 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Codrino - HT</title>
+    <title>Timecraft</title>
+    <script>
+    // Apply dark mode class immediately to prevent flash
+      const isDark =
+        localStorage.getItem("vueuse-color-scheme") === "dark"
+        || (!localStorage.getItem("vueuse-color-scheme")
+          && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      if (isDark) document.documentElement.classList.add("dark");
+    </script>
+    <style>
+    /* Inline critical styles for loading screen - prevents white flash */
+    html {
+      background-color: oklch(1 0 0);
+    }
+    html.dark {
+      background-color: oklch(0.129 0.042 264.695);
+    }
+    </style>
   </head>
   <body>
     <div id="app"></div>

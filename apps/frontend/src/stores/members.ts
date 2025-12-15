@@ -8,7 +8,6 @@ import { computed, ref } from "vue";
 import type { Ref } from "vue";
 import { toast } from "vue-sonner";
 import { addMember, getMembers } from "../services/members";
-import { useUserStore } from "../stores/user";
 
 /**
  * Members store focused on data management following Single Responsibility Principle
@@ -16,7 +15,6 @@ import { useUserStore } from "../stores/user";
  */
 export const useMembersStore = defineStore("members", () => {
   const defaultPageLimit = 5;
-  const userStore = useUserStore();
   const loading = ref<boolean>(false);
   const members: Ref<IGetMembersPaginatedRes> = ref({
     data: [],
@@ -39,10 +37,7 @@ export const useMembersStore = defineStore("members", () => {
     };
 
     loading.value = true;
-    const [data, error] = await getMembers(
-      requestParams,
-      userStore.accessToken,
-    );
+    const [data, error] = await getMembers(requestParams);
 
     if (error) {
       toast.error("Unexpected error while loading members data");
@@ -76,7 +71,7 @@ export const useMembersStore = defineStore("members", () => {
    * @param currentParams - Current pagination parameters for refresh
    */
   async function addNewMember(memberData: ICreateMemberReq, currentParams?: IGetMembersPaginatedReq) {
-    const [data, error] = await addMember(memberData, userStore.accessToken);
+    const [data, error] = await addMember(memberData);
 
     if (error) {
       toast.error("Unexpected error while adding a member");
