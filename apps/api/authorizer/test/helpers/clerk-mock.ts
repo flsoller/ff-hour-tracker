@@ -25,8 +25,8 @@ export function mockVerifyToken(payload: TokenPayload | null) {
   const { verifyToken } = jest.requireMock("@clerk/backend");
   if (payload) {
     verifyToken.mockResolvedValue({
-      sub: payload.clerkUserId,
-      orgId: payload.clerkOrgId,
+      clerkUserId: payload.clerkUserId,
+      clerkOrgId: payload.clerkOrgId,
       orgName: payload.orgName,
       userEmail: payload.userEmail,
       userName: payload.userName,

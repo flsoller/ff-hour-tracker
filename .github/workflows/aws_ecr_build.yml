@@ -47,9 +47,6 @@ jobs:
           - repository: hour-tracker-api-authorizer
             dockerfile: apps/api/authorizer/Dockerfile
             platform: linux/arm64
-          - repository: hour-tracker-api-authenticator
-            dockerfile: apps/api/authenticator/Dockerfile
-            platform: linux/arm64
           - repository: hour-tracker-org-manager
             dockerfile: apps/org-manager/Dockerfile
             platform: linux/arm64

@@ -4,7 +4,6 @@ import { Construct } from "constructs";
 import { ENVIRONMENT_PARAMS } from "../constants/environments";
 import { HOUR_TRACKER } from "../constants/stacks";
 import { ActivityTypesService } from "./activity-types";
-import { AuthenticationService } from "./authenticator";
 import { AuthorizerService } from "./authorizer";
 import { HourTrackerApiGateway } from "./gateway";
 import { MembersService } from "./members";
@@ -57,15 +56,6 @@ export class HourTrackerApi extends cdk.Stack {
         authService: defaultAuthorizer.authorizer,
       },
     );
-
-    new AuthenticationService(this, HOUR_TRACKER.API_AUTHENTICATOR, {
-      apiGateway: apiGateway.httpApiGateway,
-      dbConnectionString,
-      hashOrVersion,
-      jwtSecretString,
-      newRelicAccountId,
-      newRelicIngestLicense,
-    });
 
     new MembersService(this, HOUR_TRACKER.API_MEMBERS, {
       apiGateway: apiGateway.httpApiGateway,
