@@ -5,7 +5,9 @@
 
 export async function getAccessToken(): Promise<string | null> {
   try {
-    const token = await window.Clerk?.session?.getToken();
+    const token = await window.Clerk?.session?.getToken(
+      { template: "jwt-timecraft" },
+    );
     return token ?? null;
   } catch {
     return null;

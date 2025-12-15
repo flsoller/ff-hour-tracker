@@ -1,12 +1,9 @@
 <template>
-  <!-- Loading state while Clerk initializes -->
-  <div
-    v-if="!isLoaded"
-    class="h-screen flex items-center justify-center bg-background"
-  >
-    <div class="flex flex-col items-center gap-2">
-      <div class="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-      <span class="text-sm text-muted-foreground">Loading...</span>
+  <!-- Loading state while Clerk initializes - uses inline styles from index.html -->
+  <div v-if="!isLoaded" class="loading-initial">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem">
+      <div class="spinner" />
+      <span style="font-size: 0.875rem">Loading...</span>
     </div>
   </div>
 

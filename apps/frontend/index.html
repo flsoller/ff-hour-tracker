@@ -2,29 +2,87 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="color-scheme" content="light dark" />
     <link rel="icon" type="image/svg+xml" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Timecraft</title>
-    <script>
-    // Apply dark mode class immediately to prevent flash
-      const isDark =
-        localStorage.getItem("vueuse-color-scheme") === "dark"
-        || (!localStorage.getItem("vueuse-color-scheme")
-          && window.matchMedia("(prefers-color-scheme: dark)").matches);
-      if (isDark) document.documentElement.classList.add("dark");
-    </script>
     <style>
-    /* Inline critical styles for loading screen - prevents white flash */
-    html {
+    /* Base light mode */
+    html, body, #app {
       background-color: oklch(1 0 0);
+      margin: 0;
     }
-    html.dark {
+    .loading-initial span {
+      color: oklch(0.554 0.046 257.417);
+    }
+    .loading-initial .spinner {
+      border-color: oklch(0.208 0.042 265.755);
+      border-top-color: transparent;
+    }
+
+    /* Dark mode via .dark class (JS-controlled, user preference from localStorage) */
+    html.dark, html.dark body, html.dark #app {
       background-color: oklch(0.129 0.042 264.695);
     }
+    html.dark .loading-initial span {
+      color: oklch(0.704 0.04 256.788);
+    }
+    html.dark .loading-initial .spinner {
+      border-color: oklch(77.462% 0.10147 249.279 / 0.839);
+      border-top-color: transparent;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      html:not(.light), html:not(.light) body, html:not(.light) #app {
+        background-color: oklch(0.129 0.042 264.695);
+      }
+      html:not(.light) .loading-initial span {
+        color: oklch(0.704 0.04 256.788);
+      }
+      html:not(.light) .loading-initial .spinner {
+        border-color: oklch(77.462% 0.10147 249.279 / 0.839);
+        border-top-color: transparent;
+      }
+    }
+
+    .loading-initial {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .loading-initial .spinner {
+      width: 2rem;
+      height: 2rem;
+      border-width: 4px;
+      border-style: solid;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
     </style>
+    <script>
+    const stored = localStorage.getItem("vueuse-color-scheme");
+      if (stored === "dark") {
+        document.documentElement.classList.add("dark");
+      } else if (stored === "light") {
+        document.documentElement.classList.add("light");
+      }
+    </script>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div class="loading-initial">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem">
+          <div class="spinner"></div>
+          <span style="font-size: 0.875rem">Loading...</span>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

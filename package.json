@@ -17,7 +17,6 @@
     "turbo:test:integration": "turbo run test --filter=!infrastructure --filter=!hour-tracker-frontend --filter=!hour-tracker-e2e",
     "turbo:build-ci": "turbo run build",
     "turbo:test:db-migrator": "turbo run test --filter @hour-tracker/db-migrator",
-    "turbo:test:api-authenticator": "turbo run test --filter @hour-tracker/api-authenticator",
     "turbo:test:api-authorizer": "turbo run test --filter @hour-tracker/api-authorizer",
     "turbo:test:api-members": "turbo run test --filter @hour-tracker/api-members",
     "turbo:test:activity-types": "turbo run test --filter @hour-tracker/api-activity-types",
