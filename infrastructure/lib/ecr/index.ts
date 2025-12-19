@@ -20,15 +20,6 @@ export class HourTrackerImageRepositories extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    // Organization Manager ECR image repo
-    new ecr.Repository(this, HOUR_TRACKER_ECR_REPO_NAMES.ORGANIZATION_MANAGER, {
-      repositoryName: HOUR_TRACKER_ECR_REPO_NAMES.ORGANIZATION_MANAGER,
-      emptyOnDelete: true,
-      imageScanOnPush: false,
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
-      lifecycleRules: [defaultVersionLifecycle, defaultLifecycle],
-    });
-
     // Authorizer ECR image repo
     new ecr.Repository(this, HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHORIZER, {
       repositoryName: HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHORIZER,

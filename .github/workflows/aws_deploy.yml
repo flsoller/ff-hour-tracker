@@ -9,7 +9,6 @@ on:
         type: choice
         options:
           - HourTrackerApi
-          - HourTrackerOrganizationManager
           - HourTrackerImageRepositories
       parameter_hash_or_version:
         description: "The sha or version used to reference the image tags"
