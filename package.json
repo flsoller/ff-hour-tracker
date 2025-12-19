@@ -20,7 +20,6 @@
     "turbo:test:api-authorizer": "turbo run test --filter @hour-tracker/api-authorizer",
     "turbo:test:api-members": "turbo run test --filter @hour-tracker/api-members",
     "turbo:test:activity-types": "turbo run test --filter @hour-tracker/api-activity-types",
-    "turbo:test:org-manager": "turbo run test --filter @hour-tracker/organization-manager",
     "turbo:test:frontend": "turbo run test --filter hour-tracker-frontend",
     "migrator:db:migrate": "yarn workspace @hour-tracker/db-migrator db:migrate",
     "postinstall": "husky install",
