@@ -33,6 +33,9 @@ exports[`AuthorizerLambda should contain the correct Lambda properties 1`] = `
     },
     "Environment": {
       "Variables": {
+        "AUTHORIZED_PARTY": {
+          "Ref": "SsmParameterValueHOURTRACKERAUTHORIZEDPARTYC96584B6F00A464EAD1953AFF4B05118Parameter",
+        },
         "DATABASE_URL": {
           "Ref": "SsmParameterValueHOURTRACKERDATABASEURLC96584B6F00A464EAD1953AFF4B05118Parameter",
         },

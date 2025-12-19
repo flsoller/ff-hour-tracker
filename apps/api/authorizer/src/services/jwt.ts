@@ -10,6 +10,7 @@ export async function verifyAccessToken(token: string): Promise<TokenPayload | n
   try {
     const payload = await verifyToken(token, {
       secretKey: process.env.JWT_SECRET,
+      ...(process.env.AUTHORIZED_PARTY ? { authorizedParties: [process.env.AUTHORIZED_PARTY] } : {}),
     });
     return {
       clerkUserId: payload.clerkUserId as string,
