@@ -19,5 +19,9 @@
   },
   "[dockerfile]": {
     "editor.defaultFormatter": "dprint.dprint"
-  }
+  },
+  "cSpell.words": [
+    "Buildx",
+    "dorny"
+  ]
 }

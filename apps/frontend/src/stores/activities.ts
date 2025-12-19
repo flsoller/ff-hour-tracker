@@ -4,7 +4,6 @@ import { computed, ref } from "vue";
 import type { Ref } from "vue";
 import { toast } from "vue-sonner";
 import { addActivity, getActivities } from "../services/activities";
-import { useUserStore } from "../stores/user";
 
 /**
  * Activity types store focused on data management following Single Responsibility Principle
@@ -12,7 +11,6 @@ import { useUserStore } from "../stores/user";
  */
 export const useActivityTypesStore = defineStore("activityTypes", () => {
   const defaultPageLimit = 5;
-  const userStore = useUserStore();
   const loading = ref<boolean>(false);
   const activities: Ref<IGetActivitiesRes> = ref({
     data: [],
@@ -33,10 +31,7 @@ export const useActivityTypesStore = defineStore("activityTypes", () => {
     };
 
     loading.value = true;
-    const [data, error] = await getActivities(
-      requestParams,
-      userStore.accessToken,
-    );
+    const [data, error] = await getActivities(requestParams);
 
     if (error) {
       toast.error("Unexpected error while loading activity types data");
@@ -70,7 +65,7 @@ export const useActivityTypesStore = defineStore("activityTypes", () => {
    * @param currentParams - Current pagination parameters for refresh
    */
   async function addNewActivity(activityData: ICreateActivityReq, currentParams?: IGetActivitiesReq) {
-    const [data, error] = await addActivity(activityData, userStore.accessToken);
+    const [data, error] = await addActivity(activityData);
 
     if (error) {
       toast.error("Unexpected error while adding activity type");

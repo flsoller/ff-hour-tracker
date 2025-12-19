@@ -1,43 +1,43 @@
 import { db, models } from "@hour-tracker/db";
 import { APIGatewayProxyEventV2 } from "aws-lambda";
-import { hash } from "bcryptjs";
 
-export async function createOrganizations() {
-  const [organization] = await db
-    .insert(models.organizations)
-    .values({
-      name: "organization",
-      description: "organization description",
-    })
-    .returning();
-
-  const [otherOrganization] = await db
-    .insert(models.organizations)
-    .values({
-      name: "otherOrganization",
-      description: "otherOrganization description",
-    })
-    .returning();
-
-  return [organization, otherOrganization];
-}
-
-export async function createUserForOrganization(
-  organizationId: string,
-  overrides = {},
+/**
+ * Creates an organization with a Clerk authProviderId
+ */
+export async function createOrganizationWithClerkId(
+  clerkOrgId: string,
+  overrides: Partial<typeof models.organizations.$inferInsert> = {},
 ) {
-  const pwHash = await hash("12345", 12);
-  return db
-    .insert(models.users)
+  const [org] = await db
+    .insert(models.organizations)
     .values({
-      emailAddress: "testuser@db.com",
-      password: pwHash,
-      name: "Mr. Test",
-      organizationId,
-      role: "USER",
+      name: "Test Organization",
+      authProviderId: clerkOrgId,
       ...overrides,
     })
     .returning();
+  return org;
+}
+
+/**
+ * Creates a user with a Clerk authProviderId under an existing organization
+ */
+export async function createUserWithClerkId(
+  organizationId: string,
+  clerkUserId: string,
+  overrides: Partial<typeof models.users.$inferInsert> = {},
+) {
+  const [user] = await db
+    .insert(models.users)
+    .values({
+      emailAddress: "testuser@example.com",
+      name: "Test User",
+      organizationId,
+      authProviderId: clerkUserId,
+      ...overrides,
+    })
+    .returning();
+  return user;
 }
 
 export function createAuthorizerEvent(

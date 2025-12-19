@@ -1,7 +1,7 @@
 import { logger } from "@hour-tracker/logger";
 import { APIGatewayProxyEventV2, APIGatewaySimpleAuthorizerWithContextResult } from "aws-lambda";
 import { verifyAccessToken } from "./services/jwt";
-import { getActiveUser } from "./services/user";
+import { syncUserAndOrg } from "./services/sync";
 import { UserContext } from "./types/context.type";
 
 export const handler = async (
@@ -20,10 +20,10 @@ export const handler = async (
     };
   }
 
-  const { userId, organizationId } = verifyAccessToken(token);
+  const payload = await verifyAccessToken(token);
 
   // Deny access when no userId, organizationId can be obtained from token
-  if (!userId || !organizationId) {
+  if (!payload || !payload.clerkOrgId) {
     logger.warn("Invalid token provided");
     return {
       isAuthorized: false,
@@ -31,18 +31,22 @@ export const handler = async (
     };
   }
 
-  const { isActive, user } = await getActiveUser(userId, organizationId);
-  const isAuthorized = isActive && !!user;
-
-  logger.info({ isActive, user }, "User request evaluated");
+  const { organization, user } = await syncUserAndOrg(payload);
+  if (!organization || !user) {
+    return {
+      isAuthorized: false,
+      context: {},
+    };
+  }
+  const isAuthorized = user.active && !!user;
 
   return {
     isAuthorized,
     context: isAuthorized
       ? {
-        userId,
-        organizationId,
-        role: user?.role ?? "",
+        userId: user.id,
+        organizationId: organization.id,
+        role: user.role,
       }
       : {},
   };

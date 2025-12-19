@@ -2,11 +2,27 @@ import { createTestingPinia } from "@pinia/testing";
 import { mount, VueWrapper } from "@vue/test-utils";
 import { http, HttpResponse } from "msw";
 import { expect, vi } from "vitest";
+import { computed, ref } from "vue";
 import { useMembersStore } from "../../stores/members";
 import { AppConstants } from "../../utils/constants";
 import Members from "../../views/Members.vue";
 import { flushPromises } from "../mocks/helpers";
 import { server } from "../mocks/server";
+
+// Mock Clerk Vue composables
+vi.mock("@clerk/vue", () => ({
+  useAuth: () => ({
+    isSignedIn: ref(true),
+    getToken: computed(() => async () => "mock-token"),
+    signOut: computed(() => async () => {}),
+  }),
+  useUser: () => ({
+    user: ref({ fullName: "Test User", primaryEmailAddress: { emailAddress: "test@example.com" } }),
+  }),
+  useOrganization: () => ({
+    organization: ref({ name: "Test Org" }),
+  }),
+}));
 
 describe("Members View", () => {
   let wrapper: VueWrapper;

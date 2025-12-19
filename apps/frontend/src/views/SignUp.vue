@@ -1,11 +1,11 @@
 <template>
-  <div class="flex w-full h-screen items-center justify-center px-4 bg-background">
-    <SignIn :appearance="clerkAppearance" />
+  <div class="flex w-full h-screen items-center justify-center px-4">
+    <SignUp :appearance="clerkAppearance" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { SignIn } from "@clerk/vue";
+import { SignUp } from "@clerk/vue";
 
 const clerkAppearance = {
   variables: {

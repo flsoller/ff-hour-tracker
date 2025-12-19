@@ -8,8 +8,9 @@ import { users } from "./user";
 
 export const organizations = hourTrackerSchema.table("organizations", {
   id: uuid("id").primaryKey().notNull().defaultRandom(),
+  authProviderId: text("auth_provider_id").unique(),
   name: text("name").notNull(),
-  description: text("description").notNull(),
+  description: text("description"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
