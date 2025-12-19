@@ -1,16 +1,25 @@
-import { verify } from "jsonwebtoken";
+import { verifyToken } from "@clerk/backend";
+import { TokenPayload } from "../types/context.type";
 
-// Verify presented access token
-export function verifyAccessToken(token: string) {
+/**
+ * Checks the JWT against the secret
+ * @param token
+ * @returns
+ */
+export async function verifyAccessToken(token: string): Promise<TokenPayload | null> {
   try {
-    return verify(token, process.env.JWT_SECRET as string) as {
-      userId: string;
-      organizationId: string;
+    const payload = await verifyToken(token, {
+      secretKey: process.env.JWT_SECRET,
+    });
+    return {
+      clerkUserId: payload.clerkUserId as string,
+      clerkOrgId: payload.clerkOrgId as string,
+      orgName: payload.orgName as string,
+      userEmail: payload.userEmail as string,
+      userName: payload.userName as string,
+      orgRole: payload.orgRole as string,
     };
   } catch {
-    return {
-      userId: null,
-      organizationId: null,
-    };
+    return null;
   }
 }

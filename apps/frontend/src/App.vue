@@ -1,5 +1,14 @@
 <template>
-  <div class="h-screen flex flex-col overflow-hidden">
+  <!-- Loading state while Clerk initializes - uses inline styles from index.html -->
+  <div v-if="!isLoaded" class="loading-initial">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem">
+      <div class="spinner" />
+      <span style="font-size: 0.875rem">Loading...</span>
+    </div>
+  </div>
+
+  <!-- App content after Clerk is loaded -->
+  <div v-else class="h-screen flex flex-col overflow-hidden">
     <Toaster richColors />
     <SidebarProvider
       v-if="!$route.meta.hideSidebar"
@@ -18,7 +27,7 @@
           </div>
         </header>
         <main class="flex-1 flex flex-col overflow-hidden p-4 pt-0">
-          <router-view class="flex-1 flex flex-col overflow-hidden" />
+          <RouterView class="flex-1 flex flex-col overflow-hidden" />
         </main>
       </SidebarInset>
     </SidebarProvider>
@@ -42,8 +51,33 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/sonner";
+import { useAuth } from "@clerk/vue";
+import { watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import "vue-sonner/style.css"; // vue-sonner v2 requires this import
 import NavBar from "./components/NavBar.vue";
+
+const { isLoaded, isSignedIn } = useAuth();
+const router = useRouter();
+const route = useRoute();
+
+// Handle auth-based redirects
+watch(
+  [isLoaded, isSignedIn, () => route.path],
+  ([loaded, signedIn, _path]) => {
+    if (!loaded) return;
+
+    const isProtectedRoute = route.meta.protected;
+    const isAuthRoute = route.name === "Login" || route.name === "SignUp";
+
+    if (isProtectedRoute && !signedIn) {
+      router.replace("/login");
+    } else if (isAuthRoute && signedIn) {
+      router.replace("/");
+    }
+  },
+  { immediate: true },
+);
 </script>
 
 <style lang="scss">

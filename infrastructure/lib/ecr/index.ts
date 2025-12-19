@@ -38,15 +38,6 @@ export class HourTrackerImageRepositories extends cdk.Stack {
       lifecycleRules: [defaultVersionLifecycle, defaultLifecycle],
     });
 
-    // Authenticator ECR image repo
-    new ecr.Repository(this, HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHENTICATOR, {
-      repositoryName: HOUR_TRACKER_ECR_REPO_NAMES.API_AUTHENTICATOR,
-      emptyOnDelete: true,
-      imageScanOnPush: false,
-      removalPolicy: cdk.RemovalPolicy.DESTROY,
-      lifecycleRules: [defaultVersionLifecycle, defaultLifecycle],
-    });
-
     // Members Service ECR image repo
     new ecr.Repository(this, HOUR_TRACKER_ECR_REPO_NAMES.API_MEMBERS, {
       repositoryName: HOUR_TRACKER_ECR_REPO_NAMES.API_MEMBERS,
