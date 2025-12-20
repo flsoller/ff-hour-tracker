@@ -33,10 +33,10 @@ describe("verifyAccessToken", () => {
     });
   });
 
-  it("should not pass authorizedParties when AUTHORIZED_PARTY env var is not set", async () => {
+  it("should not pass authorizedParties when AUTHORIZED_PARTY env var is matching skip condition", async () => {
+    process.env.AUTHORIZED_PARTY = "TESTING";
     const payload = createClerkPayload();
     mockedVerifyToken.mockResolvedValue(payload as never);
-    delete process.env.AUTHORIZED_PARTY;
 
     await verifyAccessToken("test_token");
 

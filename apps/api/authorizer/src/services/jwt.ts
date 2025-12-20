@@ -1,4 +1,5 @@
 import { verifyToken } from "@clerk/backend";
+import { SKIP_AUTHORIZED_PARTY } from "../constants/globals";
 import { TokenPayload } from "../types/context.type";
 
 /**
@@ -7,10 +8,12 @@ import { TokenPayload } from "../types/context.type";
  * @returns
  */
 export async function verifyAccessToken(token: string): Promise<TokenPayload | null> {
+  const limitToAuthorizedParty = process.env.AUTHORIZED_PARTY !== SKIP_AUTHORIZED_PARTY;
+
   try {
     const payload = await verifyToken(token, {
       secretKey: process.env.JWT_SECRET,
-      ...(process.env.AUTHORIZED_PARTY ? { authorizedParties: [process.env.AUTHORIZED_PARTY] } : {}),
+      ...(limitToAuthorizedParty ? { authorizedParties: [process.env.AUTHORIZED_PARTY!] } : {}),
     });
     return {
       clerkUserId: payload.clerkUserId as string,

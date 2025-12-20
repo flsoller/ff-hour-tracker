@@ -166,7 +166,7 @@ function onSubmit() {
   const submitData: ICreateActivityReq = {
     activityName: form.activityName.trim(),
     activityDescription: form.activityDescription.trim(),
-    colorCode: form.colorCode.split("#")[1],
+    colorCode: form.colorCode.split("#")[1]!,
   };
 
   emit("submit", submitData);
@@ -194,7 +194,7 @@ watch(() => props.open, (newValue) => {
 
   // Set default color when opening for new activity type
   if (newValue && !props.activityType && !form.colorCode) {
-    form.colorCode = colorOptions[0].value; // Default to blue
+    form.colorCode = colorOptions[0]!.value; // Default to blue
   }
 }, { immediate: true });
 
