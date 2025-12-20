@@ -31,7 +31,6 @@ jobs:
           filters: |
             src:
               - 'apps/api/**'
-              - 'apps/org-manager/**'
               - 'infrastructure/**'
   deploy_ecr_stack:
     needs: changes
@@ -54,19 +53,6 @@ jobs:
     uses: ./.github/workflows/aws_ecr_build.yml
     with:
       hash_or_version: ${{ inputs.hash_or_version }}
-
-  deploy_organization_manager_stack:
-    needs:
-      - build_images
-      - changes
-    if: ${{ needs.changes.outputs.src == 'true' }}
-    secrets:
-      AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
-    uses: ./.github/workflows/aws_deploy.yml
-    with:
-      desired_stack: HourTrackerOrganizationManager
-      parameter_hash_or_version: "--parameters hashOrVersion=${{ inputs.hash_or_version }}"
 
   deploy_api_stack:
     needs:

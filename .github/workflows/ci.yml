@@ -39,14 +39,3 @@ jobs:
     uses: ./.github/workflows/aws_pipeline_api.yml
     with:
       hash_or_version: ${{ github.sha }}
-
-  deploy_dev_organization:
-    needs: run_aws_api_pipeline
-    secrets:
-      AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_DEV_TESTING_ROLE_TO_ASSUME }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
-      AWS_DEV_ORG_MANAGER_FN: ${{ secrets.AWS_DEV_ORG_MANAGER_FN }}
-    uses: ./.github/workflows/organization_manager.yml
-    with:
-      organization_name: "Dev Organization"
-      enable_support_admin: true

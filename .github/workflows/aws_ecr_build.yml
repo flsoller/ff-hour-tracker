@@ -31,7 +31,6 @@ jobs:
           filters: |
             src:
               - 'apps/api/**'
-              - 'apps/org-manager/**'
               - 'infrastructure/**'
 
   build-images:
@@ -46,9 +45,6 @@ jobs:
         include:
           - repository: hour-tracker-api-authorizer
             dockerfile: apps/api/authorizer/Dockerfile
-            platform: linux/arm64
-          - repository: hour-tracker-org-manager
-            dockerfile: apps/org-manager/Dockerfile
             platform: linux/arm64
           - repository: hour-tracker-members-service
             dockerfile: apps/api/members/Dockerfile

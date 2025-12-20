@@ -12,6 +12,7 @@ interface AuthorizerProps {
   hashOrVersion: string;
   dbConnectionString: string;
   jwtSecretString: string;
+  authorizedParty: string;
   newRelicAccountId: string;
   newRelicIngestLicense: string;
 }
@@ -39,6 +40,7 @@ export class AuthorizerService extends Construct {
         environment: {
           DATABASE_URL: props.dbConnectionString,
           JWT_SECRET: props.jwtSecretString,
+          AUTHORIZED_PARTY: props.authorizedParty,
           NEW_RELIC_LAMBDA_HANDLER: "apps/api/authorizer/index.handler",
           NEW_RELIC_ACCOUNT_ID: props.newRelicAccountId,
           NEW_RELIC_LICENSE_KEY: props.newRelicIngestLicense,
