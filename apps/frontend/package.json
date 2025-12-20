@@ -17,6 +17,7 @@
     "test": "vitest run --coverage"
   },
   "dependencies": {
+    "@clerk/themes": "2.4.46",
     "@clerk/vue": "1.17.6",
     "@tailwindcss/vite": "4.1.18",
     "@tanstack/vue-table": "8.21.3",
