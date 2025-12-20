@@ -1,5 +1,4 @@
 import { db, models } from "@hour-tracker/db";
-import { hash } from "bcryptjs";
 import { APIRequest } from "../../src/common/types/request.type";
 
 export async function createOrganizations() {
@@ -23,12 +22,11 @@ export async function createOrganizations() {
 }
 
 export async function createUserForOrganization(organizationId: string) {
-  const pwHash = await hash("12345", 12);
   return db
     .insert(models.users)
     .values({
       emailAddress: "testuser@db.com",
-      password: pwHash,
+      password: "1234",
       name: "Mr. Test",
       organizationId,
       role: "USER",

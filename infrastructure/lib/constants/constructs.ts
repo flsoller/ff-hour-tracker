@@ -8,10 +8,6 @@ export const DEFAULT_AUTHORIZER = {
   LAMBDA_AUTHORIZER: "hour-tracker-default-lambda-authorizer",
 };
 
-export const ORGANIZATION_MANAGER = {
-  NAME: "hour-tracker-organization-manager",
-};
-
 export const MEMBERS_SERVICE = {
   NAME: "hour-tracker-members-service",
   LAMBDA_INTEGRATION: "hour-tracker-members-service-lambda-integration",

@@ -59,7 +59,7 @@ describe("Members View", () => {
     const expectedHeaders = ["", "Member", "Email Address", "Status", ""];
 
     expectedHeaders.forEach((header, i) => {
-      expect(headers[i].text()).toContain(header);
+      expect(headers[i]?.text()).toContain(header);
     });
   });
 
@@ -68,11 +68,11 @@ describe("Members View", () => {
     const tableData = await wrapper.findAll("tbody > tr > td");
 
     // First cell contains avatar with initials
-    expect(tableData[0].text()).toContain("PT");
+    expect(tableData[0]?.text()).toContain("PT");
     // Second cell contains full name
-    expect(tableData[1].text()).toContain("Paige Turner");
+    expect(tableData[1]?.text()).toContain("Paige Turner");
     // Third cell contains email
-    expect(tableData[2].text()).toContain("pt@mail.com");
+    expect(tableData[2]?.text()).toContain("pt@mail.com");
   });
 
   it("should trigger api call with correct order query when sorting column", async () => {

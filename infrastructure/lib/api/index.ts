@@ -37,6 +37,11 @@ export class HourTrackerApi extends cdk.Stack {
       ENVIRONMENT_PARAMS.NEW_RELIC_LICENSE_KEY,
     );
 
+    const authorizedParty = ssm.StringParameter.valueForStringParameter(
+      this,
+      ENVIRONMENT_PARAMS.AUTHORIZED_PARTY,
+    );
+
     const defaultAuthorizer = new AuthorizerService(
       this,
       HOUR_TRACKER.API_AUTHORIZER,
@@ -44,6 +49,7 @@ export class HourTrackerApi extends cdk.Stack {
         hashOrVersion,
         dbConnectionString,
         jwtSecretString,
+        authorizedParty,
         newRelicAccountId,
         newRelicIngestLicense,
       },
