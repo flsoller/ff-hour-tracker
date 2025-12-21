@@ -18,6 +18,7 @@ export default tseslint.config(
       ".github/workflows/*",
       "apps/e2e/playwright-report/*",
       "apps/e2e/test-results/*",
+      ".changelog.config.cjs",
     ],
   },
   {
