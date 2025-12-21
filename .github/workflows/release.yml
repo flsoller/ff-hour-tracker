@@ -25,6 +25,7 @@ jobs:
           skip-commit: "true"
           skip-tag: "true"
           config-file-path: ".changelog.config.cjs"
+          release-count: "1"
 
       - name: Generate CalVer Tag
         id: create_calver_tag
