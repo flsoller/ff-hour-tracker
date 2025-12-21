@@ -13,18 +13,18 @@ jobs:
       release_version: ${{ steps.create_calver_tag.outputs.calver_tag }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6.0.1
         with:
           fetch-depth: 0
       - name: Conventional Changelog Action
         id: changelog
-        uses: TriPSs/conventional-changelog-action@v6
+        uses: TriPSs/conventional-changelog-action@v6.2.0
         with:
           github-token: ${{ secrets.github_token }}
           output-file: "false"
           skip-commit: "true"
           skip-tag: "true"
-          preset: "conventionalcommits"
+          config-file-path: ".changelog.config.cjs"
 
       - name: Generate CalVer Tag
         id: create_calver_tag
@@ -60,7 +60,7 @@ jobs:
           git push origin "${{ steps.create_calver_tag.outputs.calver_tag }}"
 
       - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v2.5.0
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
         with:
           tag_name: ${{ steps.create_calver_tag.outputs.calver_tag }}
