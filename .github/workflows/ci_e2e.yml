@@ -14,9 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6.0.1
-      - uses: actions/setup-node@v6.1.0
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v6.1.0
         with:
-          node-version: lts/*
+          node-version: ${{ vars.NODE_VERSION }}
+          cache: "yarn"
 
       - name: Get latest deployment URL
         id: deployment
