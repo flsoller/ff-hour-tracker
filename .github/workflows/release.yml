@@ -10,20 +10,10 @@ jobs:
   create-release:
     runs-on: ubuntu-latest
     outputs:
-      release_version: ${{ steps.create_calver_tag.outputs.calver_tag }}
+      release_version: ${{ steps.changelog.outputs.tag }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
-        with:
-          fetch-depth: 0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6.1.0
-        with:
-          cache: "yarn"
-
-      - name: Install dependencies
-        run: yarn install --immutable
 
       - name: Conventional Changelog Action
         id: changelog
@@ -32,49 +22,14 @@ jobs:
           github-token: ${{ secrets.github_token }}
           output-file: "false"
           skip-commit: "true"
-          skip-tag: "true"
-          config-file-path: ".changelog.config.cjs"
-          release-count: "1"
-
-      - name: Generate CalVer Tag
-        id: create_calver_tag
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
-        run: |
-          # Get current UTC date
-          CURRENT_DATE=$(date -u +"%Y-%m-%d")
-
-          # Fetch existing tags for today
-          EXISTING_TAGS=$(git tag -l "v${CURRENT_DATE}.*" | sort -V)
-
-          # Determine daily increment
-          if [ -z "$EXISTING_TAGS" ]; then
-            DAILY_INCREMENT=1
-          else
-            LAST_INCREMENT=$(echo "$EXISTING_TAGS" | tail -1 | sed -n "s/^v${CURRENT_DATE}\.\([0-9]\+\)$/\1/p")
-            DAILY_INCREMENT=$((LAST_INCREMENT + 1))
-          fi
-
-          # Construct CalVer tag
-          CALVER_TAG="v${CURRENT_DATE}.${DAILY_INCREMENT}"
-
-          # Output for subsequent steps
-          echo "calver_tag=$CALVER_TAG" >> $GITHUB_OUTPUT
-          echo "Generated CalVer tag: $CALVER_TAG"
-
-      - name: Create CalVer Git Tag
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag -a "${{ steps.create_calver_tag.outputs.calver_tag }}" -m "Release ${{ steps.create_calver_tag.outputs.calver_tag }}"
-          git push origin "${{ steps.create_calver_tag.outputs.calver_tag }}"
+          preset: "conventionalcommits"
 
       - name: Create Release
         uses: softprops/action-gh-release@v2.5.0
         if: ${{ steps.changelog.outputs.skipped == 'false' }}
         with:
-          tag_name: ${{ steps.create_calver_tag.outputs.calver_tag }}
-          name: ${{ steps.create_calver_tag.outputs.calver_tag }}
+          tag_name: ${{ steps.changelog.outputs.tag }}
+          name: ${{ steps.changelog.outputs.tag }}
           body: ${{ steps.changelog.outputs.clean_changelog }}
 
   build_migrator_and_apply_pending_migrations:
