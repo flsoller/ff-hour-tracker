@@ -784,7 +784,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@clerk/backend@npm:2.29.0":
+"@clerk/backend@npm:2.29.0, @clerk/backend@npm:^2.29.0":
   version: 2.29.0
   resolution: "@clerk/backend@npm:2.29.0"
   dependencies:
@@ -816,6 +816,26 @@ __metadata:
     react-dom:
       optional: true
   checksum: 10/10bea1bd9b4fea55f2f978b81d66033bf40098d6e091e06710cccd509ca911c83b1169ff9dbe44abec53491b46ea5e675fa38c74e5efb67d817a08bbcf5524ba
+  languageName: node
+  linkType: hard
+
+"@clerk/testing@npm:1.13.26":
+  version: 1.13.26
+  resolution: "@clerk/testing@npm:1.13.26"
+  dependencies:
+    "@clerk/backend": "npm:^2.29.0"
+    "@clerk/shared": "npm:^3.41.1"
+    "@clerk/types": "npm:^4.101.9"
+    dotenv: "npm:17.2.2"
+  peerDependencies:
+    "@playwright/test": ^1
+    cypress: ^13 || ^14
+  peerDependenciesMeta:
+    "@playwright/test":
+      optional: true
+    cypress:
+      optional: true
+  checksum: 10/66e980f858a8bf2024955d83b21f0714fa7f167af4513dd1347be9dfae517c39d066d346898b3d4d2119d93705d460851bcc86dcad41a0043d1670e6902e8771
   languageName: node
   linkType: hard
 
@@ -2048,10 +2068,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@faker-js/faker@npm:9.9.0":
-  version: 9.9.0
-  resolution: "@faker-js/faker@npm:9.9.0"
-  checksum: 10/b24b1be0fb3090d54abaaa3a814f37d1a7551f1207dcd330a1af2c70f6312a8b95ebb82653577757dd62f4cbbb56caa3c83513053253654dc3e286a05040ecbe
+"@faker-js/faker@npm:10.1.0":
+  version: 10.1.0
+  resolution: "@faker-js/faker@npm:10.1.0"
+  checksum: 10/3332795debec5793dfaea79e740ed44bd7d94fb43cea8b1bd5d59af19f15c4a9533fa696cfebf024a9bba5d9d1a8a28cde40a92670c03cc11170a3025e551e65
   languageName: node
   linkType: hard
 
@@ -3116,14 +3136,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:1.54.1":
-  version: 1.54.1
-  resolution: "@playwright/test@npm:1.54.1"
+"@playwright/test@npm:1.57.0":
+  version: 1.57.0
+  resolution: "@playwright/test@npm:1.57.0"
   dependencies:
-    playwright: "npm:1.54.1"
+    playwright: "npm:1.57.0"
   bin:
     playwright: cli.js
-  checksum: 10/75ea34818f57f11bd8a1e6e3ac202c752c520c98467607be67c0eccfe41ea8ff6ae6824e91cb5ecacbee403aef4e1e6210500ee3cc82dd9317a8ee7136af18d3
+  checksum: 10/07f5ba4841b2db1dea70d821004c5156b692488e13523c096ce3487d30f95f34ccf30ba6467ece60c86faac27ae382213b7eacab48a695550981b2e811e5e579
   languageName: node
   linkType: hard
 
@@ -5718,27 +5738,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv-cli@npm:8.0.0":
-  version: 8.0.0
-  resolution: "dotenv-cli@npm:8.0.0"
-  dependencies:
-    cross-spawn: "npm:^7.0.6"
-    dotenv: "npm:^16.3.0"
-    dotenv-expand: "npm:^10.0.0"
-    minimist: "npm:^1.2.6"
-  bin:
-    dotenv: cli.js
-  checksum: 10/3acbc2712f97de5a7b916e2e611682377b5f62efb7ebe63ede314800bedd9c63e9ae1e8b1f819efe0e87f9d813842695cfed991a276290a79cac63d48c60df05
-  languageName: node
-  linkType: hard
-
-"dotenv-expand@npm:^10.0.0":
-  version: 10.0.0
-  resolution: "dotenv-expand@npm:10.0.0"
-  checksum: 10/b41eb278bc96b92cbf3037ca5f3d21e8845bf165dc06b6f9a0a03d278c2bd5a01c0cfbb3528ae3a60301ba1a8a9cace30e748c54b460753bc00d4c014b675597
-  languageName: node
-  linkType: hard
-
 "dotenv-expand@npm:^12.0.0":
   version: 12.0.3
   resolution: "dotenv-expand@npm:12.0.3"
@@ -5748,10 +5747,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:17.2.0":
-  version: 17.2.0
-  resolution: "dotenv@npm:17.2.0"
-  checksum: 10/73d57d7ed8ae46e45c0b1dea382de3f180e71d20a3a4e10a13a3d5271a08639166e6647bb6dc0fa160ea440a55e85ff9be233150d9037d268c823cb72859d87f
+"dotenv@npm:17.2.2":
+  version: 17.2.2
+  resolution: "dotenv@npm:17.2.2"
+  checksum: 10/258210c403a426e887f0fb63d1cddb2e7dcc028974a38a4a440411b651b9c588ee4e8605e252d87d15489b3e311d7ba56d588d6cfda1b11bfbf494dd7b3ef2a3
   languageName: node
   linkType: hard
 
@@ -5759,13 +5758,6 @@ __metadata:
   version: 17.2.3
   resolution: "dotenv@npm:17.2.3"
   checksum: 10/f8b78626ebfff6e44420f634773375c9651808b3e1a33df6d4cc19120968eea53e100f59f04ec35f2a20b2beb334b6aba4f24040b2f8ad61773f158ac042a636
-  languageName: node
-  linkType: hard
-
-"dotenv@npm:^16.3.0":
-  version: 16.4.5
-  resolution: "dotenv@npm:16.4.5"
-  checksum: 10/55a3134601115194ae0f924e54473459ed0d9fc340ae610b676e248cca45aa7c680d86365318ea964e6da4e2ea80c4514c1adab5adb43d6867fb57ff068f95c8
   languageName: node
   linkType: hard
 
@@ -7198,10 +7190,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "hour-tracker-e2e@workspace:apps/e2e"
   dependencies:
-    "@faker-js/faker": "npm:9.9.0"
-    "@playwright/test": "npm:1.54.1"
-    dotenv: "npm:17.2.0"
-    dotenv-cli: "npm:8.0.0"
+    "@clerk/testing": "npm:1.13.26"
+    "@faker-js/faker": "npm:10.1.0"
+    "@playwright/test": "npm:1.57.0"
+    dotenv: "npm:17.2.3"
+    dotenv-cli: "npm:11.0.0"
   languageName: unknown
   linkType: soft
 
@@ -9669,27 +9662,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.54.1":
-  version: 1.54.1
-  resolution: "playwright-core@npm:1.54.1"
+"playwright-core@npm:1.57.0":
+  version: 1.57.0
+  resolution: "playwright-core@npm:1.57.0"
   bin:
     playwright-core: cli.js
-  checksum: 10/c0acfb7ecb48e9fb6c22f71298b966244bd4f8659093a798cc7f9a509deee22109560e44f2d507124e7718779640e0b4cb05a05c068b034405418d8740ec31ff
+  checksum: 10/ec066602f0196f036006caee14a30d0a57533a76673bb9a0c609ef56e21decf018f0e8d402ba2fb18251393be6a1c9e193c83266f1670fe50838c5340e220de0
   languageName: node
   linkType: hard
 
-"playwright@npm:1.54.1":
-  version: 1.54.1
-  resolution: "playwright@npm:1.54.1"
+"playwright@npm:1.57.0":
+  version: 1.57.0
+  resolution: "playwright@npm:1.57.0"
   dependencies:
     fsevents: "npm:2.3.2"
-    playwright-core: "npm:1.54.1"
+    playwright-core: "npm:1.57.0"
   dependenciesMeta:
     fsevents:
       optional: true
   bin:
     playwright: cli.js
-  checksum: 10/ebad2924b589a4cfedf48288e67b4afc81047222e607321c9452a37610025e6e249bdfeff010c1c70cf9a9d35c0b9e5cb7934a58986f67928dd469d9fde1a035
+  checksum: 10/241559210f98ef11b6bd6413f2d29da7ef67c7865b72053192f0d164fab9e0d3bd47913b3351d5de6433a8aff2d8424d4b8bd668df420bf4dda7ae9fcd37b942
   languageName: node
   linkType: hard
 

@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       target_env_url:
-        description: "Target deployment URL"
-        required: true
+        description: "Target deployment URL or empty to auto-fetch latest Preview URL"
+        required: false
         type: string
 
 jobs:
@@ -13,10 +13,29 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6.0.1
+      - uses: actions/setup-node@v6.1.0
         with:
           node-version: lts/*
+
+      - name: Get latest deployment URL
+        id: deployment
+        if: ${{ inputs.target_env_url == '' }}
+        run: |
+          DEPLOYMENT_URL=$(gh api repos/${{ github.repository }}/deployments \
+            --jq 'map(select(.environment == "Preview")) | .[0].id' \
+            | xargs -I {} gh api repos/${{ github.repository }}/deployments/{}/statuses \
+            --jq 'map(select(.state == "success")) | .[0].environment_url')
+
+          if [ -z "$DEPLOYMENT_URL" ] || [ "$DEPLOYMENT_URL" == "null" ]; then
+            echo "::error::Failed to fetch deployment URL from GitHub API"
+            exit 1
+          fi
+
+          echo "url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
+          echo "Using deployment URL: $DEPLOYMENT_URL"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install dependencies
         run: yarn workspaces focus hour-tracker-e2e
@@ -27,14 +46,16 @@ jobs:
       - name: Run Playwright tests
         run: yarn workspace hour-tracker-e2e test
         env:
-          PLAYWRIGHT_TEST_BASE_URL: ${{ inputs.target_env_url }}
+          PLAYWRIGHT_TEST_BASE_URL: ${{ inputs.target_env_url || steps.deployment.outputs.url }}
           CI: true
-          ADMIN_E2E_EMAIL: ${{ secrets.ADMIN_E2E_EMAIL }}
-          ADMIN_E2E_PW: ${{ secrets.ADMIN_E2E_PW }}
-          PLAYWRIGHT_TEST_API_URL: ${{ secrets.PLAYWRIGHT_TEST_API_URL }}
+          CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY }}
+          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+          E2E_CLERK_USER_EMAIL: ${{ secrets.E2E_CLERK_USER_EMAIL }}
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6.0.0
+        if: always()
         with:
           name: playwright-report
-          path: ./apps/e2e/
-          retention-days: 1
+          path: ./apps/e2e/playwright-report/
+          retention-days: 7
