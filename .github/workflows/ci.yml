@@ -39,3 +39,10 @@ jobs:
     uses: ./.github/workflows/aws_pipeline_api.yml
     with:
       hash_or_version: ${{ github.sha }}
+
+  run_e2e_tests:
+    needs:
+      - build_migrator_and_apply_pending_migrations
+      - run_aws_api_pipeline
+    secrets: inherit
+    uses: ./.github/workflows/ci_e2e.yml

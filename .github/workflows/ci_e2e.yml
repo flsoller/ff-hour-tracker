@@ -7,6 +7,12 @@ on:
         description: "Target deployment URL or empty to auto-fetch latest Preview URL"
         required: false
         type: string
+  workflow_call:
+    inputs:
+      target_env_url:
+        description: "Target deployment URL or empty to auto-fetch latest Preview URL"
+        required: false
+        type: string
 
 jobs:
   e2e_test:
@@ -21,17 +27,20 @@ jobs:
           node-version: ${{ vars.NODE_VERSION }}
           cache: "yarn"
 
-      - name: Get latest deployment URL
+      - name: Get deployment URL
         id: deployment
-        if: ${{ inputs.target_env_url == '' }}
         run: |
-          DEPLOYMENT_URL=$(gh api repos/${{ github.repository }}/deployments \
-            --jq 'map(select(.environment == "Preview")) | .[0].id' \
-            | xargs -I {} gh api repos/${{ github.repository }}/deployments/{}/statuses \
-            --jq 'map(select(.state == "success")) | .[0].environment_url')
+          if [ -n "${{ inputs.target_env_url }}" ]; then
+            DEPLOYMENT_URL="${{ inputs.target_env_url }}"
+          else
+            DEPLOYMENT_URL=$(gh api repos/${{ github.repository }}/deployments \
+              --jq 'map(select(.environment == "Preview")) | .[0].id' \
+              | xargs -I {} gh api repos/${{ github.repository }}/deployments/{}/statuses \
+              --jq 'map(select(.state == "success")) | .[0].environment_url')
+          fi
 
           if [ -z "$DEPLOYMENT_URL" ] || [ "$DEPLOYMENT_URL" == "null" ]; then
-            echo "::error::Failed to fetch deployment URL from GitHub API"
+            echo "::error::Failed to determine deployment URL"
             exit 1
           fi
 
@@ -49,7 +58,7 @@ jobs:
       - name: Run Playwright tests
         run: yarn workspace hour-tracker-e2e test
         env:
-          PLAYWRIGHT_TEST_BASE_URL: ${{ inputs.target_env_url || steps.deployment.outputs.url }}
+          PLAYWRIGHT_TEST_BASE_URL: ${{ steps.deployment.outputs.url }}
           CI: true
           CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY }}
           CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
