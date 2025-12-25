@@ -2,48 +2,48 @@
   <Dialog v-model:open="isOpen">
     <DialogContent class="sm:max-w-md">
       <DialogHeader>
-        <DialogTitle>Add Member</DialogTitle>
+        <DialogTitle>{{ t("members.addMemberDialog.title") }}</DialogTitle>
       </DialogHeader>
       <form @submit.prevent="onSubmit" class="space-y-4">
         <div class="grid grid-cols-2 gap-4">
           <div class="space-y-2">
-            <Label for="firstName">First Name</Label>
+            <Label for="firstName">{{ t("common.labels.firstName") }}</Label>
             <Input
               id="firstName"
               data-testid="firstName"
               v-model="form.firstName"
-              placeholder="Enter first name"
+              :placeholder="t('common.placeholders.enterFirstName')"
               required
             />
           </div>
           <div class="space-y-2">
-            <Label for="lastName">Last Name</Label>
+            <Label for="lastName">{{ t("common.labels.lastName") }}</Label>
             <Input
               id="lastName"
               data-testid="lastName"
               v-model="form.lastName"
-              placeholder="Enter last name"
+              :placeholder="t('common.placeholders.enterLastName')"
               required
             />
           </div>
         </div>
         <div class="space-y-2">
-          <Label for="emailAddress">Email Address</Label>
+          <Label for="emailAddress">{{ t("common.labels.email") }}</Label>
           <Input
             id="emailAddress"
             data-testid="email"
             v-model="form.emailAddress"
             type="email"
-            placeholder="Enter email address"
+            :placeholder="t('common.placeholders.enterEmail')"
             required
           />
         </div>
         <DialogFooter>
           <Button type="button" variant="outline" @click="onCancel">
-            Cancel
+            {{ t("common.actions.cancel") }}
           </Button>
           <Button type="submit" data-testid="addMember">
-            Add Member
+            {{ t("common.buttons.addMember") }}
           </Button>
         </DialogFooter>
       </form>
@@ -63,6 +63,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { reactive, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const props = defineProps<{
   open?: boolean;

@@ -6,9 +6,15 @@
           <TableHeader class="sticky top-0 z-10 bg-card border-b">
             <TableRow class="hover:bg-transparent">
               <TableHead class="w-12 bg-card"></TableHead>
-              <TableHead class="font-semibold bg-card">Member</TableHead>
-              <TableHead class="font-semibold bg-card">Email Address</TableHead>
-              <TableHead class="font-semibold bg-card">Status</TableHead>
+              <TableHead class="font-semibold bg-card">{{
+                t("members.tableHeaders.member")
+              }}</TableHead>
+              <TableHead class="font-semibold bg-card">{{
+                t("members.tableHeaders.emailAddress")
+              }}</TableHead>
+              <TableHead class="font-semibold bg-card">{{
+                t("members.tableHeaders.status")
+              }}</TableHead>
               <TableHead class="w-10 bg-card"></TableHead>
             </TableRow>
           </TableHeader>
@@ -26,7 +32,7 @@
                     </div>
                   </div>
                   <p class="text-sm text-muted-foreground">
-                    Loading members...
+                    {{ t("members.states.loading") }}
                   </p>
                 </div>
               </TableCell>
@@ -43,13 +49,19 @@
                     <Users class="h-8 w-8 text-muted-foreground" />
                   </div>
                   <div class="text-center">
-                    <h3 class="text-lg font-semibold">No members yet</h3>
+                    <h3 class="text-lg font-semibold">
+                      {{ t("members.emptyState.title") }}
+                    </h3>
                     <p class="text-sm text-muted-foreground mb-4">
-                      Get started by adding your first team member
+                      {{
+                        t(
+                          "members.emptyState.description",
+                        )
+                      }}
                     </p>
                     <Button @click="$emit('add-member')" size="sm">
                       <Plus class="mr-2 h-4 w-4" />
-                      Add First Member
+                      {{ t("members.emptyState.button") }}
                     </Button>
                   </div>
                 </div>
@@ -68,10 +80,18 @@
                   </div>
                   <div class="text-center">
                     <h3 class="text-lg font-semibold">
-                      No results found
+                      {{
+                        t(
+                          "members.noSearchResults.title",
+                        )
+                      }}
                     </h3>
                     <p class="text-sm text-muted-foreground">
-                      Try adjusting your search to find what you're looking for
+                      {{
+                        t(
+                          "members.noSearchResults.description",
+                        )
+                      }}
                     </p>
                   </div>
                 </div>
@@ -101,8 +121,11 @@
                 <div class="flex flex-col">
                   <span class="font-medium">{{ member.firstName }}
                     {{ member.lastName }}</span>
-                  <span class="text-sm text-muted-foreground">Member since
-                    {{ formatJoinDate() }}</span>
+                  <span class="text-sm text-muted-foreground">{{
+                    t("members.memberSince", {
+                      date: formatJoinDate(),
+                    })
+                  }}</span>
                 </div>
               </TableCell>
               <TableCell>
@@ -125,7 +148,7 @@
               </TableCell>
               <TableCell>
                 <Badge variant="secondary" class="text-xs">
-                  Active
+                  {{ t("members.states.active") }}
                 </Badge>
               </TableCell>
               <TableCell class="w-10">
@@ -133,17 +156,23 @@
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" size="sm" class="h-8 w-8 p-0">
                       <MoreHorizontal class="h-4 w-4" />
-                      <span class="sr-only">Open menu</span>
+                      <span class="sr-only">{{
+                        t("members.actions.openMenu")
+                      }}</span>
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" class="w-48">
                     <DropdownMenuItem @click="$emit('edit-member', member)">
                       <Edit class="mr-2 h-4 w-4" />
-                      Edit Member
+                      {{ t("members.actions.edit") }}
                     </DropdownMenuItem>
                     <DropdownMenuItem @click="$emit('view-member', member)">
                       <Eye class="mr-2 h-4 w-4" />
-                      View Details
+                      {{
+                        t(
+                          "members.actions.viewDetails",
+                        )
+                      }}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
@@ -151,7 +180,7 @@
                       class="text-destructive focus:text-destructive"
                     >
                       <Trash2 class="mr-2 h-4 w-4" />
-                      Delete Member
+                      {{ t("members.actions.delete") }}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -194,7 +223,10 @@ import {
   Trash2,
   Users,
 } from "lucide-vue-next";
+import { useI18n } from "vue-i18n";
 import { useMemberActions } from "../../composables/useMemberActions";
+
+const { t } = useI18n();
 
 // Type for individual member data from paginated response
 type MemberData = IGetMembersPaginatedRes["data"][0];

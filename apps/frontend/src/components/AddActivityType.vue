@@ -3,35 +3,53 @@
     <DialogContent class="sm:max-w-md">
       <DialogHeader>
         <DialogTitle>{{
-          isEditing ? "Edit Activity Type" : "Add Activity Type"
+          isEditing
+          ? t("configuration.addActivityTypeDialog.titleEdit")
+          : t("configuration.addActivityTypeDialog.titleAdd")
         }}</DialogTitle>
       </DialogHeader>
       <form @submit.prevent="onSubmit" class="space-y-4">
         <div class="space-y-2">
-          <Label for="name">Name *</Label>
+          <Label for="name">{{
+            t("configuration.addActivityTypeDialog.nameLabel")
+          }}</Label>
           <Input
             id="name"
             data-testid="name"
             v-model="form.activityName"
-            placeholder="e.g., Development, Design, Testing"
+            :placeholder="
+              t(
+                'configuration.addActivityTypeDialog.namePlaceholder',
+              )
+            "
             required
           />
         </div>
 
         <div class="space-y-2">
-          <Label for="description">Description *</Label>
+          <Label for="description">{{
+            t(
+              "configuration.addActivityTypeDialog.descriptionLabel",
+            )
+          }}</Label>
           <Textarea
             id="description"
             data-testid="description"
             v-model="form.activityDescription"
-            placeholder="Describe this activity type..."
+            :placeholder="
+              t(
+                'configuration.addActivityTypeDialog.descriptionPlaceholder',
+              )
+            "
             rows="3"
             required
           />
         </div>
 
         <div class="space-y-2">
-          <Label for="color">Color</Label>
+          <Label for="color">{{
+            t("configuration.addActivityTypeDialog.colorLabel")
+          }}</Label>
           <Select v-model="form.colorCode">
             <SelectTrigger>
               <SelectValue>
@@ -43,7 +61,11 @@
                   </div>
                   <span>{{ getColorName(form.colorCode) }}</span>
                 </div>
-                <span v-else>Select color</span>
+                <span v-else>{{
+                  t(
+                    "configuration.addActivityTypeDialog.colorPlaceholder",
+                  )
+                }}</span>
               </SelectValue>
             </SelectTrigger>
             <SelectContent>
@@ -71,13 +93,17 @@
 
         <DialogFooter>
           <Button type="button" variant="outline" @click="onCancel">
-            Cancel
+            {{ t("common.actions.cancel") }}
           </Button>
           <Button type="submit" data-testid="submitActivityType">
             {{
               isEditing
-              ? "Update Activity Type"
-              : "Add Activity Type"
+              ? t(
+                "configuration.addActivityTypeDialog.submitEdit",
+              )
+              : t(
+                "configuration.addActivityTypeDialog.submitAdd",
+              )
             }}
           </Button>
         </DialogFooter>
@@ -110,6 +136,9 @@ import type {
   ICreateActivityReq,
 } from "@hour-tracker/core-types/activities";
 import { computed, reactive, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const props = defineProps<{
   open?: boolean;
@@ -125,19 +154,19 @@ const emit = defineEmits<{
 const isOpen = ref(props.open ?? false);
 const isEditing = computed(() => Boolean(props.activityType));
 
-// Color options for activity types
-const colorOptions = [
-  { name: "Blue", value: "#3B82F6" },
-  { name: "Red", value: "#EF4444" },
-  { name: "Green", value: "#10B981" },
-  { name: "Yellow", value: "#F59E0B" },
-  { name: "Purple", value: "#8B5CF6" },
-  { name: "Pink", value: "#EC4899" },
-  { name: "Indigo", value: "#6366F1" },
-  { name: "Teal", value: "#14B8A6" },
-  { name: "Orange", value: "#F97316" },
-  { name: "Slate", value: "#64748B" },
-];
+// Color options for activity types - using computed for reactive translations
+const colorOptions = computed(() => [
+  { name: t("configuration.colors.blue"), value: "#3B82F6" },
+  { name: t("configuration.colors.red"), value: "#EF4444" },
+  { name: t("configuration.colors.green"), value: "#10B981" },
+  { name: t("configuration.colors.yellow"), value: "#F59E0B" },
+  { name: t("configuration.colors.purple"), value: "#8B5CF6" },
+  { name: t("configuration.colors.pink"), value: "#EC4899" },
+  { name: t("configuration.colors.indigo"), value: "#6366F1" },
+  { name: t("configuration.colors.teal"), value: "#14B8A6" },
+  { name: t("configuration.colors.orange"), value: "#F97316" },
+  { name: t("configuration.colors.slate"), value: "#64748B" },
+]);
 
 const form = reactive({
   activityName: "",
@@ -146,8 +175,10 @@ const form = reactive({
 });
 
 function getColorName(colorValue: string): string {
-  const colorOption = colorOptions.find(option => option.value === colorValue);
-  return colorOption?.name || "Custom";
+  const colorOption = colorOptions.value.find(option =>
+    option.value === colorValue
+  );
+  return colorOption?.name || t("configuration.colors.custom");
 }
 
 function populateForm(activityType: IActivityType) {
@@ -194,7 +225,7 @@ watch(() => props.open, (newValue) => {
 
   // Set default color when opening for new activity type
   if (newValue && !props.activityType && !form.colorCode) {
-    form.colorCode = colorOptions[0]!.value; // Default to blue
+    form.colorCode = colorOptions.value[0]!.value; // Default to blue
   }
 }, { immediate: true });
 

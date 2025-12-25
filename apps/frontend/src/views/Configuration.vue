@@ -5,14 +5,16 @@
       <!-- Title and Add Button -->
       <div class="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
         <div>
-          <h1 class="text-3xl font-bold tracking-tight">Activity Types</h1>
+          <h1 class="text-3xl font-bold tracking-tight">
+            {{ t("configuration.title") }}
+          </h1>
           <p class="text-muted-foreground">
-            Manage your activity types and color coding
+            {{ t("configuration.subtitle") }}
           </p>
         </div>
         <Button @click="showAddActivityType = true" class="w-full sm:w-auto">
           <Plus class="mr-2 h-4 w-4" />
-          Add Activity Type
+          {{ t("common.buttons.addActivityType") }}
         </Button>
       </div>
 
@@ -24,19 +26,21 @@
           />
           <Input
             v-model="searchQuery"
-            placeholder="Search activity types..."
+            :placeholder="t('common.placeholders.searchActivityTypes')"
             class="pl-9"
           />
         </div>
         <div class="flex items-center space-x-2">
-          <span class="text-sm text-muted-foreground">Sort by:</span>
+          <span class="text-sm text-muted-foreground">{{
+              t("common.actions.sortBy")
+            }}:</span>
           <Button
             variant="outline"
             size="sm"
             @click="toggleSort"
             class="h-8"
           >
-            Activity Name
+            {{ t("configuration.sortByActivityName") }}
             <ArrowUpDown class="ml-2 h-3 w-3" />
             <ChevronUp
               v-if="activityTypesStore.sortOrder === 'asc'"
@@ -83,7 +87,7 @@
         :page-size="pageSize"
         :total-items="activityTypesStore.totalItems"
         :loading="activityTypesStore.loading"
-        item-name="activity types"
+        :item-name="t('common.itemNames.activityTypes')"
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
         @next-page="onNextPage"
@@ -111,6 +115,9 @@ import {
 } from "lucide-vue-next";
 import { storeToRefs } from "pinia";
 import { computed, onMounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 import ActivityTypeCardView from "../components/activities/ActivityTypeCardView.vue";
 import ActivityTypeTableView from "../components/activities/ActivityTypeTableView.vue";
 import AddActivityType from "../components/AddActivityType.vue";

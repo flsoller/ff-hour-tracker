@@ -1,4 +1,5 @@
 import type { IGetMembersPaginatedRes } from "@hour-tracker/core-types/members";
+import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
 
 // Type for individual member data from paginated response
@@ -9,6 +10,8 @@ type MemberData = IGetMembersPaginatedRes["data"][0];
  * Following Single Responsibility Principle - handles only member actions
  */
 export function useMemberActions() {
+  const { locale } = useI18n();
+
   /**
    * Copy email address to clipboard
    */
@@ -29,7 +32,11 @@ export function useMemberActions() {
    * TODO: Replace with actual join date from API
    */
   function formatJoinDate(): string {
-    return "Jan 2024";
+    const date = new Date(2024, 0, 1);
+    return date.toLocaleDateString(locale.value, {
+      year: "numeric",
+      month: "short",
+    });
   }
 
   /**
