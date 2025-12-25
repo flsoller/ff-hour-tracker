@@ -41,7 +41,7 @@ export class HourTrackerApiGateway extends Construct {
     const gateway = new HttpApi(this, API_GATEWAY.NAME, {
       description: "REST API for hour tracker app",
       corsPreflight: {
-        allowHeaders: ["*"],
+        allowHeaders: ["Authorization", "*"],
         allowMethods: [
           CorsHttpMethod.OPTIONS,
           CorsHttpMethod.GET,
@@ -62,8 +62,8 @@ export class HourTrackerApiGateway extends Construct {
     gateway.addStage("live", {
       stageName: "live",
       throttle: {
-        rateLimit: 1,
-        burstLimit: 1,
+        rateLimit: 10,
+        burstLimit: 20,
       },
       autoDeploy: true,
       domainMapping: {

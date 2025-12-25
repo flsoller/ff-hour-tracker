@@ -42,7 +42,7 @@ export class MembersService extends Construct {
           NEW_RELIC_LICENSE_KEY: props.newRelicIngestLicense,
           ...DEFAULT_INSTRUMENTATION_CONFIG,
         },
-        memorySize: 256,
+        memorySize: 1024,
         timeout: Duration.seconds(20),
         functionName: LOGICAL_ID.HOUR_TRACKER_API_MEMBERS,
       },
