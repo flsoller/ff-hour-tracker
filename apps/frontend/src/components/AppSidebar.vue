@@ -37,40 +37,44 @@ import {
   Settings,
   User,
 } from "lucide-vue-next";
+import { computed } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const props = withDefaults(defineProps<SidebarProps>(), {
   variant: "inset",
 });
 
-const data = {
+const data = computed(() => ({
   navMain: [
     {
-      title: "Dashboard",
+      title: t("nav.dashboard"),
       url: "/",
       icon: Home,
       isActive: true,
       testId: "dashboardLink",
     },
     {
-      title: "Timesheet",
+      title: t("nav.timesheet"),
       url: "/timelog",
       icon: Clock,
       testId: "timesheetLink",
     },
     {
-      title: "Members",
+      title: t("nav.members"),
       url: "/members",
       icon: User,
       testId: "membersLink",
     },
     {
-      title: "Configuration",
+      title: t("nav.configuration"),
       url: "/config",
       icon: Settings,
       testId: "configLink",
     },
     {
-      title: "Reports",
+      title: t("nav.reports"),
       url: "/reports",
       icon: Inbox,
       testId: "reportsLink",
@@ -78,15 +82,15 @@ const data = {
   ],
   navSecondary: [
     {
-      title: "Support",
+      title: t("nav.support"),
       url: "#",
       icon: LifeBuoy,
     },
     {
-      title: "Feedback",
+      title: t("nav.feedback"),
       url: "#",
       icon: Send,
     },
   ],
-};
+}));
 </script>

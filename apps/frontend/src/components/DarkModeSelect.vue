@@ -8,6 +8,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Icon } from "@iconify/vue";
 import { useColorMode } from "@vueuse/core";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 // Pass { disableTransition: false } to enable transitions
 const mode = useColorMode();
@@ -25,18 +28,18 @@ const mode = useColorMode();
           icon="radix-icons:moon"
           class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
         />
-        <span class="sr-only">Toggle theme</span>
+        <span class="sr-only">{{ t("common.theme.toggle") }}</span>
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent align="end">
       <DropdownMenuItem @click="mode = 'light'">
-        Light
+        {{ t("common.theme.light") }}
       </DropdownMenuItem>
       <DropdownMenuItem @click="mode = 'dark'">
-        Dark
+        {{ t("common.theme.dark") }}
       </DropdownMenuItem>
       <DropdownMenuItem @click="mode = 'auto'">
-        System
+        {{ t("common.theme.system") }}
       </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>

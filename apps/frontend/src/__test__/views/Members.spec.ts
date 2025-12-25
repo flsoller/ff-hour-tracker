@@ -8,6 +8,7 @@ import { AppConstants } from "../../utils/constants";
 import Members from "../../views/Members.vue";
 import { flushPromises } from "../mocks/helpers";
 import { server } from "../mocks/server";
+import { i18n } from "../mocks/setup";
 
 // Mock Clerk Vue composables
 vi.mock("@clerk/vue", () => ({
@@ -30,7 +31,7 @@ describe("Members View", () => {
   beforeEach(() => {
     wrapper = mount(Members, {
       global: {
-        plugins: [createTestingPinia({ stubActions: false })],
+        plugins: [createTestingPinia({ stubActions: false }), i18n],
       },
     });
     flushPromises();
@@ -93,7 +94,7 @@ describe("Members View", () => {
     );
     const noDataWrapper = mount(Members, {
       global: {
-        plugins: [createTestingPinia({ stubActions: false })],
+        plugins: [createTestingPinia({ stubActions: false }), i18n],
       },
     });
     await flushPromises();

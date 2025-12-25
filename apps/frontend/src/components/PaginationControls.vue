@@ -3,11 +3,17 @@
     <!-- Pagination Info -->
     <div class="text-sm text-muted-foreground">
       <span v-if="totalItems > 0">
-        Showing {{ startIndex }}-{{ endIndex }} of {{ totalItems }}
-        {{ itemName }}
+        {{
+          t("common.pagination.showing", {
+            start: startIndex,
+            end: endIndex,
+            total: totalItems,
+            items: itemName,
+          })
+        }}
       </span>
       <span v-else>
-        No {{ itemName }} found
+        {{ t("common.pagination.noItems", { items: itemName }) }}
       </span>
     </div>
 
@@ -15,7 +21,9 @@
     <div class="hidden sm:flex sm:items-center sm:space-x-6">
       <!-- Page Size Selector -->
       <div class="flex items-center space-x-2">
-        <span class="text-sm text-muted-foreground">Rows per page:</span>
+        <span class="text-sm text-muted-foreground">{{
+          t("common.pagination.rowsPerPage")
+        }}</span>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm" class="h-8 w-16 gap-1">
@@ -35,10 +43,15 @@
         </DropdownMenu>
       </div>
 
-      <!-- Page Navigation -->
-      <div class="flex items-center space-x-2">
+      <!-- Page Navigation (only show when there are items) -->
+      <div v-if="totalItems > 0" class="flex items-center space-x-2">
         <span class="text-sm text-muted-foreground">
-          Page {{ currentPage }} of {{ totalPages }}
+          {{
+            t("common.pagination.pageOf", {
+              current: currentPage,
+              total: totalPages,
+            })
+          }}
         </span>
         <div class="flex items-center space-x-1">
           <Button
@@ -47,7 +60,7 @@
             :disabled="currentPage <= 1 || loading"
             @click="goToPreviousPage"
             class="h-8 w-8 p-0"
-            aria-label="Go to previous page"
+            :aria-label="t('common.pagination.goToPreviousPage')"
           >
             <ChevronLeft class="h-4 w-4" />
           </Button>
@@ -57,7 +70,7 @@
             :disabled="currentPage >= totalPages || loading"
             @click="goToNextPage"
             class="h-8 w-8 p-0"
-            aria-label="Go to next page"
+            :aria-label="t('common.pagination.goToNextPage')"
           >
             <ChevronRight class="h-4 w-4" />
           </Button>
@@ -69,7 +82,9 @@
     <div class="flex flex-col space-y-3 sm:hidden">
       <!-- Page Size Selector -->
       <div class="flex items-center justify-between">
-        <span class="text-sm text-muted-foreground">Rows per page:</span>
+        <span class="text-sm text-muted-foreground">{{
+          t("common.pagination.rowsPerPage")
+        }}</span>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm" class="h-9 w-20 gap-1">
@@ -146,6 +161,9 @@ import {
 } from "@/components/ui/pagination";
 import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-vue-next";
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 interface PaginationControlsProps {
   currentPage: number;

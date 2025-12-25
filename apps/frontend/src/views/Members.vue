@@ -5,12 +5,13 @@
       <!-- Title and Add Button -->
       <div class="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
         <div>
-          <h1 class="text-3xl font-bold tracking-tight">Members</h1>
-          <p class="text-muted-foreground">Manage your organization members</p>
+          <h1 class="text-3xl font-bold tracking-tight">
+            {{ t("members.title") }}
+          </h1>
+          <p class="text-muted-foreground">{{ t("members.subtitle") }}</p>
         </div>
         <Button @click="showAddMember = true" class="w-full sm:w-auto">
-          <Plus class="mr-2 h-4 w-4" />
-          Add Member
+          <Plus class="mr-2 h-4 w-4" /> {{ t("common.buttons.addMember") }}
         </Button>
       </div>
 
@@ -22,19 +23,21 @@
           />
           <Input
             v-model="searchQuery"
-            placeholder="Search members..."
+            :placeholder="t('common.placeholders.searchMembers')"
             class="pl-9"
           />
         </div>
         <div class="flex items-center space-x-2">
-          <span class="text-sm text-muted-foreground">Sort by:</span>
+          <span class="text-sm text-muted-foreground">{{
+              t("common.actions.sortBy")
+            }}:</span>
           <Button
             variant="outline"
             size="sm"
             @click="toggleSort"
             class="h-8"
           >
-            Last Name
+            {{ t("members.sortByLastName") }}
             <ArrowUpDown class="ml-2 h-3 w-3" />
             <ChevronUp
               v-if="membersStore.sortOrder === 'asc'"
@@ -81,7 +84,7 @@
         :page-size="pageSize"
         :total-items="membersStore.totalItems"
         :loading="membersStore.loading"
-        item-name="members"
+        :item-name="t('common.itemNames.members')"
         @page-change="onPageChange"
         @page-size-change="onPageSizeChange"
         @next-page="onNextPage"
@@ -109,12 +112,15 @@ import {
 } from "lucide-vue-next";
 import { storeToRefs } from "pinia";
 import { computed, onMounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import AddMember from "../components/AddMember.vue";
 import MemberCardView from "../components/members/MemberCardView.vue";
 import MemberTableView from "../components/members/MemberTableView.vue";
 import PaginationControls from "../components/PaginationControls.vue";
 import { useMemberActions } from "../composables/useMemberActions";
 import { useMembersStore } from "../stores/members";
+
+const { t } = useI18n();
 
 const membersStore = useMembersStore();
 const memberActions = useMemberActions();
