@@ -10,30 +10,71 @@ jobs:
   create-release:
     runs-on: ubuntu-latest
     outputs:
-      release_version: ${{ steps.changelog.outputs.tag }}
+      release_version: ${{ steps.version.outputs.version }}
+      skipped: ${{ steps.version.outputs.skipped }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.1
-
-      - name: Conventional Changelog Action
-        id: changelog
-        uses: TriPSs/conventional-changelog-action@v6.2.0
         with:
-          github-token: ${{ secrets.github_token }}
-          output-file: "false"
-          skip-commit: "true"
-          preset: "conventionalcommits"
+          fetch-depth: 0
+
+      - name: Determine version
+        id: version
+        run: |
+          TODAY=$(date -u +%Y-%m-%d)
+
+          # Find existing tags for today and get the highest number
+          EXISTING=$(git tag -l "v${TODAY}.*" | sort -t. -k4 -n | tail -1)
+
+          if [ -z "$EXISTING" ]; then
+            NUMBER=1
+          else
+            # Extract the number after the last dot
+            LAST_NUMBER=$(echo "$EXISTING" | rev | cut -d. -f1 | rev)
+            NUMBER=$((LAST_NUMBER + 1))
+          fi
+
+          VERSION="v${TODAY}.${NUMBER}"
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
+          # Check if there are new commits since last tag
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -n "$LAST_TAG" ]; then
+            COMMITS=$(git rev-list ${LAST_TAG}..HEAD --count)
+            if [ "$COMMITS" -eq 0 ]; then
+              echo "skipped=true" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+          fi
+          echo "skipped=false" >> $GITHUB_OUTPUT
+
+      - name: Generate changelog
+        if: steps.version.outputs.skipped != 'true'
+        id: changelog
+        uses: orhun/git-cliff-action@v4.7.0
+        with:
+          config: cliff.toml
+          args: --unreleased --strip header
+
+      - name: Create tag
+        if: steps.version.outputs.skipped != 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag ${{ steps.version.outputs.version }}
+          git push origin ${{ steps.version.outputs.version }}
 
       - name: Create Release
+        if: steps.version.outputs.skipped != 'true'
         uses: softprops/action-gh-release@v2.5.0
-        if: ${{ steps.changelog.outputs.skipped == 'false' }}
         with:
-          tag_name: ${{ steps.changelog.outputs.tag }}
-          name: ${{ steps.changelog.outputs.tag }}
-          body: ${{ steps.changelog.outputs.clean_changelog }}
+          tag_name: ${{ steps.version.outputs.version }}
+          name: ${{ steps.version.outputs.version }}
+          body: ${{ steps.changelog.outputs.content }}
 
   build_migrator_and_apply_pending_migrations:
     needs: create-release
+    if: needs.create-release.outputs.skipped != 'true'
     secrets:
       DB_BRANCH: ${{ secrets.NEON_DB_PRODUCTION }}
       DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
@@ -45,6 +86,7 @@ jobs:
   run_aws_api_pipeline:
     needs:
       - create-release
+    if: needs.create-release.outputs.skipped != 'true'
     secrets:
       AWS_ROLE_TO_ASSUME: ${{ secrets.AWS_PRODUCTION_ROLE_TO_ASSUME }}
       AWS_REGION: ${{ secrets.AWS_REGION }}
