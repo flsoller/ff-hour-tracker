@@ -1,0 +1,56 @@
+{
+  "actions": {
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "submit": "Submit",
+    "search": "Search",
+    "sortBy": "Sort by"
+  },
+  "buttons": {
+    "addMember": "Add Member",
+    "addActivityType": "Add Activity Type"
+  },
+  "placeholders": {
+    "search": "Search...",
+    "searchMembers": "Search members...",
+    "searchActivityTypes": "Search activity types...",
+    "enterFirstName": "Enter first name",
+    "enterLastName": "Enter last name",
+    "enterEmail": "Enter email address"
+  },
+  "labels": {
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email Address"
+  },
+  "language": {
+    "select": "Select language",
+    "en": "English",
+    "de": "German"
+  },
+  "theme": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "pagination": {
+    "showing": "Showing {start}-{end} of {total} {items}",
+    "noItems": "No {items} found",
+    "rowsPerPage": "Rows per page:",
+    "pageOf": "Page {current} of {total}",
+    "goToPreviousPage": "Go to previous page",
+    "goToNextPage": "Go to next page"
+  },
+  "itemNames": {
+    "members": "members",
+    "activityTypes": "activity types",
+    "items": "items"
+  },
+  "accessibility": {
+    "toggle": "Toggle"
+  }
+}

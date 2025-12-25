@@ -1,0 +1,58 @@
+{
+  "title": "Activity Types",
+  "subtitle": "Manage your activity types and color coding",
+  "sortByActivityName": "Activity Name",
+  "tableHeaders": {
+    "activityType": "Activity Type",
+    "description": "Description",
+    "status": "Status"
+  },
+  "states": {
+    "loading": "Loading activity types...",
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "emptyState": {
+    "title": "No activity types yet",
+    "description": "Get started by adding your first activity type",
+    "button": "Add First Activity Type"
+  },
+  "noSearchResults": {
+    "title": "No results found",
+    "description": "Try adjusting your search to find what you're looking for"
+  },
+  "actions": {
+    "edit": "Edit Activity Type",
+    "viewDetails": "View Details",
+    "activate": "Activate",
+    "deactivate": "Deactivate",
+    "delete": "Delete Activity Type",
+    "openMenu": "Open menu"
+  },
+  "createdAt": "Created {date}",
+  "addActivityTypeDialog": {
+    "titleAdd": "Add Activity Type",
+    "titleEdit": "Edit Activity Type",
+    "nameLabel": "Name *",
+    "namePlaceholder": "e.g., Development, Design, Testing",
+    "descriptionLabel": "Description *",
+    "descriptionPlaceholder": "Describe this activity type...",
+    "colorLabel": "Color",
+    "colorPlaceholder": "Select color",
+    "submitAdd": "Add Activity Type",
+    "submitEdit": "Update Activity Type"
+  },
+  "colors": {
+    "blue": "Blue",
+    "red": "Red",
+    "green": "Green",
+    "yellow": "Yellow",
+    "purple": "Purple",
+    "pink": "Pink",
+    "indigo": "Indigo",
+    "teal": "Teal",
+    "orange": "Orange",
+    "slate": "Slate",
+    "custom": "Custom"
+  }
+}

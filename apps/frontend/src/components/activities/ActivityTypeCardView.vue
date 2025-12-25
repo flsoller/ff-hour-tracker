@@ -24,13 +24,15 @@
             <Palette class="h-8 w-8 text-muted-foreground" />
           </div>
           <div>
-            <h3 class="text-lg font-semibold">No activity types yet</h3>
+            <h3 class="text-lg font-semibold">
+              {{ t("configuration.emptyState.title") }}
+            </h3>
             <p class="text-sm text-muted-foreground mb-4">
-              Get started by adding your first activity type
+              {{ t("configuration.emptyState.description") }}
             </p>
             <Button @click="$emit('add-activity-type')" size="sm">
               <Plus class="mr-2 h-4 w-4" />
-              Add First Activity Type
+              {{ t("configuration.emptyState.button") }}
             </Button>
           </div>
         </div>
@@ -46,9 +48,11 @@
             <Search class="h-8 w-8 text-muted-foreground" />
           </div>
           <div>
-            <h3 class="text-lg font-semibold">No results found</h3>
+            <h3 class="text-lg font-semibold">
+              {{ t("configuration.noSearchResults.title") }}
+            </h3>
             <p class="text-sm text-muted-foreground">
-              Try adjusting your search to find what you're looking for
+              {{ t("configuration.noSearchResults.description") }}
             </p>
           </div>
         </div>
@@ -87,13 +91,15 @@
                 >
                   {{
                     activityType.active
-                    ? "Active"
-                    : "Inactive"
+                    ? t("configuration.states.active")
+                    : t("configuration.states.inactive")
                   }}
                 </Badge>
-                <span class="text-xs text-muted-foreground">Created {{
-                    formatDate(activityType.createdAt)
-                  }}</span>
+                <span class="text-xs text-muted-foreground">{{
+                  t("configuration.createdAt", {
+                    date: formatDate(activityType.createdAt),
+                  })
+                }}</span>
               </div>
             </div>
           </div>
@@ -101,7 +107,9 @@
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="sm" class="h-8 w-8 p-0 shrink-0">
                 <MoreHorizontal class="h-4 w-4" />
-                <span class="sr-only">Open menu</span>
+                <span class="sr-only">{{
+                  t("configuration.actions.openMenu")
+                }}</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" class="w-48">
@@ -109,13 +117,13 @@
                 @click="$emit('edit-activity-type', activityType)"
               >
                 <Edit class="mr-2 h-4 w-4" />
-                Edit Activity Type
+                {{ t("configuration.actions.edit") }}
               </DropdownMenuItem>
               <DropdownMenuItem
                 @click="$emit('view-activity-type', activityType)"
               >
                 <Eye class="mr-2 h-4 w-4" />
-                View Details
+                {{ t("configuration.actions.viewDetails") }}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
@@ -125,8 +133,8 @@
                 <Power class="mr-2 h-4 w-4" />
                 {{
                   activityType.active
-                  ? "Deactivate"
-                  : "Activate"
+                  ? t("configuration.actions.deactivate")
+                  : t("configuration.actions.activate")
                 }}
               </DropdownMenuItem>
               <DropdownMenuItem
@@ -134,7 +142,7 @@
                 class="text-destructive focus:text-destructive"
               >
                 <Trash2 class="mr-2 h-4 w-4" />
-                Delete Activity Type
+                {{ t("configuration.actions.delete") }}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -167,6 +175,9 @@ import {
   Search,
   Trash2,
 } from "lucide-vue-next";
+import { useI18n } from "vue-i18n";
+
+const { t, locale } = useI18n();
 
 // Type for individual activity type data from paginated response
 type ActivityTypeData = IGetActivitiesRes["data"][0];
@@ -190,10 +201,10 @@ interface Emits {
 defineProps<Props>();
 defineEmits<Emits>();
 
-// Utility function to format dates
+// Utility function to format dates with locale support
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", {
+  return date.toLocaleDateString(locale.value, {
     year: "numeric",
     month: "short",
     day: "numeric",

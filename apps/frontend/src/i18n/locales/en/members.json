@@ -1,0 +1,33 @@
+{
+  "title": "Members",
+  "subtitle": "Manage your organization members",
+  "sortByLastName": "Last Name",
+  "tableHeaders": {
+    "member": "Member",
+    "emailAddress": "Email Address",
+    "status": "Status"
+  },
+  "states": {
+    "loading": "Loading members...",
+    "active": "Active"
+  },
+  "memberSince": "Member since {date}",
+  "emptyState": {
+    "title": "No members yet",
+    "description": "Get started by adding your first team member",
+    "button": "Add First Member"
+  },
+  "noSearchResults": {
+    "title": "No results found",
+    "description": "Try adjusting your search to find what you're looking for"
+  },
+  "actions": {
+    "edit": "Edit Member",
+    "viewDetails": "View Details",
+    "delete": "Delete Member",
+    "openMenu": "Open menu"
+  },
+  "addMemberDialog": {
+    "title": "Add Member"
+  }
+}
