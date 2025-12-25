@@ -51,7 +51,7 @@ exports[`MembersServiceLambda should contain the correct Lambda properties 1`] =
       },
     },
     "FunctionName": "HourTrackerAPI-Members",
-    "MemorySize": 256,
+    "MemorySize": 1024,
     "PackageType": "Image",
     "Role": {
       "Fn::GetAtt": [

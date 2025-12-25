@@ -57,7 +57,7 @@ exports[`AuthorizerLambda should contain the correct Lambda properties 1`] = `
       },
     },
     "FunctionName": "HourTrackerAPI-Authorizer",
-    "MemorySize": 256,
+    "MemorySize": 1024,
     "PackageType": "Image",
     "Role": {
       "Fn::GetAtt": [
