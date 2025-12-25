@@ -1,0 +1,56 @@
+{
+  "actions": {
+    "add": "Hinzufügen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "submit": "Absenden",
+    "search": "Suchen",
+    "sortBy": "Sortieren nach"
+  },
+  "buttons": {
+    "addMember": "Mitglied hinzufügen",
+    "addActivityType": "Aktivitätstyp hinzufügen"
+  },
+  "placeholders": {
+    "search": "Suchen...",
+    "searchMembers": "Mitglieder suchen...",
+    "searchActivityTypes": "Aktivitätstypen suchen...",
+    "enterFirstName": "Vorname eingeben",
+    "enterLastName": "Nachname eingeben",
+    "enterEmail": "E-Mail-Adresse eingeben"
+  },
+  "labels": {
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "E-Mail-Adresse"
+  },
+  "language": {
+    "select": "Sprache wählen",
+    "en": "Englisch",
+    "de": "Deutsch"
+  },
+  "theme": {
+    "toggle": "Design wechseln",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "system": "System"
+  },
+  "pagination": {
+    "showing": "Zeige {start}-{end} von {total} {items}",
+    "noItems": "Keine {items} gefunden",
+    "rowsPerPage": "Zeilen pro Seite:",
+    "pageOf": "Seite {current} von {total}",
+    "goToPreviousPage": "Zur vorherigen Seite",
+    "goToNextPage": "Zur nächsten Seite"
+  },
+  "itemNames": {
+    "members": "Mitglieder",
+    "activityTypes": "Aktivitätstypen",
+    "items": "Einträge"
+  },
+  "accessibility": {
+    "toggle": "Umschalten"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "title": "Aktivitätstypen",
+  "subtitle": "Verwalten Sie Ihre Aktivitätstypen und Farbkodierung",
+  "sortByActivityName": "Aktivitätsname",
+  "tableHeaders": {
+    "activityType": "Aktivitätstyp",
+    "description": "Beschreibung",
+    "status": "Status"
+  },
+  "states": {
+    "loading": "Aktivitätstypen werden geladen...",
+    "active": "Aktiv",
+    "inactive": "Inaktiv"
+  },
+  "emptyState": {
+    "title": "Noch keine Aktivitätstypen",
+    "description": "Beginnen Sie mit dem Hinzufügen Ihres ersten Aktivitätstyps",
+    "button": "Ersten Aktivitätstyp hinzufügen"
+  },
+  "noSearchResults": {
+    "title": "Keine Ergebnisse gefunden",
+    "description": "Versuchen Sie, Ihre Suche anzupassen, um das Gewünschte zu finden"
+  },
+  "actions": {
+    "edit": "Aktivitätstyp bearbeiten",
+    "viewDetails": "Details anzeigen",
+    "activate": "Aktivieren",
+    "deactivate": "Deaktivieren",
+    "delete": "Aktivitätstyp löschen",
+    "openMenu": "Menü öffnen"
+  },
+  "createdAt": "Erstellt {date}",
+  "addActivityTypeDialog": {
+    "titleAdd": "Aktivitätstyp hinzufügen",
+    "titleEdit": "Aktivitätstyp bearbeiten",
+    "nameLabel": "Name *",
+    "namePlaceholder": "z.B. Entwicklung, Design, Testen",
+    "descriptionLabel": "Beschreibung *",
+    "descriptionPlaceholder": "Beschreiben Sie diesen Aktivitätstyp...",
+    "colorLabel": "Farbe",
+    "colorPlaceholder": "Farbe auswählen",
+    "submitAdd": "Aktivitätstyp hinzufügen",
+    "submitEdit": "Aktivitätstyp aktualisieren"
+  },
+  "colors": {
+    "blue": "Blau",
+    "red": "Rot",
+    "green": "Grün",
+    "yellow": "Gelb",
+    "purple": "Lila",
+    "pink": "Rosa",
+    "indigo": "Indigo",
+    "teal": "Türkis",
+    "orange": "Orange",
+    "slate": "Schiefergrau",
+    "custom": "Benutzerdefiniert"
+  }
+}

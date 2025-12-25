@@ -1,0 +1,33 @@
+{
+  "title": "Mitglieder",
+  "subtitle": "Verwalten Sie Ihre Organisationsmitglieder",
+  "sortByLastName": "Nachname",
+  "tableHeaders": {
+    "member": "Mitglied",
+    "emailAddress": "E-Mail-Adresse",
+    "status": "Status"
+  },
+  "states": {
+    "loading": "Mitglieder werden geladen...",
+    "active": "Aktiv"
+  },
+  "memberSince": "Mitglied seit {date}",
+  "emptyState": {
+    "title": "Noch keine Mitglieder",
+    "description": "Beginnen Sie mit dem Hinzufügen Ihres ersten Teammitglieds",
+    "button": "Erstes Mitglied hinzufügen"
+  },
+  "noSearchResults": {
+    "title": "Keine Ergebnisse gefunden",
+    "description": "Versuchen Sie, Ihre Suche anzupassen, um das Gewünschte zu finden"
+  },
+  "actions": {
+    "edit": "Mitglied bearbeiten",
+    "viewDetails": "Details anzeigen",
+    "delete": "Mitglied löschen",
+    "openMenu": "Menü öffnen"
+  },
+  "addMemberDialog": {
+    "title": "Mitglied hinzufügen"
+  }
+}

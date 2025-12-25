@@ -16,6 +16,9 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { ChevronRight, type LucideIcon } from "lucide-vue-next";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 defineProps<{
   items: {
@@ -34,7 +37,7 @@ defineProps<{
 
 <template>
   <SidebarGroup>
-    <SidebarGroupLabel>Application</SidebarGroupLabel>
+    <SidebarGroupLabel>{{ t("nav.application") }}</SidebarGroupLabel>
     <SidebarMenu>
       <Collapsible
         v-for="item in items"
@@ -53,7 +56,9 @@ defineProps<{
             <CollapsibleTrigger as-child>
               <SidebarMenuAction class="data-[state=open]:rotate-90">
                 <ChevronRight />
-                <span class="sr-only">Toggle</span>
+                <span class="sr-only">{{
+                  t("common.accessibility.toggle")
+                }}</span>
               </SidebarMenuAction>
             </CollapsibleTrigger>
             <CollapsibleContent>

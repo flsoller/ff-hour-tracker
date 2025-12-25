@@ -1,0 +1,10 @@
+{
+  "application": "Application",
+  "dashboard": "Dashboard",
+  "timesheet": "Timesheet",
+  "members": "Members",
+  "configuration": "Configuration",
+  "reports": "Reports",
+  "support": "Support",
+  "feedback": "Feedback"
+}
