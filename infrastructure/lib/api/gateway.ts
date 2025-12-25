@@ -41,7 +41,7 @@ export class HourTrackerApiGateway extends Construct {
     const gateway = new HttpApi(this, API_GATEWAY.NAME, {
       description: "REST API for hour tracker app",
       corsPreflight: {
-        allowHeaders: ["Authorization", "*"],
+        allowHeaders: ["*"],
         allowMethods: [
           CorsHttpMethod.OPTIONS,
           CorsHttpMethod.GET,

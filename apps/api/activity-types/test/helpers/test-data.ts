@@ -62,6 +62,7 @@ export function createApiRequestEvent<T = unknown>(
     userId: string;
     role: string;
   },
+  pathParameters?: Record<string, string>,
 ): APIRequest {
   return {
     version: "2.0",
@@ -69,6 +70,7 @@ export function createApiRequestEvent<T = unknown>(
     rawPath: path,
     rawQueryString: "",
     queryStringParameters,
+    pathParameters,
     headers: {
       accept: "*/*",
       "accept-encoding": "gzip, deflate, br",
