@@ -33,10 +33,26 @@ jobs:
           if [ -n "${{ inputs.target_env_url }}" ]; then
             DEPLOYMENT_URL="${{ inputs.target_env_url }}"
           else
-            DEPLOYMENT_URL=$(gh api repos/${{ github.repository }}/deployments \
-              --jq 'map(select(.environment == "Preview")) | .[0].id' \
-              | xargs -I {} gh api repos/${{ github.repository }}/deployments/{}/statuses \
-              --jq 'map(select(.state == "success")) | .[0].environment_url')
+            DEPLOYMENT_URL=$(gh api graphql -F owner='${{ github.repository_owner }}' \
+              -F name='${{ github.event.repository.name }}' \
+              -F environment='Preview' \
+              -f query='
+                query($name: String!, $owner: String!, $environment: String!) {
+                  repository(owner: $owner, name: $name) {
+                    deployments(environments: [$environment], first: 10, orderBy: {field: CREATED_AT, direction: DESC}) {
+                      edges {
+                        node {
+                          state
+                          latestStatus {
+                            environmentUrl
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              ' --jq '.data.repository.deployments.edges[] | select(.node.state == "ACTIVE") | .node.latestStatus.environmentUrl' \
+              | head -n 1)
           fi
 
           if [ -z "$DEPLOYMENT_URL" ] || [ "$DEPLOYMENT_URL" == "null" ]; then
