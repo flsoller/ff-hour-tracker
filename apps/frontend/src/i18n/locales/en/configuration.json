@@ -54,5 +54,9 @@
     "orange": "Orange",
     "slate": "Slate",
     "custom": "Custom"
+  },
+  "toasts": {
+    "updateSuccess": "Activity type updated: {name}",
+    "updateError": "Unexpected error while updating activity type"
   }
 }

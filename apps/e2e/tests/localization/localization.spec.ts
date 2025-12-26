@@ -1,4 +1,4 @@
-import { expect, test } from "../../helpers/fixtures";
+import { expect, test } from "../../helpers";
 
 test.describe("Localization", () => {
   test.describe("Unauthenticated user", () => {

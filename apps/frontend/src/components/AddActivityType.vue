@@ -9,93 +9,107 @@
         }}</DialogTitle>
       </DialogHeader>
       <form @submit.prevent="onSubmit" class="space-y-4">
-        <div class="space-y-2">
-          <Label for="name">{{
-            t("configuration.addActivityTypeDialog.nameLabel")
-          }}</Label>
-          <Input
-            id="name"
-            data-testid="name"
-            v-model="form.activityName"
-            :placeholder="
-              t(
-                'configuration.addActivityTypeDialog.namePlaceholder',
-              )
-            "
-            required
-          />
-        </div>
+        <fieldset :disabled="props.loading" class="space-y-4">
+          <div class="space-y-2">
+            <Label for="name">{{
+              t("configuration.addActivityTypeDialog.nameLabel")
+            }}</Label>
+            <Input
+              id="name"
+              data-testid="name"
+              v-model="form.activityName"
+              :placeholder="
+                t(
+                  'configuration.addActivityTypeDialog.namePlaceholder',
+                )
+              "
+              required
+            />
+          </div>
 
-        <div class="space-y-2">
-          <Label for="description">{{
-            t(
-              "configuration.addActivityTypeDialog.descriptionLabel",
-            )
-          }}</Label>
-          <Textarea
-            id="description"
-            data-testid="description"
-            v-model="form.activityDescription"
-            :placeholder="
+          <div class="space-y-2">
+            <Label for="description">{{
               t(
-                'configuration.addActivityTypeDialog.descriptionPlaceholder',
+                "configuration.addActivityTypeDialog.descriptionLabel",
               )
-            "
-            rows="3"
-            required
-          />
-        </div>
+            }}</Label>
+            <Textarea
+              id="description"
+              data-testid="description"
+              v-model="form.activityDescription"
+              :placeholder="
+                t(
+                  'configuration.addActivityTypeDialog.descriptionPlaceholder',
+                )
+              "
+              rows="3"
+              required
+            />
+          </div>
 
-        <div class="space-y-2">
-          <Label for="color">{{
-            t("configuration.addActivityTypeDialog.colorLabel")
-          }}</Label>
-          <Select v-model="form.colorCode">
-            <SelectTrigger>
-              <SelectValue>
-                <div v-if="form.colorCode" class="flex items-center gap-2">
-                  <div
-                    class="w-4 h-4 rounded-full border border-gray-300"
-                    :style="{ backgroundColor: form.colorCode }"
-                  >
+          <div class="space-y-2">
+            <Label for="color">{{
+              t(
+                "configuration.addActivityTypeDialog.colorLabel",
+              )
+            }}</Label>
+            <Select v-model="form.colorCode">
+              <SelectTrigger>
+                <SelectValue>
+                  <div v-if="form.colorCode" class="flex items-center gap-2">
+                    <div
+                      class="w-4 h-4 rounded-full border border-gray-300"
+                      :style="
+                        {
+                          backgroundColor: form.colorCode,
+                        }
+                      "
+                    >
+                    </div>
+                    <span>{{ getColorName(form.colorCode) }}</span>
                   </div>
-                  <span>{{ getColorName(form.colorCode) }}</span>
-                </div>
-                <span v-else>{{
-                  t(
-                    "configuration.addActivityTypeDialog.colorPlaceholder",
-                  )
-                }}</span>
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem
-                v-for="colorOption in colorOptions"
-                :key="colorOption.value"
-                :value="colorOption.value"
-              >
-                <div class="flex items-center gap-2">
-                  <div
-                    class="w-4 h-4 rounded-full border border-gray-300"
-                    :style="
-                      {
-                        backgroundColor: colorOption.value,
-                      }
-                    "
-                  >
+                  <span v-else>{{
+                    t(
+                      "configuration.addActivityTypeDialog.colorPlaceholder",
+                    )
+                  }}</span>
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem
+                  v-for="colorOption in colorOptions"
+                  :key="colorOption.value"
+                  :value="colorOption.value"
+                >
+                  <div class="flex items-center gap-2">
+                    <div
+                      class="w-4 h-4 rounded-full border border-gray-300"
+                      :style="
+                        {
+                          backgroundColor:
+                            colorOption.value,
+                        }
+                      "
+                    >
+                    </div>
+                    <span>{{ colorOption.name }}</span>
                   </div>
-                  <span>{{ colorOption.name }}</span>
-                </div>
-              </SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </fieldset>
 
         <DialogFooter>
           <Button type="button" variant="outline" @click="onCancel">
             {{ t("common.actions.cancel") }}
           </Button>
-          <Button type="submit" data-testid="submitActivityType">
+          <Button
+            type="submit"
+            data-testid="submitActivityType"
+            :disabled="props.loading"
+          >
+            <Loader2 v-if="props.loading" class="mr-2 h-4 w-4 animate-spin" />
             {{
               isEditing
               ? t(
@@ -135,6 +149,7 @@ import type {
   IActivityType,
   ICreateActivityReq,
 } from "@hour-tracker/core-types/activities";
+import { Loader2 } from "lucide-vue-next";
 import { computed, reactive, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -143,6 +158,7 @@ const { t } = useI18n();
 const props = defineProps<{
   open?: boolean;
   activityType?: IActivityType | null;
+  loading?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -184,7 +200,11 @@ function getColorName(colorValue: string): string {
 function populateForm(activityType: IActivityType) {
   form.activityName = activityType.activityName;
   form.activityDescription = activityType.activityDescription;
-  form.colorCode = activityType.colorCode || "";
+  // Add # prefix if color code exists and doesn't already have it
+  const colorCode = activityType.colorCode || "";
+  form.colorCode = colorCode && !colorCode.startsWith("#")
+    ? `#${colorCode}`
+    : colorCode;
 }
 
 function resetForm() {
