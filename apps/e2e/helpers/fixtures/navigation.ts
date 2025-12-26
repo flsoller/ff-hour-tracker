@@ -1,8 +1,6 @@
-import { setupClerkTestingToken } from "@clerk/testing/playwright";
-import { expect, Page, test as base } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 
-// Navigation helper class
-class Navigation {
+export class Navigation {
   constructor(private page: Page) {}
 
   private routes = {
@@ -26,22 +24,3 @@ class Navigation {
     await this.page.goto(url);
   }
 }
-
-export const test = base.extend<{
-  forEachTest: void;
-  nav: Navigation;
-}>({
-  forEachTest: [async ({ page, baseURL }, use) => {
-    await setupClerkTestingToken({
-      page,
-      options: { frontendApiUrl: baseURL?.split("//")[1] },
-    });
-    await use();
-  }, { auto: true }],
-  // Navigation fixture - always available
-  nav: async ({ page }, use) => {
-    await use(new Navigation(page));
-  },
-});
-
-export { expect };

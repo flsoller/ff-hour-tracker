@@ -2,14 +2,16 @@ import type { ICreateActivityReq, IGetActivitiesReq, IGetActivitiesRes } from "@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import type { Ref } from "vue";
+import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
-import { addActivity, getActivities } from "../services/activities";
+import { addActivity, getActivities, updateActivity } from "../services/activities";
 
 /**
  * Activity types store focused on data management following Single Responsibility Principle
  * Pagination UI logic is handled by parent components
  */
 export const useActivityTypesStore = defineStore("activityTypes", () => {
+  const { t } = useI18n();
   const defaultPageLimit = 5;
   const loading = ref<boolean>(false);
   const activities: Ref<IGetActivitiesRes> = ref({
@@ -77,6 +79,33 @@ export const useActivityTypesStore = defineStore("activityTypes", () => {
     await getActivitiesPaginated(currentParams);
   }
 
+  /**
+   * Update an existing activity type and refresh the current page
+   * @param id - ID of the activity type to update
+   * @param activityData - Updated activity type data
+   * @param currentParams - Current pagination parameters for refresh
+   * @returns Promise resolving to true on success, false on failure
+   */
+  async function updateExistingActivity(
+    id: string,
+    activityData: ICreateActivityReq,
+    currentParams?: IGetActivitiesReq,
+  ): Promise<boolean> {
+    loading.value = true;
+    const [data, error] = await updateActivity(id, activityData);
+
+    if (error) {
+      toast.error(t("configuration.toasts.updateError"));
+      loading.value = false;
+      return false;
+    }
+
+    toast(t("configuration.toasts.updateSuccess", { name: data?.activityName }));
+    await getActivitiesPaginated(currentParams);
+    loading.value = false;
+    return true;
+  }
+
   return {
     activities,
     loading,
@@ -85,6 +114,7 @@ export const useActivityTypesStore = defineStore("activityTypes", () => {
     totalItems,
     getActivitiesPaginated,
     addNewActivity,
+    updateExistingActivity,
     changeSortOrder,
   };
 });

@@ -119,12 +119,6 @@
                 <Edit class="mr-2 h-4 w-4" />
                 {{ t("configuration.actions.edit") }}
               </DropdownMenuItem>
-              <DropdownMenuItem
-                @click="$emit('view-activity-type', activityType)"
-              >
-                <Eye class="mr-2 h-4 w-4" />
-                {{ t("configuration.actions.viewDetails") }}
-              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 @click="$emit('toggle-status', activityType)"
@@ -136,13 +130,6 @@
                   ? t("configuration.actions.deactivate")
                   : t("configuration.actions.activate")
                 }}
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                @click="$emit('delete-activity-type', activityType)"
-                class="text-destructive focus:text-destructive"
-              >
-                <Trash2 class="mr-2 h-4 w-4" />
-                {{ t("configuration.actions.delete") }}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -167,13 +154,11 @@ import {
 import type { IGetActivitiesRes } from "@hour-tracker/core-types/activities";
 import {
   Edit,
-  Eye,
   MoreHorizontal,
   Palette,
   Plus,
   Power,
   Search,
-  Trash2,
 } from "lucide-vue-next";
 import { useI18n } from "vue-i18n";
 
@@ -193,8 +178,6 @@ interface Props {
 interface Emits {
   (e: "add-activity-type"): void;
   (e: "edit-activity-type", activityType: ActivityTypeData): void;
-  (e: "view-activity-type", activityType: ActivityTypeData): void;
-  (e: "delete-activity-type", activityType: ActivityTypeData): void;
   (e: "toggle-status", activityType: ActivityTypeData): void;
 }
 
