@@ -57,6 +57,10 @@
   },
   "toasts": {
     "updateSuccess": "Activity type updated: {name}",
-    "updateError": "Unexpected error while updating activity type"
+    "updateError": "Unexpected error while updating activity type",
+    "toggleSuccess": "Activity type {action}: {name}",
+    "toggleError": "Unexpected error while toggling activity type status",
+    "activated": "activated",
+    "deactivated": "deactivated"
   }
 }

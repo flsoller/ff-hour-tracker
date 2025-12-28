@@ -31,4 +31,23 @@ test.describe("Configuration Page - Activity Types", () => {
     await expect(firstRow).toContainText(updatedName);
     await expect(firstRow).toContainText(updatedDescription);
   });
+
+  test("allows a user to toggle an activity type status", async ({ page, config }) => {
+    const activityName = await config.createActivityTypeAndFocus();
+
+    const firstRow = page.locator("tbody tr").first();
+    await expect(firstRow).toContainText("Active");
+
+    await page.getByRole("button", { name: "Open menu" }).click();
+    await page.getByRole("menuitem", { name: /deactivate/i }).click();
+
+    await expect(page.getByText(new RegExp(`Activity type deactivated: ${activityName}`, "i"))).toBeVisible();
+    await expect(firstRow).toContainText("Inactive");
+
+    await page.getByRole("button", { name: "Open menu" }).click();
+    await page.getByRole("menuitem", { name: /activate/i }).click();
+
+    await expect(page.getByText(new RegExp(`Activity type activated: ${activityName}`, "i"))).toBeVisible();
+    await expect(firstRow).toContainText("Active");
+  });
 });

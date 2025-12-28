@@ -4,7 +4,12 @@ import { computed, ref } from "vue";
 import type { Ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { toast } from "vue-sonner";
-import { addActivity, getActivities, updateActivity } from "../services/activities";
+import {
+  addActivity,
+  getActivities,
+  toggleActivityStatus as toggleActivityStatusService,
+  updateActivity,
+} from "../services/activities";
 
 /**
  * Activity types store focused on data management following Single Responsibility Principle
@@ -106,6 +111,39 @@ export const useActivityTypesStore = defineStore("activityTypes", () => {
     return true;
   }
 
+  /**
+   * Toggle activity type status (active/inactive) and refresh the current page
+   * @param id - ID of the activity type to toggle
+   * @param currentActive - Current active status
+   * @param activityName - Name of the activity type (for toast message)
+   * @param currentParams - Current pagination parameters for refresh
+   * @returns Promise resolving to true on success, false on failure
+   */
+  async function toggleActivityStatus(
+    id: string,
+    currentActive: boolean,
+    activityName: string,
+    currentParams?: IGetActivitiesReq,
+  ): Promise<boolean> {
+    loading.value = true;
+    const newActive = !currentActive;
+    const [, error] = await toggleActivityStatusService(id, newActive);
+
+    if (error) {
+      toast.error(t("configuration.toasts.toggleError"));
+      loading.value = false;
+      return false;
+    }
+
+    const actionKey = newActive ? "activated" : "deactivated";
+    toast(
+      t("configuration.toasts.toggleSuccess", { name: activityName, action: t(`configuration.toasts.${actionKey}`) }),
+    );
+    await getActivitiesPaginated(currentParams);
+    loading.value = false;
+    return true;
+  }
+
   return {
     activities,
     loading,
@@ -116,5 +154,6 @@ export const useActivityTypesStore = defineStore("activityTypes", () => {
     addNewActivity,
     updateExistingActivity,
     changeSortOrder,
+    toggleActivityStatus,
   };
 });

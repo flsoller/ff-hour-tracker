@@ -1,7 +1,7 @@
-import type { IGetActivitiesRes } from "@hour-tracker/core-types/activities";
+import type { IGetActivitiesReq, IGetActivitiesRes } from "@hour-tracker/core-types/activities";
 import { ref } from "vue";
 import type { Ref } from "vue";
-import { toast } from "vue-sonner";
+import { useActivityTypesStore } from "../stores/activities";
 
 // Type for individual activity type data from paginated response
 type ActivityTypeData = IGetActivitiesRes["data"][0];
@@ -34,11 +34,18 @@ export function useActivityTypeActions() {
 
   /**
    * Handle toggle activity type status action
-   * TODO: Implement toggle status functionality
+   * Requires pagination params from parent component to maintain page state
    */
-  function toggleActivityTypeStatus(activityType: ActivityTypeData) {
-    const newStatus = activityType.active ? "deactivate" : "activate";
-    toast.info(`${newStatus} functionality coming soon for ${activityType.activityName}`);
+  function toggleActivityTypeStatus(
+    activityType: ActivityTypeData,
+    currentParams?: IGetActivitiesReq,
+  ) {
+    return useActivityTypesStore().toggleActivityStatus(
+      activityType.id,
+      activityType.active,
+      activityType.activityName,
+      currentParams,
+    );
   }
 
   return {
