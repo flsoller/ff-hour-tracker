@@ -90,3 +90,20 @@ export async function updateById(
     DrizzleORM.eq(models.activityTypes.id, activityId),
   ).returning();
 }
+
+/**
+ * Updates the active status for an activity type
+ * @param activityId
+ * @param active
+ * @returns
+ */
+export async function updateActiveStatusById(
+  activityId: string,
+  active: boolean,
+) {
+  return db.update(models.activityTypes).set({
+    active,
+  }).where(
+    DrizzleORM.eq(models.activityTypes.id, activityId),
+  );
+}
