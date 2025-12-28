@@ -41,4 +41,32 @@ async function addActivity(
   return [data, error];
 }
 
-export { addActivity, getActivities };
+async function updateActivity(
+  id: string,
+  params: ICreateActivityReq,
+): Promise<[IActivityCreatedRes | null, Error | null]> {
+  const accessToken = await getAccessToken();
+  const [data, error] = await api.put<ICreateActivityReq, IActivityCreatedRes>(
+    `${ACTIVITIES_API}/${id}`,
+    params,
+    { headers: { Authorization: `Bearer ${accessToken}` } },
+  );
+
+  return [data, error];
+}
+
+async function toggleActivityStatus(
+  id: string,
+  active: boolean,
+): Promise<[void | null, Error | null]> {
+  const accessToken = await getAccessToken();
+  const [data, error] = await api.patch<{ active: boolean }, void>(
+    `${ACTIVITIES_API}/${id}`,
+    { active },
+    { headers: { Authorization: `Bearer ${accessToken}` } },
+  );
+
+  return [data, error];
+}
+
+export { addActivity, getActivities, toggleActivityStatus, updateActivity };

@@ -24,5 +24,8 @@
     "Buildx",
     "calver",
     "dorny"
-  ]
+  ],
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  }
 }

@@ -51,7 +51,7 @@ exports[`ActivityTypesServiceLambda should contain the correct Lambda properties
       },
     },
     "FunctionName": "HourTrackerAPI-ActivityTypes",
-    "MemorySize": 256,
+    "MemorySize": 1024,
     "PackageType": "Image",
     "Role": {
       "Fn::GetAtt": [

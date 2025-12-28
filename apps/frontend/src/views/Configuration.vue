@@ -61,9 +61,13 @@
         :is-searching="!!searchQuery"
         @add-activity-type="showAddActivityType = true"
         @edit-activity-type="activityTypeActions.editActivityType"
-        @view-activity-type="activityTypeActions.viewActivityTypeDetails"
-        @delete-activity-type="activityTypeActions.deleteActivityType"
-        @toggle-status="activityTypeActions.toggleActivityTypeStatus"
+        @toggle-status="
+          (activityType) =>
+          activityTypeActions.toggleActivityTypeStatus(
+            activityType,
+            currentPaginationParams,
+          )
+        "
       />
 
       <!-- Mobile Card View -->
@@ -73,9 +77,13 @@
         :is-searching="!!searchQuery"
         @add-activity-type="showAddActivityType = true"
         @edit-activity-type="activityTypeActions.editActivityType"
-        @view-activity-type="activityTypeActions.viewActivityTypeDetails"
-        @delete-activity-type="activityTypeActions.deleteActivityType"
-        @toggle-status="activityTypeActions.toggleActivityTypeStatus"
+        @toggle-status="
+          (activityType) =>
+          activityTypeActions.toggleActivityTypeStatus(
+            activityType,
+            currentPaginationParams,
+          )
+        "
       />
     </div>
 
@@ -95,9 +103,20 @@
       />
     </div>
 
+    <!-- Add Activity Type Modal -->
     <AddActivityType
       v-model:open="showAddActivityType"
-      @submit="onSubmitActivityType"
+      :loading="isSubmitting"
+      @submit="onSubmitNewActivityType"
+    />
+
+    <!-- Edit Activity Type Modal -->
+    <AddActivityType
+      v-model:open="activityTypeActions.isEditModalOpen.value"
+      :activity-type="activityTypeActions.editingActivityType.value"
+      :loading="isSubmitting"
+      @submit="onSubmitEditActivityType"
+      @cancel="activityTypeActions.closeEditModal"
     />
   </div>
 </template>
@@ -134,6 +153,7 @@ const pageSize = ref<number>(activityTypesStore.defaultPageLimit);
 
 const showAddActivityType = ref(false);
 const searchQuery = ref("");
+const isSubmitting = ref(false);
 
 const totalPages = computed(() =>
   Math.ceil(activityTypesStore.totalItems / pageSize.value)
@@ -217,11 +237,30 @@ async function onPreviousPage() {
   }
 }
 
-async function onSubmitActivityType(activityTypeData: ICreateActivityReq) {
+async function onSubmitNewActivityType(activityTypeData: ICreateActivityReq) {
+  isSubmitting.value = true;
   await activityTypesStore.addNewActivity(
     activityTypeData,
     currentPaginationParams.value,
   );
+  isSubmitting.value = false;
   showAddActivityType.value = false;
+}
+
+async function onSubmitEditActivityType(activityTypeData: ICreateActivityReq) {
+  const activityType = activityTypeActions.editingActivityType.value;
+  if (!activityType) return;
+
+  isSubmitting.value = true;
+  const success = await activityTypesStore.updateExistingActivity(
+    activityType.id,
+    activityTypeData,
+    currentPaginationParams.value,
+  );
+  isSubmitting.value = false;
+
+  if (success) {
+    activityTypeActions.closeEditModal();
+  }
 }
 </script>

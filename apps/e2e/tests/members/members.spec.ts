@@ -1,4 +1,4 @@
-import { expect, test } from "../../helpers/fixtures";
+import { expect, test } from "../../helpers";
 
 test.describe("Members Page", () => {
   test("shows empty state when no members exist", async ({ page, nav }) => {

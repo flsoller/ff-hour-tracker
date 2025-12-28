@@ -1,6 +1,6 @@
 import { clerk, clerkSetup } from "@clerk/testing/playwright";
 import path from "path";
-import { test as setup } from "./helpers/fixtures";
+import { test as setup } from "./helpers";
 
 setup.describe.configure({
   mode: "serial",
