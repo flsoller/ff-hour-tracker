@@ -57,6 +57,10 @@
   },
   "toasts": {
     "updateSuccess": "Aktivitätstyp aktualisiert: {name}",
-    "updateError": "Unerwarteter Fehler beim Aktualisieren des Aktivitätstyps"
+    "updateError": "Unerwarteter Fehler beim Aktualisieren des Aktivitätstyps",
+    "toggleSuccess": "Aktivitätstyp {action}: {name}",
+    "toggleError": "Unerwarteter Fehler beim Umschalten des Aktivitätstyp-Status",
+    "activated": "aktiviert",
+    "deactivated": "deaktiviert"
   }
 }

@@ -61,7 +61,13 @@
         :is-searching="!!searchQuery"
         @add-activity-type="showAddActivityType = true"
         @edit-activity-type="activityTypeActions.editActivityType"
-        @toggle-status="activityTypeActions.toggleActivityTypeStatus"
+        @toggle-status="
+          (activityType) =>
+          activityTypeActions.toggleActivityTypeStatus(
+            activityType,
+            currentPaginationParams,
+          )
+        "
       />
 
       <!-- Mobile Card View -->
@@ -71,7 +77,13 @@
         :is-searching="!!searchQuery"
         @add-activity-type="showAddActivityType = true"
         @edit-activity-type="activityTypeActions.editActivityType"
-        @toggle-status="activityTypeActions.toggleActivityTypeStatus"
+        @toggle-status="
+          (activityType) =>
+          activityTypeActions.toggleActivityTypeStatus(
+            activityType,
+            currentPaginationParams,
+          )
+        "
       />
     </div>
 

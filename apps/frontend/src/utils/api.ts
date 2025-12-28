@@ -85,6 +85,23 @@ const api = {
         ...options?.headers,
       },
     }),
+
+  /**
+   * PATCH method
+   * @param endpoint - target URL endpoint
+   * @param body - request body
+   * @param options - optional request options
+   */
+  patch: <TBody, TRes>(endpoint: string, body: TBody, options?: RequestInit) =>
+    _apiRequest<TRes>(endpoint, {
+      method: "PATCH",
+      body: JSON.stringify(body),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        ...options?.headers,
+      },
+    }),
 };
 
 export default api;

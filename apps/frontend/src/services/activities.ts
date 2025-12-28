@@ -55,4 +55,18 @@ async function updateActivity(
   return [data, error];
 }
 
-export { addActivity, getActivities, updateActivity };
+async function toggleActivityStatus(
+  id: string,
+  active: boolean,
+): Promise<[void | null, Error | null]> {
+  const accessToken = await getAccessToken();
+  const [data, error] = await api.patch<{ active: boolean }, void>(
+    `${ACTIVITIES_API}/${id}`,
+    { active },
+    { headers: { Authorization: `Bearer ${accessToken}` } },
+  );
+
+  return [data, error];
+}
+
+export { addActivity, getActivities, toggleActivityStatus, updateActivity };
