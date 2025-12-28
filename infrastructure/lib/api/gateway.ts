@@ -62,8 +62,8 @@ export class HourTrackerApiGateway extends Construct {
     gateway.addStage("live", {
       stageName: "live",
       throttle: {
-        rateLimit: 1,
-        burstLimit: 1,
+        rateLimit: 10,
+        burstLimit: 20,
       },
       autoDeploy: true,
       domainMapping: {

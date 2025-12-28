@@ -1,5 +1,7 @@
-import type { IGetActivitiesRes } from "@hour-tracker/core-types/activities";
-import { toast } from "vue-sonner";
+import type { IGetActivitiesReq, IGetActivitiesRes } from "@hour-tracker/core-types/activities";
+import { ref } from "vue";
+import type { Ref } from "vue";
+import { useActivityTypesStore } from "../stores/activities";
 
 // Type for individual activity type data from paginated response
 type ActivityTypeData = IGetActivitiesRes["data"][0];
@@ -9,43 +11,50 @@ type ActivityTypeData = IGetActivitiesRes["data"][0];
  * Following Single Responsibility Principle - handles only activity type actions
  */
 export function useActivityTypeActions() {
+  // State for edit modal
+  const editingActivityType: Ref<ActivityTypeData | null> = ref(null);
+  const isEditModalOpen = ref(false);
+
   /**
    * Handle edit activity type action
-   * TODO: Implement edit functionality
+   * Opens the edit modal with the selected activity type
    */
   function editActivityType(activityType: ActivityTypeData) {
-    toast.info(`Edit functionality coming soon for ${activityType.activityName}`);
+    editingActivityType.value = activityType;
+    isEditModalOpen.value = true;
   }
 
   /**
-   * Handle view activity type details action
-   * TODO: Implement view details functionality
+   * Close the edit modal and clear selection
    */
-  function viewActivityTypeDetails(activityType: ActivityTypeData) {
-    toast.info(`View details functionality coming soon for ${activityType.activityName}`);
-  }
-
-  /**
-   * Handle delete activity type action
-   * TODO: Implement delete functionality with confirmation
-   */
-  function deleteActivityType(activityType: ActivityTypeData) {
-    toast.info(`Delete functionality coming soon for ${activityType.activityName}`);
+  function closeEditModal() {
+    isEditModalOpen.value = false;
+    editingActivityType.value = null;
   }
 
   /**
    * Handle toggle activity type status action
-   * TODO: Implement toggle status functionality
+   * Requires pagination params from parent component to maintain page state
    */
-  function toggleActivityTypeStatus(activityType: ActivityTypeData) {
-    const newStatus = activityType.active ? "deactivate" : "activate";
-    toast.info(`${newStatus} functionality coming soon for ${activityType.activityName}`);
+  function toggleActivityTypeStatus(
+    activityType: ActivityTypeData,
+    currentParams?: IGetActivitiesReq,
+  ) {
+    return useActivityTypesStore().toggleActivityStatus(
+      activityType.id,
+      activityType.active,
+      activityType.activityName,
+      currentParams,
+    );
   }
 
   return {
+    // State
+    editingActivityType,
+    isEditModalOpen,
+    // Actions
     editActivityType,
-    viewActivityTypeDetails,
-    deleteActivityType,
+    closeEditModal,
     toggleActivityTypeStatus,
   };
 }
