@@ -7469,7 +7469,7 @@ __metadata:
     lucide-vue-next: "npm:0.562.0"
     msw: "npm:2.12.4"
     pinia: "npm:3.0.4"
-    reka-ui: "npm:2.6.1"
+    reka-ui: "npm:2.7.0"
     sass: "npm:1.97.1"
     tailwind-merge: "npm:3.4.0"
     tailwindcss: "npm:4.1.18"
@@ -10137,9 +10137,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reka-ui@npm:2.6.1":
-  version: 2.6.1
-  resolution: "reka-ui@npm:2.6.1"
+"reka-ui@npm:2.7.0":
+  version: 2.7.0
+  resolution: "reka-ui@npm:2.7.0"
   dependencies:
     "@floating-ui/dom": "npm:^1.6.13"
     "@floating-ui/vue": "npm:^1.1.6"
@@ -10153,7 +10153,7 @@ __metadata:
     ohash: "npm:^2.0.11"
   peerDependencies:
     vue: ">= 3.2.0"
-  checksum: 10/cd7eced5c772161e209fdbdaa2db7d12f29e3275821a62ef24cadb0b551491de21264622d32f8d1e3e9014c48775c844ac887ffbff8c9940f40ad4ee0b075023
+  checksum: 10/6393365b82223d46d086bfb17536119e788102830729fe3d38225171fe0ac20881f9c47a9f47c1f0f0512212e2ba517f11850cca0f4f8a1a7000f4f7c626046d
   languageName: node
   linkType: hard
 
