@@ -62,7 +62,7 @@ export class ActivityTypesService extends Construct {
     props.apiGateway.addRoutes({
       integration: activityTypesServiceIntegration,
       path: "/v1/activity-types/{id}",
-      methods: [HttpMethod.PUT],
+      methods: [HttpMethod.PUT, HttpMethod.PATCH],
     });
   }
 }
