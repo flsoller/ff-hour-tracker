@@ -7,62 +7,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Timecraft</title>
     <style>
-    /* Base light mode */
+    /* Initial CSS variables to avoid style flashes */
+    :root {
+      --background: oklch(1 0 0);
+      --foreground: oklch(0.129 0.042 264.695);
+      --muted: oklch(0.968 0.007 247.896);
+      --muted-foreground: oklch(0.554 0.046 257.417);
+    }
+    .dark {
+      --background: oklch(0.129 0.042 264.695);
+      --foreground: oklch(98.415% 0.00352 248.585 / 0.86);
+      --muted: oklch(0.279 0.041 260.031);
+      --muted-foreground: oklch(0.704 0.04 256.788);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not(.light) {
+        --background: oklch(0.129 0.042 264.695);
+        --foreground: oklch(98.415% 0.00352 248.585 / 0.86);
+        --muted: oklch(0.279 0.041 260.031);
+        --muted-foreground: oklch(0.704 0.04 256.788);
+      }
+    }
+    .bg-clip-text {
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    .text-transparent {
+      color: transparent;
+    }
+    .text-muted-foreground {
+      color: var(--muted-foreground);
+    }
+    .from-foreground.to-foreground\/60.bg-linear-to-br {
+      background-image: linear-gradient(
+        to bottom right,
+        var(--foreground),
+        color-mix(in oklch, var(--foreground) 60%, transparent)
+      );
+    }
+    .from-blue-500.to-indigo-600.bg-linear-to-br {
+      background-image: linear-gradient(
+        to bottom right,
+        oklch(0.623 0.214 259.815),
+        oklch(0.511 0.262 276.966)
+      );
+    }
+
     html, body, #app {
       background-color: oklch(1 0 0);
       margin: 0;
     }
-    .loading-initial span {
-      color: oklch(0.554 0.046 257.417);
-    }
-    .loading-initial .spinner {
-      border-color: oklch(0.208 0.042 265.755);
-      border-top-color: transparent;
-    }
 
-    /* Dark mode via .dark class (JS-controlled, user preference from localStorage) */
     html.dark, html.dark body, html.dark #app {
       background-color: oklch(0.129 0.042 264.695);
-    }
-    html.dark .loading-initial span {
-      color: oklch(0.704 0.04 256.788);
-    }
-    html.dark .loading-initial .spinner {
-      border-color: oklch(77.462% 0.10147 249.279 / 0.839);
-      border-top-color: transparent;
     }
 
     @media (prefers-color-scheme: dark) {
       html:not(.light), html:not(.light) body, html:not(.light) #app {
         background-color: oklch(0.129 0.042 264.695);
       }
-      html:not(.light) .loading-initial span {
-        color: oklch(0.704 0.04 256.788);
-      }
-      html:not(.light) .loading-initial .spinner {
-        border-color: oklch(77.462% 0.10147 249.279 / 0.839);
-        border-top-color: transparent;
-      }
     }
 
-    .loading-initial {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .blur-3xl {
+      filter: blur(64px);
     }
-    .loading-initial .spinner {
-      width: 2rem;
-      height: 2rem;
-      border-width: 4px;
-      border-style: solid;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
+    .blur-2xl {
+      filter: blur(40px);
     }
     </style>
     <script>
@@ -75,14 +85,7 @@
     </script>
   </head>
   <body>
-    <div id="app">
-      <div class="loading-initial">
-        <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem">
-          <div class="spinner"></div>
-          <span style="font-size: 0.875rem">Loading...</span>
-        </div>
-      </div>
-    </div>
+    <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

@@ -8,6 +8,14 @@ vi.mock("@clerk/vue", () => ({
     name: "SignIn",
     template: "<div data-testid=\"clerk-sign-in\">Clerk SignIn</div>",
   },
+  SignedIn: {
+    name: "SignedIn",
+    template: "<div><slot /></div>",
+  },
+  UserButton: {
+    name: "UserButton",
+    template: "<div data-testid=\"clerk-user-button\">User Button</div>",
+  },
   clerkPlugin: {
     install: vi.fn(),
   },
@@ -42,11 +50,9 @@ describe("Login View", () => {
       expect(signIn.exists()).toBe(true);
     });
 
-    it("should be centered on the page", () => {
-      const container = wrapper.find("div");
-      expect(container.classes()).toContain("flex");
-      expect(container.classes()).toContain("items-center");
-      expect(container.classes()).toContain("justify-center");
+    it("should render the main element", () => {
+      const main = wrapper.find("main");
+      expect(main.exists()).toBe(true);
     });
   });
 });

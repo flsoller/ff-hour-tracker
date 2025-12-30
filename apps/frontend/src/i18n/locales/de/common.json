@@ -52,5 +52,10 @@
   },
   "accessibility": {
     "toggle": "Umschalten"
+  },
+  "splash": {
+    "appName": "Timecraft",
+    "tagline": "Professionelles Zeitmanagement",
+    "loading": "Arbeitsbereich wird geladen..."
   }
 }
