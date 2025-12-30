@@ -5,7 +5,7 @@
       <NavBar />
     </header>
     <main class="relative z-10 flex-1 flex items-center justify-center px-4">
-      <SignUp />
+      <Waitlist />
     </main>
   </div>
 </template>
@@ -13,5 +13,5 @@
 <script setup lang="ts">
 import AnimatedBackground from "@/components/AnimatedBackground.vue";
 import NavBar from "@/components/NavBar.vue";
-import { SignUp } from "@clerk/vue";
+import { Waitlist } from "@clerk/vue";
 </script>

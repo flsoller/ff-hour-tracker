@@ -5,6 +5,7 @@ import Members from "@/views/Members.vue";
 import Reports from "@/views/Reports.vue";
 import SignUp from "@/views/SignUp.vue";
 import TimeLogging from "@/views/TimeLogging.vue";
+import Waitlist from "@/views/Waitlist.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 
@@ -82,6 +83,17 @@ const routes: Array<RouteRecordRaw> = [
     path: "/signup",
     name: "SignUp",
     component: SignUp,
+    meta: {
+      hideSidebar: true,
+    },
+  },
+  /**
+   * Waitlist page
+   */
+  {
+    path: "/waitlist",
+    name: "Waitlist",
+    component: Waitlist,
     meta: {
       hideSidebar: true,
     },

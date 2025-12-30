@@ -1,12 +1,12 @@
 import { mount, VueWrapper } from "@vue/test-utils";
 import { expect, vi } from "vitest";
-import LoginView from "../../views/Login.vue";
+import WaitlistView from "../../views/Waitlist.vue";
 
 // Mock Clerk Vue components
 vi.mock("@clerk/vue", () => ({
-  SignIn: {
-    name: "SignIn",
-    template: "<div data-testid=\"clerk-sign-in\">Clerk SignIn</div>",
+  Waitlist: {
+    name: "Waitlist",
+    template: "<div data-testid=\"clerk-waitlist\">Clerk Waitlist</div>",
   },
   SignedIn: {
     name: "SignedIn",
@@ -21,15 +21,15 @@ vi.mock("@clerk/vue", () => ({
   },
 }));
 
-describe("Login View", () => {
+describe("Waitlist View", () => {
   let wrapper: VueWrapper;
 
   beforeEach(() => {
-    wrapper = mount(LoginView, {
+    wrapper = mount(WaitlistView, {
       global: {
         stubs: {
-          SignIn: {
-            template: "<div data-testid=\"clerk-sign-in\">Clerk SignIn</div>",
+          Waitlist: {
+            template: "<div data-testid=\"clerk-waitlist\">Clerk Waitlist</div>",
           },
         },
       },
@@ -45,9 +45,9 @@ describe("Login View", () => {
       expect(wrapper.isVisible()).toBe(true);
     });
 
-    it("should render the Clerk SignIn component", () => {
-      const signIn = wrapper.find("[data-testid=\"clerk-sign-in\"]");
-      expect(signIn.exists()).toBe(true);
+    it("should render the Clerk Waitlist component", () => {
+      const waitlist = wrapper.find("[data-testid=\"clerk-waitlist\"]");
+      expect(waitlist.exists()).toBe(true);
     });
 
     it("should render the main element", () => {
