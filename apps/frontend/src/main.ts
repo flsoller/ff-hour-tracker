@@ -25,6 +25,7 @@ app.use(clerkPlugin, {
     theme: shadcn,
   },
   localization: getClerkLocalization(getInitialLocale()),
+  waitlistUrl: "/waitlist",
 });
 app.use(router);
 app.mount("#app");
