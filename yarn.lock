@@ -879,30 +879,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/cli@npm:20.2.0":
-  version: 20.2.0
-  resolution: "@commitlint/cli@npm:20.2.0"
+"@commitlint/cli@npm:20.3.0":
+  version: 20.3.0
+  resolution: "@commitlint/cli@npm:20.3.0"
   dependencies:
     "@commitlint/format": "npm:^20.2.0"
-    "@commitlint/lint": "npm:^20.2.0"
-    "@commitlint/load": "npm:^20.2.0"
+    "@commitlint/lint": "npm:^20.3.0"
+    "@commitlint/load": "npm:^20.3.0"
     "@commitlint/read": "npm:^20.2.0"
     "@commitlint/types": "npm:^20.2.0"
     tinyexec: "npm:^1.0.0"
     yargs: "npm:^17.0.0"
   bin:
     commitlint: ./cli.js
-  checksum: 10/3892ff04ffc60c63fd53546e97d6fb3aa19cbcc60149ff9dce631814064ac002e656da23577d9510adaddf5da9c07259366b6a6a549a0959731491eb76c5d5bd
+  checksum: 10/92d7d3c0f27c9af8ebd3ca18c405b4381d6810cb02fb381aa7af23426f62404e66be4067313f2034278ac0739d8ce3809d14ee1dbf097dbaa58b8605b414ce41
   languageName: node
   linkType: hard
 
-"@commitlint/config-conventional@npm:20.2.0":
-  version: 20.2.0
-  resolution: "@commitlint/config-conventional@npm:20.2.0"
+"@commitlint/config-conventional@npm:20.3.0":
+  version: 20.3.0
+  resolution: "@commitlint/config-conventional@npm:20.3.0"
   dependencies:
     "@commitlint/types": "npm:^20.2.0"
     conventional-changelog-conventionalcommits: "npm:^7.0.2"
-  checksum: 10/e9290c90c0e2b56ece25d45df1477746355ff540204d6acd9ef6c514e8e52aecde730667bb638b793f93e7e3c5d1fc395e3ea15047918cad48d834eb773956d5
+  checksum: 10/410fe56bbe553a591e6a30dad018c992e9a2d5c1851666cd323d26dc3b1a96f15b6350c71cd3c3095653408109cdcaae8cd76eaf69868896cef9e0ea532e0464
   languageName: node
   linkType: hard
 
@@ -957,21 +957,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/lint@npm:^20.2.0":
-  version: 20.2.0
-  resolution: "@commitlint/lint@npm:20.2.0"
+"@commitlint/lint@npm:^20.3.0":
+  version: 20.3.0
+  resolution: "@commitlint/lint@npm:20.3.0"
   dependencies:
     "@commitlint/is-ignored": "npm:^20.2.0"
     "@commitlint/parse": "npm:^20.2.0"
-    "@commitlint/rules": "npm:^20.2.0"
+    "@commitlint/rules": "npm:^20.3.0"
     "@commitlint/types": "npm:^20.2.0"
-  checksum: 10/35844454c0c2b04e4f5ee10f099bb34100027a5db2009fe2ac12997001f8bef371d7479cd41b1ac8e422395762c47dc60676e976b44be4d5b8f24c09b6adc2f1
+  checksum: 10/e51f55cd7fdc19fcbd61d481d98e0bb11ef4f2c152fe01ddc6e11bef88e06db9bbddeb4fe5aad86540879426bbc515ca2f82bf910bfcf87a4bef247b9758a50b
   languageName: node
   linkType: hard
 
-"@commitlint/load@npm:^20.2.0":
-  version: 20.2.0
-  resolution: "@commitlint/load@npm:20.2.0"
+"@commitlint/load@npm:^20.3.0":
+  version: 20.3.0
+  resolution: "@commitlint/load@npm:20.3.0"
   dependencies:
     "@commitlint/config-validator": "npm:^20.2.0"
     "@commitlint/execute-rule": "npm:^20.0.0"
@@ -983,7 +983,7 @@ __metadata:
     lodash.isplainobject: "npm:^4.0.6"
     lodash.merge: "npm:^4.6.2"
     lodash.uniq: "npm:^4.5.0"
-  checksum: 10/90285577381d593fbd2ee7fb825234f828378205374d26186577500bd160919efa01b1e584ad44190e57da9c151238063b8c896356bf9a7074e4a85a5a3e19b5
+  checksum: 10/d55989ecc080f44c5113acd0a9a2f29c656262ddaf747212d9c3aa0b96bba2a96ac6b65d3623238eebf0043636cb5a6e09f528362a17753ff48938b400db543b
   languageName: node
   linkType: hard
 
@@ -1032,15 +1032,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/rules@npm:^20.2.0":
-  version: 20.2.0
-  resolution: "@commitlint/rules@npm:20.2.0"
+"@commitlint/rules@npm:^20.3.0":
+  version: 20.3.0
+  resolution: "@commitlint/rules@npm:20.3.0"
   dependencies:
     "@commitlint/ensure": "npm:^20.2.0"
     "@commitlint/message": "npm:^20.0.0"
     "@commitlint/to-lines": "npm:^20.0.0"
     "@commitlint/types": "npm:^20.2.0"
-  checksum: 10/f5cda11de06a5cbacceebb0628a4a45b01e2d3af483e1e95cc04aa7ec1a1198cfdcd8587c29afdc9dc915df8a849864e989347c6304f81b50fdb0c98e47ab49f
+  checksum: 10/20e3c94cb9b906d91d74488e957a7a00eaa0308a6d1e6d294fb31c88bfbfe518902670473a615ee56782b69d47c50d46ac537576329ffc40ddbc255012c7a349
   languageName: node
   linkType: hard
 
@@ -2443,13 +2443,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@intlify/core-base@npm:11.2.7":
-  version: 11.2.7
-  resolution: "@intlify/core-base@npm:11.2.7"
+"@intlify/core-base@npm:11.2.8":
+  version: 11.2.8
+  resolution: "@intlify/core-base@npm:11.2.8"
   dependencies:
-    "@intlify/message-compiler": "npm:11.2.7"
-    "@intlify/shared": "npm:11.2.7"
-  checksum: 10/79019245b14075ba09aa6c884bc083e9ec85de1aa340a308ced956bad088ce1a5179e6e33fb4ad25833132eda7e4f832b098ada6e7079a060921cee1d405ce8d
+    "@intlify/message-compiler": "npm:11.2.8"
+    "@intlify/shared": "npm:11.2.8"
+  checksum: 10/e162c4affebb07cfa6fad805fd070b596d0ba0fb1f167f147481fd60f228a2d0fc439a3f5ff5a956fea8de02980f5bdbe445939f40ad373c8843292145e129ed
   languageName: node
   linkType: hard
 
@@ -2463,7 +2463,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@intlify/message-compiler@npm:11.2.7, @intlify/message-compiler@npm:^11.1.12":
+"@intlify/message-compiler@npm:11.2.8":
+  version: 11.2.8
+  resolution: "@intlify/message-compiler@npm:11.2.8"
+  dependencies:
+    "@intlify/shared": "npm:11.2.8"
+    source-map-js: "npm:^1.0.2"
+  checksum: 10/89728352da9f2782334388f2bcc960eb4e2c92b93c78d7df9b592f8ad0f8ed222d93425f794c8b2769215b5c769fbf4b9c1ebb56aea45f2fe2ad5021c2ab7bba
+  languageName: node
+  linkType: hard
+
+"@intlify/message-compiler@npm:^11.1.12":
   version: 11.2.7
   resolution: "@intlify/message-compiler@npm:11.2.7"
   dependencies:
@@ -2484,6 +2494,13 @@ __metadata:
   version: 11.2.7
   resolution: "@intlify/shared@npm:11.2.7"
   checksum: 10/bd7c93cab84912c848afab80e625a008554e72b10227d0ac1b3102a3bbb3faec136f5299d9d0406fd206bbabbe987833bfa5f9e0678914acbccf9b52ba413299
+  languageName: node
+  linkType: hard
+
+"@intlify/shared@npm:11.2.8":
+  version: 11.2.8
+  resolution: "@intlify/shared@npm:11.2.8"
+  checksum: 10/1629f152210b6695cac26cd803fd29c4b8abdc001afc6a5fd4df2f26fe5befdf37f2f87bd8385aa773fe50eb7f31f76288892848beb98dba17ed74ec9ccd81fa
   languageName: node
   linkType: hard
 
@@ -6773,9 +6790,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jest@npm:29.11.1":
-  version: 29.11.1
-  resolution: "eslint-plugin-jest@npm:29.11.1"
+"eslint-plugin-jest@npm:29.12.0":
+  version: 29.12.0
+  resolution: "eslint-plugin-jest@npm:29.12.0"
   dependencies:
     "@typescript-eslint/utils": "npm:^8.0.0"
   peerDependencies:
@@ -6787,7 +6804,7 @@ __metadata:
       optional: true
     jest:
       optional: true
-  checksum: 10/81d3fd001022460a84e6325a37fb973e919e13bf95db5ef7eb479c2d700a40bd0b4a5a51831f39e8205b6ef5efeec5e96ca6c8304d94f56beec1ac3c92d667e3
+  checksum: 10/b1df0ff8d57bbb3e9bac3c18a172053c4b7786561e143f68dc514c11059a165e0c5b316376755a3e39bc23732c4db680eaa75dff64bf970139fd2c50aac6363e
   languageName: node
   linkType: hard
 
@@ -7117,12 +7134,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ff-hour-tracker@workspace:."
   dependencies:
-    "@commitlint/cli": "npm:20.2.0"
-    "@commitlint/config-conventional": "npm:20.2.0"
+    "@commitlint/cli": "npm:20.3.0"
+    "@commitlint/config-conventional": "npm:20.3.0"
     "@eslint/js": "npm:9.39.2"
     dprint: "npm:0.51.1"
     eslint: "npm:9.39.2"
-    eslint-plugin-jest: "npm:29.11.1"
+    eslint-plugin-jest: "npm:29.12.0"
     husky: "npm:9.1.7"
     lint-staged: "npm:16.2.7"
     turbo: "npm:2.7.2"
@@ -7588,7 +7605,7 @@ __metadata:
     vite: "npm:7.3.0"
     vitest: "npm:4.0.16"
     vue: "npm:3.5.26"
-    vue-i18n: "npm:11.2.7"
+    vue-i18n: "npm:11.2.8"
     vue-router: "npm:4.6.4"
     vue-sonner: "npm:2.0.9"
     vue-tsc: "npm:3.2.1"
@@ -11788,16 +11805,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-i18n@npm:11.2.7":
-  version: 11.2.7
-  resolution: "vue-i18n@npm:11.2.7"
+"vue-i18n@npm:11.2.8":
+  version: 11.2.8
+  resolution: "vue-i18n@npm:11.2.8"
   dependencies:
-    "@intlify/core-base": "npm:11.2.7"
-    "@intlify/shared": "npm:11.2.7"
+    "@intlify/core-base": "npm:11.2.8"
+    "@intlify/shared": "npm:11.2.8"
     "@vue/devtools-api": "npm:^6.5.0"
   peerDependencies:
     vue: ^3.0.0
-  checksum: 10/d0025b4b11bdd23c85bf8932de7c17cb3c561584769d23b7de41c4bff469c5d9258d375372ae66b55a795837837992ef03d71498c50029c0bb277b7f51ff93ae
+  checksum: 10/ff9371de491c93bc75c69cf02ba9cad54e0b6e3efe6fb34f9ee1031aec6c505a41fc4fc6db8b02a03d125153ebcaa34c7e7e419a4b55c61434a646ca082a5ee3
   languageName: node
   linkType: hard
 
