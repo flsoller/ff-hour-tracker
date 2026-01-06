@@ -46,7 +46,11 @@ defineProps<{
         :default-open="item.isActive"
       >
         <SidebarMenuItem>
-          <SidebarMenuButton as-child :tooltip="item.title">
+          <SidebarMenuButton
+            as-child
+            :tooltip="item.title"
+            :is-active="item.isActive"
+          >
             <router-link :to="item.url" :data-testid="item.testId">
               <component :is="item.icon" />
               <span>{{ item.title }}</span>
