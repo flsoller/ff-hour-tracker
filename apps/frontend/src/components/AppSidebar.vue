@@ -39,8 +39,10 @@ import {
 } from "lucide-vue-next";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
 
 const { t } = useI18n();
+const route = useRoute();
 
 const props = withDefaults(defineProps<SidebarProps>(), {
   variant: "inset",
@@ -52,31 +54,35 @@ const data = computed(() => ({
       title: t("nav.dashboard"),
       url: "/",
       icon: Home,
-      isActive: true,
+      isActive: route.path === "/",
       testId: "dashboardLink",
     },
     {
       title: t("nav.timesheet"),
       url: "/timelog",
       icon: Clock,
+      isActive: route.path === "/timelog",
       testId: "timesheetLink",
     },
     {
       title: t("nav.members"),
       url: "/members",
       icon: User,
+      isActive: route.path === "/members",
       testId: "membersLink",
     },
     {
       title: t("nav.configuration"),
       url: "/config",
       icon: Settings,
+      isActive: route.path === "/config",
       testId: "configLink",
     },
     {
       title: t("nav.reports"),
       url: "/reports",
       icon: Inbox,
+      isActive: route.path === "/reports",
       testId: "reportsLink",
     },
   ],

@@ -6,13 +6,13 @@ test.describe("Unauthenticated flows", () => {
   test("unauthenticated user is redirected to login when accessing root page", async ({ page }) => {
     await page.goto("/");
     await expect(page).toHaveURL(/.*login.*/);
-    await expect(page.getByText("Sign in to Timecraft")).toBeVisible();
+    await expect(page.getByText("Sign in to Tokistack")).toBeVisible();
   });
 
   test("unauthenticated user is redirected to login when accessing members page", async ({ page }) => {
     await page.goto("/members");
     await expect(page).toHaveURL(/.*login.*/);
-    await expect(page.getByText("Sign in to Timecraft")).toBeVisible();
+    await expect(page.getByText("Sign in to Tokistack")).toBeVisible();
   });
 
   test("should allow unauthenticated user to change theme", async ({ page }) => {

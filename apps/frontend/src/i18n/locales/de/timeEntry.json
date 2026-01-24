@@ -1,0 +1,76 @@
+{
+  "modal": {
+    "title": "Zeiteintrag hinzufügen",
+    "description": "Wählen Sie einen Eintragstyp",
+    "helpText": "Wählen Sie den Eingabemodus, der am besten zu Ihrer Zeiterfassung passt. Datum & Zeit berechnet die Stunden automatisch aus Start-/Endzeiten. Stunden/Tag ermöglicht die Eingabe von Stunden für einen bestimmten Tag. Stunden/Monat erfasst die gesamten monatlichen Stunden."
+  },
+  "modes": {
+    "dateTime": "Datum & Zeit",
+    "hoursDay": "Stunden/Tag",
+    "hoursMonth": "Stunden/Monat"
+  },
+  "fields": {
+    "activityType": "Aktivitätstyp",
+    "activityTypePlaceholder": "Aktivitätstyp auswählen",
+    "teamMembers": "Teammitglieder",
+    "teamMembersPlaceholder": "Teammitglieder auswählen",
+    "teamMembersSelected": "{count} Mitglied(er) ausgewählt",
+    "selectedMembers": "Ausgewählt:",
+    "notes": "Notizen (Optional)",
+    "notesPlaceholder": "Zusätzliche Notizen zu diesem Zeiteintrag hinzufügen...",
+    "createMore": "Weitere erstellen - Fenster nach dem Hinzufügen offen lassen",
+    "date": "Datum",
+    "startDate": "Startdatum",
+    "endDate": "Enddatum",
+    "startTime": "Startzeit",
+    "endTime": "Endzeit",
+    "hours": "Stunden",
+    "hoursPlaceholder": "Stunden eingeben",
+    "monthlyHoursPlaceholder": "Stunden für den Monat eingeben",
+    "duration": "Dauer",
+    "hoursShort": "Std",
+    "minutes": "Minuten",
+    "minutesShort": "Min",
+    "month": "Monat",
+    "year": "Jahr",
+    "calculatedHours": "Berechnet: {hours} Stunden",
+    "noMembers": "Keine Mitglieder angelegt",
+    "noMembersFound": "Keine Mitglieder gefunden",
+    "searchMembers": "Mitglieder suchen...",
+    "noActivities": "Keine Aktivitäten angelegt"
+  },
+  "months": {
+    "1": "Januar",
+    "2": "Februar",
+    "3": "März",
+    "4": "April",
+    "5": "Mai",
+    "6": "Juni",
+    "7": "Juli",
+    "8": "August",
+    "9": "September",
+    "10": "Oktober",
+    "11": "November",
+    "12": "Dezember"
+  },
+  "buttons": {
+    "addEntry": "Eintrag hinzufügen",
+    "adding": "Wird hinzugefügt..."
+  },
+  "validation": {
+    "activityRequired": "Bitte wählen Sie einen Aktivitätstyp",
+    "memberRequired": "Bitte wählen Sie mindestens ein Teammitglied",
+    "startDateRequired": "Startdatum ist erforderlich",
+    "endDateRequired": "Enddatum ist erforderlich",
+    "startTimeRequired": "Startzeit ist erforderlich",
+    "endTimeRequired": "Endzeit ist erforderlich",
+    "endTimeMustBeAfterStart": "Endzeit muss nach der Startzeit liegen",
+    "dateRequired": "Datum ist erforderlich",
+    "hoursRequired": "Stunden müssen größer als 0 sein",
+    "durationRequired": "Dauer muss größer als 0 sein"
+  },
+  "toasts": {
+    "createSuccess": "{count} Zeiteintrag/Zeiteinträge erfolgreich erstellt",
+    "createError": "Fehler beim Erstellen der Zeiteinträge"
+  }
+}

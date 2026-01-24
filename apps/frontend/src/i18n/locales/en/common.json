@@ -11,7 +11,8 @@
   },
   "buttons": {
     "addMember": "Add Member",
-    "addActivityType": "Add Activity Type"
+    "addActivityType": "Add Activity Type",
+    "addTimeEntry": "Time Entry"
   },
   "placeholders": {
     "search": "Search...",
@@ -54,7 +55,7 @@
     "toggle": "Toggle"
   },
   "splash": {
-    "appName": "Timecraft",
+    "appName": "Tokistack",
     "tagline": "Professional Time Management",
     "loading": "Loading your workspace..."
   }

@@ -7,14 +7,14 @@ test.describe("Localization", () => {
     test("can switch language on login page", async ({ page }) => {
       await page.goto("/");
       await expect(page).toHaveURL(/.*login.*/);
-      await expect(page.getByText("Sign in to Timecraft")).toBeVisible();
+      await expect(page.getByText("Sign in to Tokistack")).toBeVisible();
 
       await page.getByRole("button", { name: "Select language" }).click();
       await page.getByRole("menuitem", { name: "Deutsch" }).click();
 
       await page.waitForLoadState("domcontentloaded");
 
-      await expect(page.getByText("In Timecraft einloggen")).toBeVisible();
+      await expect(page.getByText("In Tokistack einloggen")).toBeVisible();
     });
   });
 
