@@ -1,0 +1,76 @@
+{
+  "modal": {
+    "title": "Add Time Entry",
+    "description": "Choose one entry type below",
+    "helpText": "Select the entry mode that best fits your requirements. Date & Time calculates hours automatically from start/end times. Hours/Day lets you enter hours for a specific day. Hours/Month tracks total monthly hours."
+  },
+  "modes": {
+    "dateTime": "Date & Time",
+    "hoursDay": "Hours/Day",
+    "hoursMonth": "Hours/Month"
+  },
+  "fields": {
+    "activityType": "Activity Type",
+    "activityTypePlaceholder": "Select activity type",
+    "teamMembers": "Team Members",
+    "teamMembersPlaceholder": "Select team members",
+    "teamMembersSelected": "{count} member(s) selected",
+    "selectedMembers": "Selected:",
+    "notes": "Notes (Optional)",
+    "notesPlaceholder": "Add any additional notes about this time entry...",
+    "createMore": "Create more - Keep this modal open after adding",
+    "date": "Date",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "hours": "Hours",
+    "hoursPlaceholder": "Enter hours",
+    "monthlyHoursPlaceholder": "Enter hours for the month",
+    "duration": "Duration",
+    "hoursShort": "h",
+    "minutes": "Minutes",
+    "minutesShort": "m",
+    "month": "Month",
+    "year": "Year",
+    "calculatedHours": "Calculated: {hours} hours",
+    "noMembers": "No members available",
+    "noMembersFound": "No members match your search",
+    "searchMembers": "Search members...",
+    "noActivities": "No activities available"
+  },
+  "months": {
+    "1": "January",
+    "2": "February",
+    "3": "March",
+    "4": "April",
+    "5": "May",
+    "6": "June",
+    "7": "July",
+    "8": "August",
+    "9": "September",
+    "10": "October",
+    "11": "November",
+    "12": "December"
+  },
+  "buttons": {
+    "addEntry": "Add Entry",
+    "adding": "Adding..."
+  },
+  "validation": {
+    "activityRequired": "Please select an activity type",
+    "memberRequired": "Please select at least one team member",
+    "startDateRequired": "Start date is required",
+    "endDateRequired": "End date is required",
+    "startTimeRequired": "Start time is required",
+    "endTimeRequired": "End time is required",
+    "endTimeMustBeAfterStart": "End time must be after start time",
+    "dateRequired": "Date is required",
+    "hoursRequired": "Hours must be greater than 0",
+    "durationRequired": "Duration must be greater than 0"
+  },
+  "toasts": {
+    "createSuccess": "{count} time entry(ies) created successfully",
+    "createError": "Failed to create time entries"
+  }
+}

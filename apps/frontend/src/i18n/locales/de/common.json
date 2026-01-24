@@ -11,7 +11,8 @@
   },
   "buttons": {
     "addMember": "Mitglied hinzufügen",
-    "addActivityType": "Aktivitätstyp hinzufügen"
+    "addActivityType": "Aktivitätstyp hinzufügen",
+    "addTimeEntry": "Zeiteintrag"
   },
   "placeholders": {
     "search": "Suchen...",

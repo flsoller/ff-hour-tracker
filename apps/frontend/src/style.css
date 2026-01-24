@@ -142,3 +142,12 @@
     color: var(--foreground);
   }
 }
+
+/* iOS Safari date/time input fixes to prevent overflow issues */
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"] {
+  display: block;
+  -webkit-appearance: none;
+  appearance: none;
+}
